@@ -45,7 +45,7 @@
     border-radius:999px;color:var(--ink);font:500 12.5px 'Archivo';padding:8px 15px;outline:0}
   #q:focus{border-color:var(--gold)}
   #q::placeholder{color:var(--faint)}
-  h2{font:700 13px 'JetBrains Mono',monospace;letter-spacing:.18em;color:var(--gold);
+  h2{scroll-margin-top:118px;font:700 13px 'JetBrains Mono',monospace;letter-spacing:.18em;color:var(--gold);
     margin:36px 0 2px;text-transform:uppercase}
   h2 .cnt{color:var(--faint);letter-spacing:0}
   .sub{color:var(--faint);font-size:12.5px;margin:0 0 12px}
@@ -90,6 +90,19 @@
   .srclink{display:inline-block;margin-top:10px;font:600 11px 'JetBrains Mono',monospace;
     color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(217,164,65,.4)}
   .none{color:var(--faint);font-style:italic;padding:8px 2px}
+  .lhead{position:relative;padding-right:36px}
+  .lhead::after{content:'BE';position:absolute;right:15px;top:13px;color:var(--faint);
+    transition:transform .15s}
+  .lead.open .lhead::after{transform:rotate(180deg);color:var(--gold)}
+  .jumps{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none}
+  .jumps::-webkit-scrollbar{display:none}
+  .chip.jump{flex:none;border-style:dashed}
+  .cpy{background:none;border:1px solid var(--rule);border-radius:7px;color:var(--dim);
+    font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.08em;padding:7px 12px;
+    cursor:pointer;margin:10px 10px 0 0;-webkit-tap-highlight-color:transparent}
+  @media(hover:hover){.cpy:hover{border-color:var(--gold);color:var(--gold)}}
+  .cpy.done{border-color:var(--green);color:var(--green)}
   .vrow{display:flex;gap:12px;align-items:baseline;border:1px solid var(--rule);
     background:var(--card);border-radius:9px;padding:11px 14px;margin:7px 0;flex-wrap:wrap}
   .vn{font-weight:700;font-size:13.5px;min-width:0;flex:1}
@@ -137,21 +150,27 @@
     <button class="chip" aria-pressed="false" data-m="250000">$250K+</button>
     <button class="chip" aria-pressed="false" data-m="500000">$500K+</button>
   </div>
+  <div class="chips jumps">
+    <button class="chip jump" data-j="s1">01 APPROVED</button>
+    <button class="chip jump" data-j="s2">02 AWARDED</button>
+    <button class="chip jump" data-j="s3">03 UPSTREAM</button>
+    <button class="chip jump" data-j="s4">04 CHECKBOOK</button>
+  </div>
 </div>
 
-<h2>01 &middot; Money approved <span class="cnt num" data-cnt="1"></span></h2>
+<h2 id="s1">01 &middot; Money approved <span class="cnt num" data-cnt="1"></span></h2>
 <p class="sub">Bond ceilings &amp; capital money &mdash; the earliest signal there is. Select a lead for the vote, the exact text, its project history, and the source.</p>
 <div id="sec1"></div>
 
-<h2>02 &middot; Awarded <span class="cnt num" data-cnt="2"></span></h2>
+<h2 id="s2">02 &middot; Awarded <span class="cnt num" data-cnt="2"></span></h2>
 <p class="sub">Contracts the Legislature just let &mdash; know who&rsquo;s winning, chase the sub work</p>
 <div id="sec2"></div>
 
-<h2>03 &middot; Upstream <span class="cnt num" data-cnt="3"></span></h2>
+<h2 id="s3">03 &middot; Upstream <span class="cnt num" data-cnt="3"></span></h2>
 <p class="sub">Design, engineering &amp; infrastructure grant money &mdash; construction follows design</p>
 <div id="sec3"></div>
 
-<h2>04 &middot; The checkbook layer</h2>
+<h2 id="s4">04 &middot; The checkbook layer</h2>
 <p class="sub">What North Tonawanda actually <b>paid</b> construction vendors, from the city&rsquo;s
 own warrant reports ($3,213,275 across the firms below, 2025&ndash;26). The county
 publishes no checkbook &mdash; where one exists, Groundwork reads it. Decisions tell you
@@ -190,6 +209,33 @@ var LEADS=[{"sec": 1, "id": "IF-036-26", "date": "2026-02-17", "title": "Townlin
 function money0(v){return '$'+Math.round(v).toLocaleString('en-US');}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 var state={t:'ALL',q:'',min:0};
+(function initState(){
+  try{var sv=JSON.parse(localStorage.getItem('gw')||'{}');
+    if(sv.t)state.t=sv.t; if(sv.q)state.q=sv.q; if(sv.min)state.min=sv.min;}catch(e){}
+  var p=new URLSearchParams(location.search);
+  if(p.get('trade'))state.t=p.get('trade').toUpperCase();
+  if(p.get('min'))state.min=+p.get('min')||0;
+  if(p.get('q'))state.q=(p.get('q')||'').toLowerCase();
+})();
+function persist(){
+  try{localStorage.setItem('gw',JSON.stringify(state));}catch(e){}
+  var p=new URLSearchParams();
+  if(state.t!=='ALL')p.set('trade',state.t);
+  if(state.min)p.set('min',state.min);
+  if(state.q)p.set('q',state.q);
+  var qs=p.toString();
+  history.replaceState(null,'',qs?('?'+qs):location.pathname);
+}
+function syncChips(){
+  var valid=[].some.call(document.querySelectorAll('#chips .chip'),
+    function(x){return x.getAttribute('data-t')===state.t;});
+  if(!valid)state.t='ALL';
+  document.querySelectorAll('#chips .chip').forEach(function(x){
+    x.setAttribute('aria-pressed',x.getAttribute('data-t')===state.t);});
+  document.querySelectorAll('[data-m]').forEach(function(x){
+    x.setAttribute('aria-pressed',+x.getAttribute('data-m')===state.min);});
+  document.getElementById('q').value=state.q;
+}
 function card(L,i){
   var tag='<span class="tag'+(L.tr==='OTHER'?' oth':'')+'">'+L.tr+'</span>';
   var thb=L.th?'<span class="thb">THREAD · '+L.th.n+' since '+L.th.y0+'</span>':'';
@@ -220,6 +266,7 @@ function drill(L){
   h+='<p class="vline"><b>'+esc(L.cm)+'</b>'+
      (v.mv?' · moved by <b>'+esc(v.mv)+'</b>':'')+(v.sc?', seconded by <b>'+esc(v.sc)+'</b>':'')+
      (v.a!=null?' · '+v.a+'–'+v.n+' · '+esc(v.out):'')+'</p>';
+  h+='<button class="cpy" data-cp>⧉ COPY LEAD</button>';
   if(L.src) h+='<a class="srclink" href="'+L.src+'" target="_blank" rel="noreferrer">SOURCE: the county’s own PDF ↗</a>';
   return h;
 }
@@ -244,13 +291,13 @@ function paint(){
 }
 document.getElementById('chips').addEventListener('click',function(e){
   var c=e.target.closest('.chip'); if(!c)return;
-  state.t=c.getAttribute('data-t');
+  state.t=c.getAttribute('data-t');persist();
   document.querySelectorAll('#chips .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c);});
   paint();
 });
 document.querySelectorAll('[data-m]').forEach(function(c){
   c.addEventListener('click',function(){
-    state.min=+c.getAttribute('data-m');
+    state.min=+c.getAttribute('data-m');persist();
     document.querySelectorAll('[data-m]').forEach(function(x){x.setAttribute('aria-pressed',x===c);});
     paint();
   });
@@ -258,10 +305,10 @@ document.querySelectorAll('[data-m]').forEach(function(c){
 var qt;
 document.getElementById('q').addEventListener('input',function(e){
   clearTimeout(qt);
-  qt=setTimeout(function(){state.q=e.target.value.trim().toLowerCase();paint();},120);
+  qt=setTimeout(function(){state.q=e.target.value.trim().toLowerCase();persist();paint();},120);
 });
 document.addEventListener('click',function(e){
-  var el=e.target.closest('.lead'); if(!el||e.target.closest('a'))return;
+  var el=e.target.closest('.lead'); if(!el||e.target.closest('a')||e.target.closest('.cpy'))return;
   var open=el.classList.toggle('open');
   el.setAttribute('aria-expanded',open);
   if(open) el.querySelector('.drill').innerHTML=drill(LEADS[+el.getAttribute('data-i')]);
@@ -271,6 +318,32 @@ document.addEventListener('keydown',function(e){
   var el=e.target.closest('.lead'); if(!el)return;
   e.preventDefault(); el.click();
 });
+document.querySelectorAll('[data-j]').forEach(function(c){
+  c.addEventListener('click',function(){
+    var el=document.getElementById(c.getAttribute('data-j'));
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.cpy'); if(!btn)return;
+  var el=btn.closest('.lead'); var L=LEADS[+el.getAttribute('data-i')];
+  var NL=String.fromCharCode(10);
+  var txt=L.title+' — '+(L.amt?money0(L.amt)+(L.cap?' ceiling':''):'')+' · '+L.id+' · '+L.date+
+    (L.vote.a!=null?' · voted '+L.vote.a+'–'+L.vote.n:'')+
+    (L.src?NL+'Source: '+L.src:'')+NL+'via Groundwork — jcurry44.github.io/groundwork-demo';
+  function done(ok){btn.textContent=ok?'COPIED ✓':'COPY FAILED';btn.classList.toggle('done',ok);
+    setTimeout(function(){btn.textContent='⧉ COPY LEAD';btn.classList.remove('done');},1600);}
+  function fallback(){
+    var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    var ok=false; try{ok=document.execCommand('copy');}catch(err){}
+    document.body.removeChild(ta); done(ok);
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){done(true);},fallback);
+  } else fallback();
+});
+syncChips();
 paint();
 </script>
 </body></html>
