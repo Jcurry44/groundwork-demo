@@ -62,6 +62,13 @@
     <label class="chip"><input type="checkbox" value="FLEET/EQUIP"><span>FLEET/EQUIP</span></label>
   </div>
 
+  <h2>Your counties</h2>
+  <div class="chips" id="cos">
+    <label class="chip"><input type="radio" name="co" value="" checked><span>BOTH</span></label>
+    <label class="chip"><input type="radio" name="co" value="NIAGARA"><span>NIAGARA</span></label>
+    <label class="chip"><input type="radio" name="co" value="ERIE"><span>ERIE</span></label>
+  </div>
+
   <h2>Only show me money over</h2>
   <div class="chips" id="floors">
     <label class="chip"><input type="radio" name="f" value="0" checked><span>ANY $</span></label>
@@ -90,10 +97,12 @@ var BASE='https://jcurry44.github.io/groundwork-demo/';
 function picks(){
   var ts=[].map.call(document.querySelectorAll('#trades input:checked'),function(i){return i.value;});
   var f=document.querySelector('#floors input:checked').value;
-  return {ts:ts,f:+f};
+  var co=document.querySelector('#cos input:checked').value;
+  return {ts:ts,f:+f,co:co};
 }
 function build(){
   var p=picks(), u=BASE, q=[];
+  if(p.co)q.push('co='+p.co);
   if(p.ts.length)q.push('trade='+encodeURIComponent(p.ts[0]));
   if(p.f)q.push('min='+p.f);
   if(q.length)u+='?'+q.join('&');
@@ -101,6 +110,7 @@ function build(){
   document.getElementById('open').href=u;
   var body='I want in on the Groundwork founding pilot.'+String.fromCharCode(10)+
     'Firm: ___'+String.fromCharCode(10)+
+    'Counties: '+(p.co?p.co:'both — Niagara + Erie')+String.fromCharCode(10)+
     'Trades: '+(p.ts.length?p.ts.join(', '):'___')+String.fromCharCode(10)+
     'Minimum $: '+(p.f?('$'+p.f.toLocaleString()):'any')+String.fromCharCode(10)+
     'My link: '+u;
