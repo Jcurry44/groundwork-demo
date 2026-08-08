@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Groundwork — build your link</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23101312'/%3E%3Ctext x='32' y='45' font-family='Arial Black,Arial' font-size='38' font-weight='900' fill='%23d9a441' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#101312;--card:#171c1a;--ink:#e9e7de;--dim:#a5a294;--faint:#6d6a5e;
+    --rule:#262b28;--gold:#d9a441;--green:#37b06b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 'Archivo',system-ui,sans-serif;display:flex;justify-content:center;
+    padding:40px 16px}
+  .wrap{max-width:560px;width:100%}
+  .band{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.22em;color:var(--gold)}
+  h1{font:900 40px/1.05 'Archivo';margin:10px 0 6px;letter-spacing:-.02em}
+  h1 span{color:var(--gold)}
+  .lede{color:var(--dim);font-size:15px;margin:0 0 24px}
+  h2{font:700 12px 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--gold);
+    margin:24px 0 10px;text-transform:uppercase}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .chip input{position:absolute;opacity:0;pointer-events:none}
+  .chip span{display:inline-block;font:600 11px 'JetBrains Mono',monospace;
+    letter-spacing:.08em;color:var(--dim);border:1px solid var(--rule);border-radius:999px;
+    padding:9px 15px;transition:all .15s;user-select:none}
+  .chip input:checked+span{background:var(--gold);border-color:var(--gold);color:#14120b}
+  @media(hover:hover){.chip:hover span{border-color:var(--gold);color:var(--ink)}
+    .chip input:checked+span{color:#14120b}}
+  .chip input:focus-visible+span{outline:2px solid var(--gold);outline-offset:2px}
+  .linkbox{margin:26px 0 0;border:1px solid rgba(217,164,65,.4);border-radius:12px;
+    background:var(--card);padding:18px}
+  .linkbox .lbl{font:600 9.5px 'JetBrains Mono',monospace;letter-spacing:.14em;
+    color:var(--faint);margin-bottom:8px}
+  .url{font:600 13px 'JetBrains Mono',monospace;color:var(--gold);word-break:break-all;
+    line-height:1.6}
+  .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .btn{border:0;border-radius:9px;font:700 13px 'Archivo';padding:12px 20px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;text-decoration:none;display:inline-block}
+  .btn.gold{background:var(--gold);color:#14120b}
+  .btn.line{background:none;border:1px solid var(--rule);color:var(--ink)}
+  .btn.done{background:var(--green);color:#0c130e}
+  .note{color:var(--faint);font-size:12px;margin-top:14px;line-height:1.6}
+  a.back{color:var(--faint);font-size:12.5px;text-decoration:none;display:inline-block;
+    margin-top:26px}
+  a.back:hover{color:var(--gold)}
+</style></head><body><div class="wrap">
+  <div class="band">GROUNDWORK &middot; BUILD YOUR LINK</div>
+  <h1>Your trades.<br>Your <span>link</span>.</h1>
+  <p class="lede">Pick what you chase and how big it has to be. You get a link that always
+  opens on your work &mdash; bookmark it, text it to your estimator, done.</p>
+
+  <h2>The trades you chase <em style="font-style:normal;color:var(--faint);letter-spacing:0">· tap any</em></h2>
+  <div class="chips" id="trades">
+    <label class="chip"><input type="checkbox" value="ROADS"><span>ROADS</span></label>
+    <label class="chip"><input type="checkbox" value="BRIDGE"><span>BRIDGE</span></label>
+    <label class="chip"><input type="checkbox" value="WATER/SEWER"><span>WATER/SEWER</span></label>
+    <label class="chip"><input type="checkbox" value="BUILDING"><span>BUILDING</span></label>
+    <label class="chip"><input type="checkbox" value="ELECTRICAL"><span>ELECTRICAL</span></label>
+    <label class="chip"><input type="checkbox" value="SITE/PARKS"><span>SITE/PARKS</span></label>
+    <label class="chip"><input type="checkbox" value="FLEET/EQUIP"><span>FLEET/EQUIP</span></label>
+  </div>
+
+  <h2>Only show me money over</h2>
+  <div class="chips" id="floors">
+    <label class="chip"><input type="radio" name="f" value="0" checked><span>ANY $</span></label>
+    <label class="chip"><input type="radio" name="f" value="100000"><span>$100K</span></label>
+    <label class="chip"><input type="radio" name="f" value="250000"><span>$250K</span></label>
+    <label class="chip"><input type="radio" name="f" value="500000"><span>$500K</span></label>
+  </div>
+
+  <div class="linkbox">
+    <div class="lbl">YOUR LINK</div>
+    <div class="url" id="url"></div>
+    <div class="row">
+      <button class="btn gold" id="copy">COPY LINK</button>
+      <a class="btn line" id="open" href="index.html">OPEN IT</a>
+      <a class="btn line" id="pilot" href="#">JOIN THE PILOT &rarr;</a>
+    </div>
+    <p class="note">The demo filters live to one trade at a time &mdash; your first pick
+    drives the link; the weekly product covers every trade you tick. Joining the pilot
+    opens an email to us with your picks filled in; first five WNY firms ride free.</p>
+  </div>
+
+  <a class="back" href="index.html">&larr; back to the demo</a>
+</div>
+<script>
+var BASE='https://jcurry44.github.io/groundwork-demo/';
+function picks(){
+  var ts=[].map.call(document.querySelectorAll('#trades input:checked'),function(i){return i.value;});
+  var f=document.querySelector('#floors input:checked').value;
+  return {ts:ts,f:+f};
+}
+function build(){
+  var p=picks(), u=BASE, q=[];
+  if(p.ts.length)q.push('trade='+encodeURIComponent(p.ts[0]));
+  if(p.f)q.push('min='+p.f);
+  if(q.length)u+='?'+q.join('&');
+  document.getElementById('url').textContent=u;
+  document.getElementById('open').href=u;
+  var body='I want in on the Groundwork founding pilot.'+String.fromCharCode(10)+
+    'Firm: ___'+String.fromCharCode(10)+
+    'Trades: '+(p.ts.length?p.ts.join(', '):'___')+String.fromCharCode(10)+
+    'Minimum $: '+(p.f?('$'+p.f.toLocaleString()):'any')+String.fromCharCode(10)+
+    'My link: '+u;
+  document.getElementById('pilot').href='mailto:jjcurry027@gmail.com?subject='+
+    encodeURIComponent('Groundwork founding pilot')+'&body='+encodeURIComponent(body);
+}
+document.addEventListener('change',build);
+document.getElementById('copy').addEventListener('click',function(){
+  var b=this,u=document.getElementById('url').textContent;
+  function done(ok){b.textContent=ok?'COPIED ✓':'COPY FAILED';
+    b.classList.toggle('done',ok);
+    setTimeout(function(){b.textContent='COPY LINK';b.classList.remove('done');},1600);}
+  function fb(){var ta=document.createElement('textarea');ta.value=u;
+    ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);done(ok);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(u).then(function(){done(true);},fb);
+  }else fb();
+});
+build();
+</script>
+</body></html>
