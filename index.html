@@ -95,6 +95,11 @@
   .srclink{display:inline-block;margin-top:10px;font:600 11px 'JetBrains Mono',monospace;
     color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(217,164,65,.4)}
   .none{color:var(--faint);font-style:italic;padding:8px 2px}
+  .more{display:block;width:100%;background:none;border:1px dashed var(--rule);
+    border-radius:10px;color:var(--gold);font:600 11px 'JetBrains Mono',monospace;
+    letter-spacing:.12em;padding:12px;margin:10px 0 4px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent}
+  @media(hover:hover){.more:hover{border-color:var(--gold)}}
   .lhead{position:relative;padding-right:36px}
   .lhead::after{content:'\25BE';position:absolute;right:15px;top:13px;color:var(--faint);
     transition:transform .15s}
@@ -258,6 +263,7 @@ var LEADS=[{"sec": 0, "id": "CS-032-26", "date": "2026-08-04", "title": "Approva
 function money0(v){return '$'+Math.round(v).toLocaleString('en-US');}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 var state={t:'ALL',q:'',min:0,s:'big',co:'BOTH'};
+var expanded={};
 (function initState(){
   try{var sv=JSON.parse(localStorage.getItem('gw')||'{}');
     if(sv.t)state.t=sv.t; if(sv.q)state.q=sv.q; if(sv.min)state.min=sv.min;
@@ -354,8 +360,10 @@ function paint(){
     var rows=LEADS.map(function(L,i){return [L,i];})
       .filter(function(p){return p[0].sec===sec&&match(p[0]);});
     if(state.s==='new')rows.sort(function(a,b){return a[0].date<b[0].date?1:-1;});
+    var full=rows.length, shown=(!expanded[sec]&&full>10)?rows.slice(0,8):rows;
     document.getElementById('sec'+sec).innerHTML=
-      rows.length?rows.map(function(p){return card(p[0],p[1]);}).join('')
+      full?(shown.map(function(p){return card(p[0],p[1]);}).join('')+
+        (shown.length<full?'<button class="more" data-more="'+sec+'">SHOW ALL '+full+' &darr;</button>':''))
       :'<p class="none">Nothing matches in this section — an honest zero.</p>';
     var cs=document.querySelector('[data-cnt="'+sec+'"]');
     if(cs)cs.textContent='('+rows.length+')';
@@ -407,6 +415,10 @@ document.addEventListener('click',function(e){
   var vr=e.target.closest('.vrow'); if(!vr)return;
   var open=vr.classList.toggle('open');
   vr.setAttribute('aria-expanded',open);
+});
+document.addEventListener('click',function(e){
+  var mb=e.target.closest('[data-more]'); if(!mb)return;
+  expanded[+mb.getAttribute('data-more')]=true; paint();
 });
 document.querySelectorAll('[data-j]').forEach(function(c){
   c.addEventListener('click',function(){
