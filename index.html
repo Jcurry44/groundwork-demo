@@ -7,16 +7,17 @@
 <meta property="og:description" content="$291,064,564 in WNY construction signals across Niagara + Erie, parsed from board minutes. The money, the vote, the source — weekly, by trade.">
 <meta property="og:image" content="https://jcurry44.github.io/groundwork-demo/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='1' y='1' width='62' height='62' rx='11' fill='%23f6f2ea' stroke='%23c8c0ae' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='42' font-weight='700' fill='%231e1c18' text-anchor='middle'%3EG%3C/text%3E%3Crect x='16' y='50' width='32' height='5' rx='2.5' fill='%237a5c2e'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='1' y='1' width='62' height='62' rx='11' fill='%23f6f2ea' stroke='%23c8c0ae' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='42' font-weight='700' fill='%231e1c18' text-anchor='middle'%3EG%3C/text%3E%3Crect x='16' y='50' width='32' height='5' rx='2.5' fill='%237a5c2e'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{--paper:#f6f2ea;--desk:#e9e2d2;--card:#fbf8f2;--drill:#f3efe6;--ink:#1e1c18;
     --muted:#5b564c;--faint:#8a8478;--rule:#dcd5c6;--rule2:#c8c0ae;--accent:#7a5c2e;
-    --brick:#a04b2e;--green:#3d6b40}
+    --brick:#a04b2e;--green:#3d6b40;--lift:0 1px 2px rgba(30,28,24,.05);
+    --hover:0 4px 14px -6px rgba(30,28,24,.12)}
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--paper);color:var(--ink);
-    font:15px/1.55 Georgia,'Times New Roman',serif}
+  body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;
+    font:15px/1.6 Inter,system-ui,-apple-system,'Segoe UI',sans-serif}
   ::selection{background:rgba(122,92,46,.2)}
   .wrap{max-width:880px;margin:0 auto;padding:0 18px}
   @media(min-width:960px){
@@ -28,190 +29,243 @@
   .num{font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
     font-variant-numeric:tabular-nums}
   header{padding:26px 0 8px}
-  .band{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.22em;color:var(--muted);
+  .band{font:600 10px Inter,sans-serif;letter-spacing:.08em;color:var(--muted);
     border-bottom:2px solid var(--ink);padding-bottom:12px}
-  h1{font:600 clamp(44px,8vw,64px)/1.04 'Fraunces',Georgia,serif;margin:18px 0 0;
+  h1{font:600 clamp(44px,8vw,64px)/1.04 'Fraunces',serif;margin:18px 0 0;
     letter-spacing:-.01em}
   h1 span{color:var(--accent)}
-  .tagline{font-size:clamp(15px,2.4vw,17px);color:var(--muted);margin:12px 0 0;max-width:60ch}
-  .tagline b{color:var(--ink)}
-  .fresh{font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--muted);
+  .tagline{font-size:clamp(15px,2.4vw,16.5px);line-height:1.6;color:var(--muted);
+    margin:12px 0 0;max-width:62ch}
+  .tagline b{color:var(--ink);font-weight:600}
+  .fresh{font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--muted);
     margin-top:14px}
   .stats{display:flex;gap:26px;flex-wrap:wrap;margin:20px 0 0;padding:16px 0;
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-  .st .v{font:600 22px 'JetBrains Mono',monospace;color:var(--ink)}
-  .st .l{font:600 9px 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--faint);
-    text-transform:uppercase;margin-top:2px}
+  .st .v{font:600 24px/1.15 'Fraunces',serif;color:var(--ink)}
+  .st .l{font:500 10px Inter,sans-serif;letter-spacing:.04em;color:var(--faint);
+    margin-top:2px}
   .st .v em{color:var(--accent);font-style:normal}
-  .filters{position:sticky;top:0;z-index:9;background:linear-gradient(var(--paper) 88%,transparent);
-    padding:14px 0 10px;margin-top:8px}
+  .filters{padding:14px 0 4px;margin-top:8px}
   .chips{display:flex;gap:7px;flex-wrap:wrap}
   .chips+.chips{margin-top:8px}
-  .chip{font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--muted);
-    background:none;border:1px solid var(--rule2);border-radius:999px;padding:7px 13px;
-    cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
+  .chip{display:inline-flex;align-items:center;height:34px;font:500 11px Inter,sans-serif;
+    letter-spacing:.01em;color:var(--muted);background:none;border:1px solid var(--rule2);
+    border-radius:999px;padding:0 13px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:all .12s ease-out}
   .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   @media(hover:hover){.chip:hover{border-color:var(--accent);color:var(--ink)}
     .chip[aria-pressed="true"]:hover{color:var(--paper)}}
-  #q{flex:1;min-width:160px;background:var(--card);border:1px solid var(--rule2);
-    border-radius:999px;color:var(--ink);font:13px Georgia,serif;padding:8px 15px;outline:0}
+  #q{flex:1;min-width:160px;height:34px;background:#fffdf8;border:1px solid var(--rule);
+    border-radius:999px;color:var(--ink);font:13px Inter,sans-serif;padding:0 15px;
+    outline:0;box-shadow:inset 0 1px 2px rgba(30,28,24,.04)}
   #q:focus{border-color:var(--accent)}
   #q::placeholder{color:var(--faint)}
-  h2{scroll-margin-top:118px;font:600 12px 'JetBrains Mono',monospace;letter-spacing:.16em;
-    color:var(--ink);margin:36px 0 2px;text-transform:uppercase;display:flex;gap:10px;
+  .grab{display:none}
+  .fdone{display:none}
+  .scrim{position:fixed;inset:0;background:rgba(30,28,24,.35);z-index:30}
+  body.lock{overflow:hidden}
+  .filters.sheet{position:fixed;z-index:40;left:0;right:0;bottom:0;margin:0;
+    background:var(--paper);border-radius:16px 16px 0 0;
+    box-shadow:0 -12px 40px -12px rgba(30,28,24,.4);
+    padding:12px 18px calc(18px + env(safe-area-inset-bottom,0px));
+    max-height:82vh;overflow:auto;overscroll-behavior:contain}
+  .filters.sheet .grab{display:block;width:36px;height:4px;border-radius:2px;
+    background:var(--rule2);margin:0 auto 14px}
+  .filters.sheet .fdone{display:block;width:100%;margin-top:16px;background:var(--ink);
+    color:var(--paper);border:0;border-radius:10px;font:600 13px Inter,sans-serif;
+    padding:13px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  @media(min-width:760px){
+    .filters.sheet{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);
+      width:min(620px,calc(100vw - 48px));border-radius:14px;border:1px solid var(--rule2);
+      box-shadow:0 24px 70px -20px rgba(30,28,24,.45);padding:20px;
+      max-height:min(600px,86vh)}
+    .filters.sheet .grab{display:none}
+  }
+  .utility{position:sticky;top:0;z-index:9;background:var(--paper);
+    border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center;
+    padding:10px 0;margin-top:4px}
+  @media(max-width:959px){.utility{margin-left:-18px;margin-right:-18px;
+    padding-left:18px;padding-right:18px}}
+  .fbtn{flex:none;display:inline-flex;align-items:center;gap:7px;height:34px;
+    font:600 12px Inter,sans-serif;letter-spacing:.01em;color:var(--ink);
+    background:none;border:1px solid var(--ink);border-radius:999px;padding:0 14px;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .12s ease-out}
+  @media(hover:hover){.fbtn:hover{background:var(--ink);color:var(--paper)}
+    .fbtn:hover .fcnt{color:var(--paper)}}
+  .fcnt{color:var(--accent)}
+  .fico{width:14px;height:14px}
+  .fico path,.fico circle{fill:none;stroke:currentColor;stroke-width:1.5;
+    stroke-linecap:round}
+  .utility .jumps{flex:1;min-width:0}
+  h2{scroll-margin-top:68px;font:600 11px Inter,sans-serif;letter-spacing:.08em;
+    color:var(--ink);margin:44px 0 2px;display:flex;gap:10px;
     align-items:center}
   h2::after{content:'';flex:1;height:1px;background:var(--rule)}
   h2 .cnt{color:var(--faint);letter-spacing:0}
-  .sub{color:var(--muted);font-size:13px;margin:0 0 12px;max-width:78ch}
-  .sub b{color:var(--ink)}
-  .lead{border:1px solid var(--rule);background:var(--card);border-radius:10px;
-    margin:9px 0;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;
-    transition:border-color .15s}
-  @media(hover:hover){.lead:hover{border-color:var(--accent)}}
-  .lt{font-size:14.5px;line-height:1.5}
-  .tag{display:inline-block;font:600 9px 'JetBrains Mono',monospace;letter-spacing:.1em;
+  .sub{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 12px;max-width:78ch}
+  .sub b{color:var(--ink);font-weight:600}
+  .lead{border:1px solid var(--rule);background:var(--card);border-radius:12px;
+    margin:12px 0;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;
+    box-shadow:var(--lift);transition:border-color .15s,box-shadow .15s,transform .12s ease-out}
+  @media(hover:hover){.lead:hover{border-color:var(--accent);transform:translateY(-1px);
+    box-shadow:var(--hover)}}
+  .ltags{display:flex;gap:6px;align-items:center;overflow:hidden;white-space:nowrap;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent);
+    mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent)}
+  .ltags .tag,.ltags .thb,.ltags .newb{margin:0;flex:none;vertical-align:baseline}
+  .lt{font:500 15.5px/1.5 Inter,sans-serif;margin-top:7px}
+  .tag{display:inline-block;font:600 9px/1 'JetBrains Mono',monospace;letter-spacing:.08em;
     color:var(--green);border:1px solid rgba(61,107,64,.45);border-radius:4px;
-    padding:2px 6px;margin-right:8px;vertical-align:2px}
+    padding:3px 7px;margin-right:8px;vertical-align:2px}
   .tag.oth{color:var(--faint);border-color:var(--rule2)}
   .tag.cty{color:var(--muted);border-color:rgba(91,86,76,.35)}
   .lead.tb{border-color:rgba(160,75,46,.45);
     background:linear-gradient(rgba(160,75,46,.04),transparent 60%),var(--card)}
   .tblh::before{content:'\25CF';font-size:9px;color:var(--brick)}
-  .amt.na{font-size:10px;letter-spacing:.08em;color:var(--faint)}
-  .thb{display:inline-block;font:600 9px 'JetBrains Mono',monospace;letter-spacing:.06em;
+  .amt.na{font:500 10.5px Inter,sans-serif;letter-spacing:.02em;color:var(--faint)}
+  .thb{display:inline-block;font:600 9px/1 'JetBrains Mono',monospace;letter-spacing:.05em;
     color:var(--accent);border:1px solid rgba(122,92,46,.45);border-radius:4px;
-    padding:2px 6px;margin-left:8px;vertical-align:2px}
+    padding:3px 7px;margin-left:8px;vertical-align:2px}
   .lm{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
     margin-top:8px;flex-wrap:wrap}
   .amt{font:600 16px 'JetBrains Mono',monospace;color:var(--accent)}
   .amt small{font-size:9px;letter-spacing:.1em;color:var(--faint);margin-left:6px}
   .meta{font:400 10.5px 'JetBrains Mono',monospace;color:var(--faint)}
   .drill{display:none;border-top:1px solid var(--rule);background:var(--drill);
-    padding:13px 15px 15px}
+    padding:14px 16px 16px}
   .lead.open .drill{display:block}
   .drow{display:flex;gap:12px;padding:6px 0;border-bottom:1px dotted var(--rule);
     align-items:baseline}
   .drow:last-of-type{border-bottom:0}
   .dk{flex:none;width:150px;font:600 9.5px 'JetBrains Mono',monospace;letter-spacing:.08em;
     color:var(--accent)}
-  .dv{font-size:12.5px;color:var(--muted);min-width:0}
+  .dv{font-size:13px;color:var(--muted);min-width:0}
   .dv q{color:var(--ink);quotes:'\201C' '\201D'}
   .thread{margin:10px 0 0;padding:10px 12px;border:1px solid rgba(122,92,46,.35);
     border-radius:8px;background:rgba(122,92,46,.06)}
-  .thread .tht{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--accent);
+  .thread .tht{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--accent);
     margin-bottom:6px}
-  .throw{display:flex;gap:10px;justify-content:space-between;font-size:12px;color:var(--muted);
+  .throw{display:flex;gap:10px;justify-content:space-between;font-size:12.5px;color:var(--muted);
     padding:3px 0;flex-wrap:wrap}
-  .throw .num{color:var(--faint);flex:none}
-  .vline{font-size:12.5px;color:var(--muted);margin:8px 0 0;padding-top:8px;
+  .throw .num{color:var(--faint);flex:none;font-size:11px}
+  .vline{font-size:13px;color:var(--muted);margin:8px 0 0;padding-top:8px;
     border-top:1px solid var(--rule)}
-  .vline b{color:var(--ink)}
-  .srclink{display:inline-block;margin-top:10px;font:600 11px 'JetBrains Mono',monospace;
-    color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(122,92,46,.4)}
-  .none{color:var(--muted);font-style:italic;padding:8px 2px}
-  .more{display:block;width:100%;background:none;border:1px dashed var(--rule2);
-    border-radius:10px;color:var(--accent);font:600 11px 'JetBrains Mono',monospace;
-    letter-spacing:.12em;padding:12px;margin:10px 0 4px;cursor:pointer;
-    -webkit-tap-highlight-color:transparent}
+  .vline b{color:var(--ink);font-weight:600}
+  .srclink{display:inline-block;margin-top:10px;font:600 11px Inter,sans-serif;
+    letter-spacing:.01em;color:var(--accent);text-decoration:none;
+    border-bottom:1px solid rgba(122,92,46,.4)}
+  .none{color:var(--muted);font-style:italic;padding:8px 2px;font-size:13.5px}
+  .more{display:block;width:100%;background:none;border:1px solid var(--rule2);
+    border-radius:12px;color:var(--accent);font:600 11px Inter,sans-serif;
+    letter-spacing:.02em;padding:12px;margin:12px 0 4px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:border-color .12s ease-out}
   @media(hover:hover){.more:hover{border-color:var(--accent)}}
-  .lhead{position:relative;padding:13px 36px 13px 15px}
-  .lhead::after{content:'\25BE';position:absolute;right:15px;top:13px;color:var(--faint);
+  .lhead{position:relative;padding:14px 40px 14px 16px}
+  .chev{position:absolute;right:14px;top:15px;width:16px;height:16px;color:var(--muted);
     transition:transform .15s}
-  .lead.open .lhead::after{transform:rotate(180deg);color:var(--accent)}
+  .chev path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;
+    stroke-linejoin:round}
+  .lead.open .chev{transform:rotate(180deg);color:var(--accent)}
   .jumps{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;
     scrollbar-width:none}
   .jumps::-webkit-scrollbar{display:none}
-  .chip.jump{flex:none;border-style:dashed}
-  .cpy{background:none;border:1px solid var(--rule2);border-radius:7px;color:var(--muted);
-    font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.08em;padding:7px 12px;
-    cursor:pointer;margin:10px 10px 0 0;-webkit-tap-highlight-color:transparent}
+  .chip.jump{flex:none}
+  .cpy{background:none;border:1px solid var(--rule2);border-radius:8px;color:var(--muted);
+    font:600 11px Inter,sans-serif;letter-spacing:.01em;padding:7px 12px;
+    cursor:pointer;margin:10px 10px 0 0;-webkit-tap-highlight-color:transparent;
+    transition:all .12s ease-out}
   @media(hover:hover){.cpy:hover{border-color:var(--accent);color:var(--accent)}}
   .cpy.done{border-color:var(--green);color:var(--green)}
-  .vrow{border:1px solid var(--rule);background:var(--card);border-radius:9px;
-    padding:11px 14px;margin:7px 0;cursor:pointer;position:relative;
-    -webkit-tap-highlight-color:transparent;transition:border-color .15s}
-  @media(hover:hover){.vrow:hover{border-color:var(--accent)}}
+  .vrow{border:1px solid var(--rule);background:var(--card);border-radius:12px;
+    padding:12px 16px;margin:8px 0;cursor:pointer;position:relative;
+    -webkit-tap-highlight-color:transparent;box-shadow:var(--lift);
+    transition:border-color .15s,box-shadow .15s,transform .12s ease-out}
+  @media(hover:hover){.vrow:hover{border-color:var(--accent);transform:translateY(-1px);
+    box-shadow:var(--hover)}}
   .vhead{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;padding-right:24px}
-  .vrow::after{content:'\25BE';position:absolute;right:13px;top:11px;color:var(--faint);
-    transition:transform .15s}
-  .vrow.open::after{transform:rotate(180deg);color:var(--accent)}
+  .vrow .chev{top:13px}
+  .vrow.open .chev{transform:rotate(180deg);color:var(--accent)}
   .vdrill{display:none;border-top:1px dotted var(--rule);margin-top:9px;padding-top:7px}
   .vrow.open .vdrill{display:block}
-  .vpay{display:flex;gap:12px;font-size:11.5px;color:var(--muted);padding:3px 0;
+  .vpay{display:flex;gap:12px;font-size:12px;color:var(--muted);padding:3px 0;
     align-items:baseline}
   .vpay>.num:first-child{flex:none;width:64px;color:var(--faint);font-size:10px}
   .vpx{flex:1;min-width:0}
   .vpa{flex:none;color:var(--ink)}
   .vmore{color:var(--muted);font-style:italic}
-  .vn{font-weight:700;font-size:13.5px;min-width:0;flex:1}
+  .vn{font-weight:600;font-size:14px;min-width:0;flex:1}
   .vys{font-size:10px;color:var(--faint)}
   .vt{font:600 15px 'JetBrains Mono',monospace;color:var(--accent)}
-  .cover{margin:44px 0 0;padding:22px;border:1px solid var(--rule2);border-radius:12px;
-    background:var(--card)}
-  .cover h3{margin:0 0 6px;font:600 21px/1.3 'Fraunces',Georgia,serif}
-  .cover p{margin:6px 0;color:var(--muted);font-size:13.5px}
-  .cover .now{color:var(--green);font-weight:700}
+  .cover{margin:44px 0 0;padding:24px;border:1px solid var(--rule2);border-radius:12px;
+    background:var(--card);box-shadow:var(--lift)}
+  .cover h3{margin:0 0 6px;font:600 19px/1.35 Inter,sans-serif;letter-spacing:-.01em}
+  .cover p{margin:8px 0;color:var(--muted);font-size:13.5px}
+  .cover .now{color:var(--green);font-weight:600}
   .price{margin:16px 0 0;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .price .p{font:600 30px 'Fraunces',Georgia,serif}
-  .price .p small{font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.06em;
+  .price .p{font:600 30px 'Fraunces',serif}
+  .price .p small{font:500 10.5px Inter,sans-serif;letter-spacing:.02em;
     color:var(--faint)}
   .cta{display:inline-block;background:var(--accent);color:#fdfbf6;
-    font:600 15px 'Fraunces',Georgia,serif;padding:12px 22px;border-radius:9px;
-    text-decoration:none}
+    font:600 14px Inter,sans-serif;letter-spacing:.01em;padding:12px 22px;border-radius:10px;
+    text-decoration:none;transition:background .12s ease-out}
   @media(hover:hover){.cta:hover{background:#6b5028}}
   .pilot{font-size:12.5px;color:var(--muted)}
   footer{margin:40px 0 0;padding:18px 0 46px;border-top:1px solid var(--rule);
     color:var(--faint);font-size:12px;line-height:1.7}
+  footer b{color:var(--muted)}
   .fcast{margin:0 0 10px;padding:9px 12px;border-left:3px solid var(--accent);
-    background:rgba(122,92,46,.07);font:600 10.5px 'JetBrains Mono',monospace;
-    color:var(--accent);line-height:1.65;letter-spacing:.02em}
+    background:rgba(122,92,46,.07);font:500 11.5px/1.6 Inter,sans-serif;
+    color:var(--accent)}
   .fcast.thin{color:var(--muted);border-left-color:var(--rule2);background:var(--drill)}
   .intel{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:9px;margin:12px 0 0}
-  .panel{border:1px solid var(--rule);background:var(--card);border-radius:10px;
-    padding:14px 15px}
-  .pt{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--muted)}
-  .pv{font:600 26px/1.1 'Fraunces',Georgia,serif;margin-top:8px}
-  .pl{font:600 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--faint);
-    text-transform:uppercase;margin-top:3px}
+    gap:12px;margin:12px 0 0}
+  .panel{border:1px solid var(--rule);background:var(--card);border-radius:12px;
+    padding:14px 16px;box-shadow:var(--lift)}
+  .pt{font:600 11px Inter,sans-serif;letter-spacing:.08em;color:var(--muted)}
+  .pv{font:600 26px/1.1 'Fraunces',serif;margin-top:8px}
+  .pl{font:500 10px Inter,sans-serif;letter-spacing:.04em;color:var(--faint);
+    margin-top:3px}
   .px{font-size:12.5px;color:var(--muted);margin:8px 0 0;line-height:1.6}
-  .px b{color:var(--ink)} .px .num{color:var(--ink)}
+  .px b{color:var(--ink);font-weight:600} .px .num{color:var(--ink)}
   .panel .px{border-top:1px solid var(--rule);padding-top:8px}
-  .bridge{margin:10px 0 0;padding:16px;border:1px solid rgba(122,92,46,.35);
-    border-radius:10px;
+  .bridge{margin:12px 0 0;padding:16px;border:1px solid rgba(122,92,46,.35);
+    border-radius:12px;box-shadow:var(--lift);
     background:linear-gradient(rgba(122,92,46,.05),transparent 70%),var(--card)}
   .bridge .pt{color:var(--accent)}
   .bridge .chips{margin:10px 0}
   .fchip{border-style:solid;color:var(--ink)}
-  #fq{width:100%;background:var(--card);border:1px solid var(--rule2);border-radius:9px;
-    color:var(--ink);font:14px Georgia,serif;padding:11px 14px;outline:0;margin:12px 0 0}
+  #fq{width:100%;background:#fffdf8;border:1px solid var(--rule);border-radius:999px;
+    color:var(--ink);font:14px Inter,sans-serif;padding:11px 16px;outline:0;margin:12px 0 0;
+    box-shadow:inset 0 1px 2px rgba(30,28,24,.04)}
   #fq:focus{border-color:var(--accent)}
   #fq::placeholder{color:var(--faint)}
-  .fnote{font-size:11px;color:var(--muted);margin:6px 0 0}
+  .fnote{font-size:11.5px;color:var(--muted);margin:6px 0 0}
   .frow{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;border:1px solid var(--rule);
-    background:var(--card);border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;
-    -webkit-tap-highlight-color:transparent;transition:border-color .15s}
-  @media(hover:hover){.frow:hover{border-color:var(--accent)}}
+    background:var(--card);border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;box-shadow:var(--lift);
+    transition:border-color .15s,box-shadow .15s,transform .12s ease-out}
+  @media(hover:hover){.frow:hover{border-color:var(--accent);transform:translateY(-1px);
+    box-shadow:var(--hover)}}
   .fal{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--accent)}
-  .fdcard{border:1px solid var(--rule2);border-radius:10px;background:var(--card);
-    padding:15px 16px;margin:10px 0}
-  .fdn{font:600 18px 'Fraunces',Georgia,serif}
+  .fdcard{border:1px solid var(--rule2);border-radius:12px;background:var(--card);
+    padding:16px;margin:12px 0;box-shadow:var(--lift)}
+  .fdn{font:600 18px 'Fraunces',serif}
   .fdm{font:400 10.5px 'JetBrains Mono',monospace;color:var(--faint);margin-top:4px}
-  .fdd{font-size:12.5px;color:var(--muted);margin-top:9px}
+  .fdd{font-size:13px;color:var(--muted);margin-top:9px}
   .fdd .num{color:var(--accent);font-weight:600;font-size:15px}
   .fdcb{margin-top:9px;font:600 11px 'JetBrains Mono',monospace;color:var(--green)}
-  .fdr{margin-top:9px;font-size:12px;color:var(--muted)}
-  .fdr b{color:var(--ink)}
+  .fdr{margin-top:9px;font-size:12.5px;color:var(--muted)}
+  .fdr b{color:var(--ink);font-weight:600}
   .fdrec{margin-top:9px;border-top:1px dotted var(--rule);padding-top:6px}
-  .fx{font-size:10.5px;color:var(--muted);margin-top:9px;font-style:italic}
-  .newb{display:inline-block;font:600 8.5px 'JetBrains Mono',monospace;letter-spacing:.08em;
+  .fx{font-size:11px;color:var(--muted);margin-top:9px;font-style:italic}
+  .newb{display:inline-block;font:600 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;
     color:var(--accent);border:1px solid rgba(122,92,46,.5);border-radius:4px;
-    padding:1px 5px;margin-right:7px;vertical-align:1px}
-  .digest{margin:10px 0 2px;padding:9px 13px;border:1px solid var(--rule2);border-radius:9px;
-    font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:.05em;color:var(--muted);
-    line-height:1.8}
-  .digest b{color:var(--ink);font-weight:600}
-  .digest .dgl{color:var(--accent);letter-spacing:.1em}
+    padding:3px 6px;margin-right:7px;vertical-align:1px}
+  .digest{margin:10px 0 2px;padding:9px 14px;border:1px solid var(--rule2);border-radius:10px;
+    font:500 11.5px Inter,sans-serif;color:var(--muted);line-height:1.8}
+  .digest b{color:var(--ink);font-weight:600;font-size:11px;
+    font-family:'JetBrains Mono',ui-monospace,monospace}
+  .digest .dgl{color:var(--accent);font-weight:600}
   .cal{margin:11px 0 2px}
   .calr{display:grid;grid-template-columns:62px repeat(12,1fr);gap:3px 2px;
     align-items:center;margin-top:3px}
@@ -241,10 +295,21 @@
   .chip:focus-visible,.lead:focus-visible,.vrow:focus-visible,.frow:focus-visible,
   .more:focus-visible,.cpy:focus-visible,.cta:focus-visible{
     outline:2px solid var(--accent);outline-offset:2px}
+  @media(max-width:700px){
+    h2{margin-top:36px}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:14px 10px}
+    .st:last-child{grid-column:1/-1}
+    .st .v{font-size:19px}
+    .fresh{font-size:9.5px;letter-spacing:.02em}
+    .chip{height:32px}
+    #q{height:32px;font-size:12px}
+    .fbtn{height:32px}
+    .lt{font-size:15px}
+  }
   @media print{
     body{background:#fff;font-size:12px;padding:0}
     .wrap{max-width:none;background:#fff;border:0;box-shadow:none;padding:0}
-    .filters,.cta,.cpy,.srclink,.jumps,#fq{display:none !important}
+    .filters,.utility,.scrim,.cta,.cpy,.srclink,.jumps,#fq{display:none !important}
     .lead,.vrow,.panel,.bridge,.frow,.fdcard{break-inside:avoid}
     header{padding-top:8px}
     a{text-decoration:none}
@@ -252,59 +317,70 @@
 </style></head><body>
 <div class="wrap">
 <header>
-  <div class="band">GROUNDWORK &middot; WESTERN NEW YORK &middot; DEMO ISSUE</div>
+  <div class="band">Groundwork &middot; Western New York &middot; Demo issue</div>
   <h1>Ground<span>work</span></h1>
-  <p class="tagline">Public money shows up in board minutes <b>a median of 22 months before it
-  reaches a bid portal &mdash; we measured it</b> across 45 county projects. Groundwork reads every board in WNY and hands you the money,
-  the vote, and the source &mdash; weekly, filtered to your trade.</p>
-  <div class="fresh">LATEST PARSED &middot; NIAGARA 2026-08-04 (VOTE NOT PUBLIC YET) &middot; ERIE 2026-06-11 (MINUTES NOT POSTED) &middot; MONDAY&rsquo;S BRIEF WOULD CARRY BOTH</div>
+  <p class="tagline">Public money shows up in board minutes <b>a median of 22 months before the
+  bid portal &mdash; we measured it</b> (45 county projects). Groundwork reads every WNY board
+  and hands you the money, the vote, and the source &mdash; weekly, filtered to your trade.</p>
+  <div class="fresh" title="Latest parsed &middot; Niagara 2026-08-04 (vote not public yet) &middot; Erie 2026-06-11 (minutes not posted) &middot; Monday&rsquo;s brief would carry both">Latest &middot; Niagara Aug 4 &middot; Erie Jun 11 &middot; Votes pending</div>
   <div class="stats">
-    <div class="st"><div class="v num"><em>$56,816,305</em></div><div class="l">on the table &middot; vote not public yet</div></div>
-    <div class="st"><div class="v num"><em>$291,064,564</em></div><div class="l">in voted signals &middot; 2 counties &middot; 2026 YTD</div></div>
-    <div class="st"><div class="v num">77</div><div class="l">voted leads &middot; niagara + erie</div></div>
-    <div class="st"><div class="v num">51</div><div class="l">carry a project thread</div></div>
-    <div class="st"><div class="v num">12 <em>YRS</em></div><div class="l">of history behind every lead &middot; 5,888 records read</div></div>
+    <div class="st"><div class="v"><em>$56.8M</em></div><div class="l">On the table &middot; vote not public yet</div></div>
+    <div class="st"><div class="v"><em>$291M</em></div><div class="l">In voted signals &middot; 2 counties &middot; 2026 YTD</div></div>
+    <div class="st"><div class="v">77</div><div class="l">Voted leads &middot; Niagara + Erie</div></div>
+    <div class="st"><div class="v">51</div><div class="l">Carry a project thread</div></div>
+    <div class="st"><div class="v">12 <em>yrs</em></div><div class="l">Of county history behind every lead &middot; 5,888 records read</div></div>
   </div>
 </header>
 
-<div class="filters">
+<div id="fph" aria-hidden="true"></div>
+<div class="filters" id="fpanel" aria-label="Filters">
+  <div class="grab" aria-hidden="true"></div>
   <div class="chips" id="cochips">
-    <button class="chip" aria-pressed="true" data-co="BOTH">BOTH COUNTIES</button>
-    <button class="chip" aria-pressed="false" data-co="NIAGARA">NIAGARA</button>
-    <button class="chip" aria-pressed="false" data-co="ERIE">ERIE</button>
+    <button class="chip" aria-pressed="true" data-co="BOTH">Both counties</button>
+    <button class="chip" aria-pressed="false" data-co="NIAGARA">Niagara</button>
+    <button class="chip" aria-pressed="false" data-co="ERIE">Erie</button>
   </div>
   <div class="chips" id="chips">
-    <button class="chip" aria-pressed="true" data-t="ALL">ALL TRADES</button>
-    <button class="chip" aria-pressed="false" data-t="BRIDGE">BRIDGE</button><button class="chip" aria-pressed="false" data-t="BUILDING">BUILDING</button><button class="chip" aria-pressed="false" data-t="ELECTRICAL">ELECTRICAL</button><button class="chip" aria-pressed="false" data-t="FLEET/EQUIP">FLEET/EQUIP</button><button class="chip" aria-pressed="false" data-t="ROADS">ROADS</button><button class="chip" aria-pressed="false" data-t="SITE/PARKS">SITE/PARKS</button><button class="chip" aria-pressed="false" data-t="WATER/SEWER">WATER/SEWER</button>
+    <button class="chip" aria-pressed="true" data-t="ALL">All trades</button>
+    <button class="chip" aria-pressed="false" data-t="BRIDGE">Bridge</button><button class="chip" aria-pressed="false" data-t="BUILDING">Building</button><button class="chip" aria-pressed="false" data-t="ELECTRICAL">Electrical</button><button class="chip" aria-pressed="false" data-t="FLEET/EQUIP">Fleet/equip</button><button class="chip" aria-pressed="false" data-t="ROADS">Roads</button><button class="chip" aria-pressed="false" data-t="SITE/PARKS">Site/parks</button><button class="chip" aria-pressed="false" data-t="WATER/SEWER">Water/sewer</button>
   </div>
   <div class="chips">
     <input id="q" type="search" placeholder="Search leads — road, roof, bridge, a project name…" aria-label="Search leads">
-    <button class="chip" aria-pressed="true" data-m="0">ANY $</button>
+    <button class="chip" aria-pressed="true" data-m="0">Any $</button>
     <button class="chip" aria-pressed="false" data-m="100000">$100K+</button>
     <button class="chip" aria-pressed="false" data-m="250000">$250K+</button>
     <button class="chip" aria-pressed="false" data-m="500000">$500K+</button>
-    <button class="chip" aria-pressed="true" data-s="big">BIGGEST</button>
-    <button class="chip" aria-pressed="false" data-s="new">NEWEST</button>
+    <button class="chip" aria-pressed="true" data-s="big">Biggest</button>
+    <button class="chip" aria-pressed="false" data-s="new">Newest</button>
   </div>
-  <div class="chips jumps">
-    <button class="chip jump" data-j="s0">00 AGENDA</button>
-    <button class="chip jump" data-j="s1">01 APPROVED</button>
-    <button class="chip jump" data-j="s2">02 AWARDED</button>
-    <button class="chip jump" data-j="s3">03 UPSTREAM</button>
-    <button class="chip jump" data-j="s4">04 CHECKBOOK</button>
-    <button class="chip jump" data-j="s5">05 INTEL</button>
-  </div>
+  <button class="fdone" id="fdone">Done</button>
 </div>
 
 <div id="digest" class="digest" hidden
   title="&ldquo;Opening soon&rdquo; = a sec-03 lead&rsquo;s forecast window (p25) starts within 183 days of this issue&rsquo;s build date"></div>
 
+<div class="utility">
+  <button class="fbtn" id="fbtn" aria-haspopup="dialog" aria-expanded="false">
+    <svg class="fico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4.5h6.5M12.7 4.5H14M2 11.5h1.3M7.5 11.5H14"/><circle cx="10.6" cy="4.5" r="1.9"/><circle cx="5.4" cy="11.5" r="1.9"/></svg>
+    Filters<span class="fcnt" id="fcnt" hidden></span>
+  </button>
+  <div class="chips jumps">
+    <button class="chip jump" data-j="s0">00 Agenda</button>
+    <button class="chip jump" data-j="s1">01 Approved</button>
+    <button class="chip jump" data-j="s2">02 Awarded</button>
+    <button class="chip jump" data-j="s3">03 Upstream</button>
+    <button class="chip jump" data-j="s4">04 Checkbook</button>
+    <button class="chip jump" data-j="s5">05 Intel</button>
+  </div>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+
 <h2 id="s0" class="tblh">00 &middot; On the table <span class="cnt num" data-cnt="0"></span></h2>
-<p class="sub"><b>Niagara&rsquo;s Aug 4, 2026 agenda</b> &mdash; no vote in the public record yet (the county hasn&rsquo;t posted minutes); <b>Erie&rsquo;s Jun 11, 2026 agenda</b> &mdash; its minutes haven&rsquo;t posted yet, so no vote is in the public record. The earliest signal there is. 53 items carry no parsed dollar line yet &mdash; their cards say so, and a $ floor hides them until an amount exists.</p>
+<p class="sub"><b>Niagara&rsquo;s Aug 4 and Erie&rsquo;s Jun 11 agendas</b> &mdash; minutes not posted, so no votes are public yet. The earliest signal there is; items without a parsed $ say so and are hidden by $ floors.</p>
 <div id="sec0"></div>
 
 <h2 id="s1">01 &middot; Money approved <span class="cnt num" data-cnt="1"></span></h2>
-<p class="sub">Bond ceilings &amp; capital money &mdash; the earliest signal there is. Select a lead for the vote, the exact text, its project history, and the source.</p>
+<p class="sub">Bond ceilings &amp; capital money. Select a lead for the vote, the exact text, its history, and the source.</p>
 <div id="sec1"></div>
 
 <h2 id="s2">02 &middot; Awarded <span class="cnt num" data-cnt="2"></span></h2>
@@ -316,34 +392,32 @@
 <div id="sec3"></div>
 
 <h2 id="s4">04 &middot; The checkbook layer</h2>
-<p class="sub">What North Tonawanda actually <b>paid</b> construction vendors, from the city&rsquo;s
-own warrant reports ($3,213,275 across the firms below, 2025&ndash;26). The county
-publishes no checkbook &mdash; where one exists, Groundwork reads it. Decisions tell you
-what&rsquo;s coming; the checkbook tells you who&rsquo;s already in the room.</p>
-<div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">LAKESIDE CONTRACTORS, INC.</span><span class="vys num">2026&ndash;2026 · 1 payment</span><span class="vt num">$632,174</span></div><div class="vdrill"><div class="vpay"><span class="num">07/20/26</span><span class="vpx">PO#E2026-PAY#1</span><span class="num vpa">$632,174</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">C &amp; S ENGINEERS, INC.</span><span class="vys num">2025&ndash;2026 · 40 payments</span><span class="vt num">$498,950</span></div><div class="vdrill"><div class="vpay"><span class="num">12/31/24</span><span class="vpx">PO#E2025-PAY#3</span><span class="num vpa">$75,000</span></div><div class="vpay"><span class="num">05/19/25</span><span class="vpx">PO#E2025--PAY#4</span><span class="num vpa">$75,000</span></div><div class="vpay"><span class="num">12/02/25</span><span class="vpx">PO#E2025-#1/#2</span><span class="num vpa">$58,435</span></div><div class="vpay"><span class="num">12/02/25</span><span class="vpx">PO#E2025-#1/#2</span><span class="num vpa">$44,244</span></div><div class="vpay"><span class="num">12/02/25</span><span class="vpx">PO#E2025-#5</span><span class="num vpa">$36,500</span></div><div class="vpay"><span class="num">07/20/26</span><span class="vpx">PO#E2026-PAY#4</span><span class="num vpa">$27,359</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#E2026-PAY#7</span><span class="num vpa">$25,000</span></div><div class="vpay"><span class="num">07/29/25</span><span class="vpx">COMM DEV</span><span class="num vpa">$13,002</span></div><div class="vpay vmore">&hellip;and 32 more payments</div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">MUNICIPAL MILLING</span><span class="vys num">2025&ndash;2026 · 10 payments</span><span class="vt num">$449,214</span></div><div class="vdrill"><div class="vpay"><span class="num">07/29/25</span><span class="vpx">PO#D2025-119D</span><span class="num vpa">$105,062</span></div><div class="vpay"><span class="num">06/03/25</span><span class="vpx">PO#D2025-119A</span><span class="num vpa">$92,525</span></div><div class="vpay"><span class="num">06/03/25</span><span class="vpx">PO#D2025-119B</span><span class="num vpa">$88,280</span></div><div class="vpay"><span class="num">07/06/26</span><span class="vpx">PO#D2026-119B</span><span class="num vpa">$68,238</span></div><div class="vpay"><span class="num">06/16/26</span><span class="vpx">PO#D2026-119A</span><span class="num vpa">$38,113</span></div><div class="vpay"><span class="num">09/02/25</span><span class="vpx">PO#D2025-119E</span><span class="num vpa">$20,828</span></div><div class="vpay"><span class="num">09/02/25</span><span class="vpx">PO#D2025-119E</span><span class="num vpa">$18,944</span></div><div class="vpay"><span class="num">09/02/25</span><span class="vpx">PO#D2025-119E</span><span class="num vpa">$7,796</span></div><div class="vpay vmore">&hellip;and 2 more payments</div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">GOODWIN ELECTRIC CORPORATION</span><span class="vys num">2026&ndash;2026 · 2 payments</span><span class="vt num">$428,640</span></div><div class="vdrill"><div class="vpay"><span class="num">05/04/26</span><span class="vpx">PO#W30108R</span><span class="num vpa">$387,600</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#W30108U</span><span class="num vpa">$41,040</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">D &amp; H PAVING LLC</span><span class="vys num">2026&ndash;2026 · 1 payment</span><span class="vt num">$322,015</span></div><div class="vdrill"><div class="vpay"><span class="num">02/17/26</span><span class="vpx">PO#E2026-PAY#1/2</span><span class="num vpa">$322,015</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">STC CONSTRUCTION INC</span><span class="vys num">2026&ndash;2026 · 4 payments</span><span class="vt num">$219,972</span></div><div class="vdrill"><div class="vpay"><span class="num">02/17/26</span><span class="vpx">PO#W30108N</span><span class="num vpa">$88,588</span></div><div class="vpay"><span class="num">04/21/26</span><span class="vpx">PO#W30108P</span><span class="num vpa">$70,490</span></div><div class="vpay"><span class="num">01/20/26</span><span class="vpx">PO#W30108M</span><span class="num vpa">$31,682</span></div><div class="vpay"><span class="num">05/19/26</span><span class="vpx">PO#W30108S</span><span class="num vpa">$29,212</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">NW CONTRACTING</span><span class="vys num">2025&ndash;2026 · 3 payments</span><span class="vt num">$170,010</span></div><div class="vdrill"><div class="vpay"><span class="num">11/17/25</span><span class="vpx">PO#D2025-276A</span><span class="num vpa">$65,607</span></div><div class="vpay"><span class="num">02/17/26</span><span class="vpx">PO#D2025-276D</span><span class="num vpa">$64,448</span></div><div class="vpay"><span class="num">03/16/26</span><span class="vpx">PO#D2025-276E</span><span class="num vpa">$39,955</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">CASCADE ENGINEERING</span><span class="vys num">2025&ndash;2026 · 6 payments</span><span class="vt num">$132,346</span></div><div class="vdrill"><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#D2026-33B</span><span class="num vpa">$32,418</span></div><div class="vpay"><span class="num">09/15/25</span><span class="vpx">PO#D2025-33E</span><span class="num vpa">$31,014</span></div><div class="vpay"><span class="num">06/02/25</span><span class="vpx">PO#D2025-33D</span><span class="num vpa">$30,825</span></div><div class="vpay"><span class="num">03/06/26</span><span class="vpx">PO#D2026-33A</span><span class="num vpa">$29,890</span></div><div class="vpay"><span class="num">03/06/26</span><span class="vpx">PO#D2026-33A</span><span class="num vpa">$4,285</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#D2026-33B</span><span class="num vpa">$3,915</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">CAMBRIA ASPHALT PRODUCTS, INC.</span><span class="vys num">2025&ndash;2026 · 32 payments</span><span class="vt num">$115,699</span></div><div class="vdrill"><div class="vpay"><span class="num">06/16/25</span><span class="vpx">PO#D2025-31H</span><span class="num vpa">$17,068</span></div><div class="vpay"><span class="num">11/03/25</span><span class="vpx">PO#R06424</span><span class="num vpa">$16,384</span></div><div class="vpay"><span class="num">11/03/25</span><span class="vpx">PO#D2025-31P</span><span class="num vpa">$10,689</span></div><div class="vpay"><span class="num">06/02/25</span><span class="vpx">PO#D2025-31F</span><span class="num vpa">$8,862</span></div><div class="vpay"><span class="num">04/06/26</span><span class="vpx">PO#D2026-31B</span><span class="num vpa">$7,676</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#D2026-31D</span><span class="num vpa">$7,500</span></div><div class="vpay"><span class="num">06/16/25</span><span class="vpx">PO#D2025-31H</span><span class="num vpa">$5,432</span></div><div class="vpay"><span class="num">11/03/25</span><span class="vpx">PO#D2025-31P</span><span class="num vpa">$4,226</span></div><div class="vpay vmore">&hellip;and 24 more payments</div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">T-MARK PLUMBING</span><span class="vys num">2025&ndash;2026 · 2 payments</span><span class="vt num">$96,697</span></div><div class="vdrill"><div class="vpay"><span class="num">08/14/25</span><span class="vpx">PO#E2025-276</span><span class="num vpa">$88,156</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#E2026-027/028</span><span class="num vpa">$8,541</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">LUMBER CITY DEVELOPMENT CORP.</span><span class="vys num">2025&ndash;2026 · 4 payments</span><span class="vt num">$94,120</span></div><div class="vdrill"><div class="vpay"><span class="num">07/20/26</span><span class="vpx">COMM DEV</span><span class="num vpa">$31,620</span></div><div class="vpay"><span class="num">10/06/25</span><span class="vpx">COMM DEV</span><span class="num vpa">$31,500</span></div><div class="vpay"><span class="num">12/31/24</span><span class="vpx">COMM DEV</span><span class="num vpa">$15,500</span></div><div class="vpay"><span class="num">12/31/24</span><span class="vpx">COMM DEV</span><span class="num vpa">$15,500</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><div class="vhead"><span class="vn">SHANOR ELECTRIC SUPPLIES LLC</span><span class="vys num">2025&ndash;2026 · 104 payments</span><span class="vt num">$53,438</span></div><div class="vdrill"><div class="vpay"><span class="num">08/14/25</span><span class="vpx">PO#R06331</span><span class="num vpa">$5,684</span></div><div class="vpay"><span class="num">11/17/25</span><span class="vpx">PO#D2025-162N</span><span class="num vpa">$5,047</span></div><div class="vpay"><span class="num">07/06/26</span><span class="vpx">PO#R06773</span><span class="num vpa">$3,967</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#R06615</span><span class="num vpa">$3,601</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#D2026-162C</span><span class="num vpa">$3,445</span></div><div class="vpay"><span class="num">10/07/25</span><span class="vpx">PO#P2025-00342</span><span class="num vpa">$2,225</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#R06615</span><span class="num vpa">$2,070</span></div><div class="vpay"><span class="num">06/16/26</span><span class="vpx">PO#D2026-162F</span><span class="num vpa">$1,588</span></div><div class="vpay vmore">&hellip;and 96 more payments</div></div></div>
+<p class="sub">What North Tonawanda actually <b>paid</b> construction vendors, from the
+city&rsquo;s own warrants ($3,213,275, 2025&ndash;26). The checkbook shows
+who&rsquo;s already in the room.</p>
+<div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">LAKESIDE CONTRACTORS, INC.</span><span class="vys num">2026&ndash;2026 · 1 payment</span><span class="vt num">$632,174</span></div><div class="vdrill"><div class="vpay"><span class="num">07/20/26</span><span class="vpx">PO#E2026-PAY#1</span><span class="num vpa">$632,174</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">C &amp; S ENGINEERS, INC.</span><span class="vys num">2025&ndash;2026 · 40 payments</span><span class="vt num">$498,950</span></div><div class="vdrill"><div class="vpay"><span class="num">12/31/24</span><span class="vpx">PO#E2025-PAY#3</span><span class="num vpa">$75,000</span></div><div class="vpay"><span class="num">05/19/25</span><span class="vpx">PO#E2025--PAY#4</span><span class="num vpa">$75,000</span></div><div class="vpay"><span class="num">12/02/25</span><span class="vpx">PO#E2025-#1/#2</span><span class="num vpa">$58,435</span></div><div class="vpay"><span class="num">12/02/25</span><span class="vpx">PO#E2025-#1/#2</span><span class="num vpa">$44,244</span></div><div class="vpay"><span class="num">12/02/25</span><span class="vpx">PO#E2025-#5</span><span class="num vpa">$36,500</span></div><div class="vpay"><span class="num">07/20/26</span><span class="vpx">PO#E2026-PAY#4</span><span class="num vpa">$27,359</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#E2026-PAY#7</span><span class="num vpa">$25,000</span></div><div class="vpay"><span class="num">07/29/25</span><span class="vpx">COMM DEV</span><span class="num vpa">$13,002</span></div><div class="vpay vmore">&hellip;and 32 more payments</div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">MUNICIPAL MILLING</span><span class="vys num">2025&ndash;2026 · 10 payments</span><span class="vt num">$449,214</span></div><div class="vdrill"><div class="vpay"><span class="num">07/29/25</span><span class="vpx">PO#D2025-119D</span><span class="num vpa">$105,062</span></div><div class="vpay"><span class="num">06/03/25</span><span class="vpx">PO#D2025-119A</span><span class="num vpa">$92,525</span></div><div class="vpay"><span class="num">06/03/25</span><span class="vpx">PO#D2025-119B</span><span class="num vpa">$88,280</span></div><div class="vpay"><span class="num">07/06/26</span><span class="vpx">PO#D2026-119B</span><span class="num vpa">$68,238</span></div><div class="vpay"><span class="num">06/16/26</span><span class="vpx">PO#D2026-119A</span><span class="num vpa">$38,113</span></div><div class="vpay"><span class="num">09/02/25</span><span class="vpx">PO#D2025-119E</span><span class="num vpa">$20,828</span></div><div class="vpay"><span class="num">09/02/25</span><span class="vpx">PO#D2025-119E</span><span class="num vpa">$18,944</span></div><div class="vpay"><span class="num">09/02/25</span><span class="vpx">PO#D2025-119E</span><span class="num vpa">$7,796</span></div><div class="vpay vmore">&hellip;and 2 more payments</div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">GOODWIN ELECTRIC CORPORATION</span><span class="vys num">2026&ndash;2026 · 2 payments</span><span class="vt num">$428,640</span></div><div class="vdrill"><div class="vpay"><span class="num">05/04/26</span><span class="vpx">PO#W30108R</span><span class="num vpa">$387,600</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#W30108U</span><span class="num vpa">$41,040</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">D &amp; H PAVING LLC</span><span class="vys num">2026&ndash;2026 · 1 payment</span><span class="vt num">$322,015</span></div><div class="vdrill"><div class="vpay"><span class="num">02/17/26</span><span class="vpx">PO#E2026-PAY#1/2</span><span class="num vpa">$322,015</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">STC CONSTRUCTION INC</span><span class="vys num">2026&ndash;2026 · 4 payments</span><span class="vt num">$219,972</span></div><div class="vdrill"><div class="vpay"><span class="num">02/17/26</span><span class="vpx">PO#W30108N</span><span class="num vpa">$88,588</span></div><div class="vpay"><span class="num">04/21/26</span><span class="vpx">PO#W30108P</span><span class="num vpa">$70,490</span></div><div class="vpay"><span class="num">01/20/26</span><span class="vpx">PO#W30108M</span><span class="num vpa">$31,682</span></div><div class="vpay"><span class="num">05/19/26</span><span class="vpx">PO#W30108S</span><span class="num vpa">$29,212</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">NW CONTRACTING</span><span class="vys num">2025&ndash;2026 · 3 payments</span><span class="vt num">$170,010</span></div><div class="vdrill"><div class="vpay"><span class="num">11/17/25</span><span class="vpx">PO#D2025-276A</span><span class="num vpa">$65,607</span></div><div class="vpay"><span class="num">02/17/26</span><span class="vpx">PO#D2025-276D</span><span class="num vpa">$64,448</span></div><div class="vpay"><span class="num">03/16/26</span><span class="vpx">PO#D2025-276E</span><span class="num vpa">$39,955</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">CASCADE ENGINEERING</span><span class="vys num">2025&ndash;2026 · 6 payments</span><span class="vt num">$132,346</span></div><div class="vdrill"><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#D2026-33B</span><span class="num vpa">$32,418</span></div><div class="vpay"><span class="num">09/15/25</span><span class="vpx">PO#D2025-33E</span><span class="num vpa">$31,014</span></div><div class="vpay"><span class="num">06/02/25</span><span class="vpx">PO#D2025-33D</span><span class="num vpa">$30,825</span></div><div class="vpay"><span class="num">03/06/26</span><span class="vpx">PO#D2026-33A</span><span class="num vpa">$29,890</span></div><div class="vpay"><span class="num">03/06/26</span><span class="vpx">PO#D2026-33A</span><span class="num vpa">$4,285</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#D2026-33B</span><span class="num vpa">$3,915</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">CAMBRIA ASPHALT PRODUCTS, INC.</span><span class="vys num">2025&ndash;2026 · 32 payments</span><span class="vt num">$115,699</span></div><div class="vdrill"><div class="vpay"><span class="num">06/16/25</span><span class="vpx">PO#D2025-31H</span><span class="num vpa">$17,068</span></div><div class="vpay"><span class="num">11/03/25</span><span class="vpx">PO#R06424</span><span class="num vpa">$16,384</span></div><div class="vpay"><span class="num">11/03/25</span><span class="vpx">PO#D2025-31P</span><span class="num vpa">$10,689</span></div><div class="vpay"><span class="num">06/02/25</span><span class="vpx">PO#D2025-31F</span><span class="num vpa">$8,862</span></div><div class="vpay"><span class="num">04/06/26</span><span class="vpx">PO#D2026-31B</span><span class="num vpa">$7,676</span></div><div class="vpay"><span class="num">06/15/26</span><span class="vpx">PO#D2026-31D</span><span class="num vpa">$7,500</span></div><div class="vpay"><span class="num">06/16/25</span><span class="vpx">PO#D2025-31H</span><span class="num vpa">$5,432</span></div><div class="vpay"><span class="num">11/03/25</span><span class="vpx">PO#D2025-31P</span><span class="num vpa">$4,226</span></div><div class="vpay vmore">&hellip;and 24 more payments</div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">T-MARK PLUMBING</span><span class="vys num">2025&ndash;2026 · 2 payments</span><span class="vt num">$96,697</span></div><div class="vdrill"><div class="vpay"><span class="num">08/14/25</span><span class="vpx">PO#E2025-276</span><span class="num vpa">$88,156</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#E2026-027/028</span><span class="num vpa">$8,541</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">LUMBER CITY DEVELOPMENT CORP.</span><span class="vys num">2025&ndash;2026 · 4 payments</span><span class="vt num">$94,120</span></div><div class="vdrill"><div class="vpay"><span class="num">07/20/26</span><span class="vpx">COMM DEV</span><span class="num vpa">$31,620</span></div><div class="vpay"><span class="num">10/06/25</span><span class="vpx">COMM DEV</span><span class="num vpa">$31,500</span></div><div class="vpay"><span class="num">12/31/24</span><span class="vpx">COMM DEV</span><span class="num vpa">$15,500</span></div><div class="vpay"><span class="num">12/31/24</span><span class="vpx">COMM DEV</span><span class="num vpa">$15,500</span></div></div></div><div class="vrow" tabindex="0" role="button" aria-expanded="false"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg><div class="vhead"><span class="vn">SHANOR ELECTRIC SUPPLIES LLC</span><span class="vys num">2025&ndash;2026 · 104 payments</span><span class="vt num">$53,438</span></div><div class="vdrill"><div class="vpay"><span class="num">08/14/25</span><span class="vpx">PO#R06331</span><span class="num vpa">$5,684</span></div><div class="vpay"><span class="num">11/17/25</span><span class="vpx">PO#D2025-162N</span><span class="num vpa">$5,047</span></div><div class="vpay"><span class="num">07/06/26</span><span class="vpx">PO#R06773</span><span class="num vpa">$3,967</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#R06615</span><span class="num vpa">$3,601</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#D2026-162C</span><span class="num vpa">$3,445</span></div><div class="vpay"><span class="num">10/07/25</span><span class="vpx">PO#P2025-00342</span><span class="num vpa">$2,225</span></div><div class="vpay"><span class="num">04/07/26</span><span class="vpx">PO#R06615</span><span class="num vpa">$2,070</span></div><div class="vpay"><span class="num">06/16/26</span><span class="vpx">PO#D2026-162F</span><span class="num vpa">$1,588</span></div><div class="vpay vmore">&hellip;and 96 more payments</div></div></div>
 
 <h2 id="s5">05 &middot; Twelve years of homework</h2>
-<p class="sub">The engine that parsed this week&rsquo;s agenda has read every county resolution
-since 2015 &mdash; 5,888 of them. What the record teaches, with the sample size on every
-number. Thin data says so; it never fakes precision.</p>
+<p class="sub">This engine has read every county resolution since 2015 &mdash; 5,888
+of them. What the record teaches, with the N on every number.</p>
 <div class="intel">
-  <div class="panel"><div class="pt">THE CLOCK</div>
+  <div class="panel"><div class="pt">The clock</div>
     <div class="pv">658 days</div>
-    <div class="pl">design money &rarr; construction ad &middot; median (&asymp;22 months)</div>
+    <div class="pl">Design money &rarr; construction ad &middot; median (&asymp;22 months)</div>
     <div class="ckwrap" aria-hidden="true"><div class="ckl" style="left:59.8%">658d median</div><div class="cktrack"><div class="ckfill" style="left:26.7%;width:66.8%"></div><div class="ckmark" style="left:59.8%"></div></div><span class="cktick" style="left:26.7%">294</span><span class="cktick" style="left:93.5%">1029</span></div>
     <p class="px">Middle half <span class="num">294&ndash;1029</span> days,
     from <span class="num">N=45</span> county project pairs since 2015. See design money
     today and the construction ad typically lands <b>about two years out</b> &mdash; a quarter
     move inside 10 months; federal-aid bridge jobs own the slow tail.</p></div>
-  <div class="panel"><div class="pt">THE GROWTH</div>
+  <div class="panel"><div class="pt">The growth</div>
     <div class="pv">+24.3%</div>
-    <div class="pl">median design-contract growth &middot; 69% grow &middot; N=45</div>
+    <div class="pl">Median design-contract growth &middot; 69% grow &middot; N=45</div>
     <p class="px">Construction bids run tight: median <span class="num">+0.1%</span>
     over the award (N=100) and known closeouts finish <span class="num">&minus;3.3%</span> (N=19).
     <b>The soft money is in professional services</b> &mdash; one Walmore Road design contract grew $185,000 &rarr; $784,500 (+324%).</p></div>
-  <div class="panel"><div class="pt">THE CALENDAR</div>
+  <div class="panel"><div class="pt">The calendar</div>
     <div class="pv">Jan&ndash;Mar</div>
-    <div class="pl">roads money &middot; 31% of trade $ &middot; N=261</div>
+    <div class="pl">Roads money &middot; 31% of trade $ &middot; N=261</div>
     <div class="cal" aria-hidden="true"><div class="calr"><span class="call">ROADS</span><span class="calc" style="background:rgba(122,92,46,0.88)" title="Jan: 10% of trade $"></span><span class="calc" style="background:rgba(122,92,46,0.94)" title="Feb: 11% of trade $"></span><span class="calc" style="background:rgba(122,92,46,1.0)" title="Mar: 11% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.65)" title="Apr: 7% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.97)" title="May: 11% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.78)" title="Jun: 8% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.29)" title="Jul: 2% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.88)" title="Aug: 10% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.99)" title="Sep: 11% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.8)" title="Oct: 9% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.59)" title="Nov: 6% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.58)" title="Dec: 6% of trade $"></span></div><div class="calr"><span class="call">BUILDING</span><span class="calc" style="background:rgba(200,192,174,0.32)" title="Jan: 5% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.91)" title="Feb: 22% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.18)" title="Mar: 1% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.24)" title="Apr: 3% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.36)" title="May: 6% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.41)" title="Jun: 7% of trade $"></span><span class="calc" title="Jul: $0 in the record"></span><span class="calc" style="background:rgba(200,192,174,0.24)" title="Aug: 3% of trade $"></span><span class="calc" style="background:rgba(122,92,46,0.65)" title="Sep: 14% of trade $"></span><span class="calc" style="background:rgba(122,92,46,0.62)" title="Oct: 13% of trade $"></span><span class="calc" style="background:rgba(122,92,46,1.0)" title="Nov: 24% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.2)" title="Dec: 2% of trade $"></span></div><div class="calr"><span class="call">WATER/SEWER</span><span class="calc" style="background:rgba(200,192,174,0.23)" title="Jan: 5% of trade $"></span><span class="calc" style="background:rgba(122,92,46,0.25)" title="Feb: 6% of trade $"></span><span class="calc" title="Mar: $0 in the record"></span><span class="calc" style="background:rgba(122,92,46,1.0)" title="Apr: 54% of trade $"></span><span class="calc" title="May: $0 in the record"></span><span class="calc" style="background:rgba(200,192,174,0.16)" title="Jun: 1% of trade $"></span><span class="calc" title="Jul: $0 in the record"></span><span class="calc" style="background:rgba(200,192,174,0.59)" title="Aug: 28% of trade $"></span><span class="calc" style="background:rgba(200,192,174,0.19)" title="Sep: 3% of trade $"></span><span class="calc" title="Oct: $0 in the record"></span><span class="calc" title="Nov: $0 in the record"></span><span class="calc" style="background:rgba(200,192,174,0.2)" title="Dec: 3% of trade $"></span></div><div class="calr calm"><span class="call"></span><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div></div>
     <p class="px">BUILDING clusters <b>Sep&ndash;Nov</b> (52% of $, N=120);
     WATER/SEWER <b>Feb&ndash;Apr</b> (60% of $, N=27 &mdash; thin).
@@ -351,7 +425,7 @@ number. Thin data says so; it never fakes precision.</p>
     (<span class="num">142 of 161</span> meetings, 2015&ndash;2025).</p></div>
 </div>
 <div class="bridge">
-  <div class="pt">THE BRIDGE ROOM &middot; WE CAN TELL YOU EXACTLY WHO YOU&rsquo;RE BIDDING AGAINST</div>
+  <div class="pt">The bridge room &middot; we can tell you exactly who you&rsquo;re bidding against</div>
   <p class="px">County bridge lettings are <b>one repeated room</b>. A single 2024 tabulation
   (<span class="num">IF-193-24</span>, Hartland Road Bridge) prints seven bidders &mdash; and the
   same pool recurs in <span class="num">IF-074-20</span> (2020) and <span class="num">IF-013-19</span>
@@ -360,7 +434,7 @@ number. Thin data says so; it never fakes precision.</p>
   <p class="px" style="margin-top:4px">Whoever sells to one of these firms can name the exact
   competitors they lost to &mdash; with record ids.</p>
 </div>
-<div class="pt" style="margin-top:22px">KNOW YOUR ROOM &middot; FIRM LOOKUP</div>
+<div class="pt" style="margin-top:24px">Know your room &middot; firm lookup</div>
 <input id="fq" type="search" placeholder="Search a firm — CATCO, Edbauer, Scott Lawn Yard, Parise…" aria-label="Search firms">
 <p class="fnote">Firms with 3+ county appearances, checkbook presence, or the bridge room shown
 (67 in this demo file) &middot; the product carries all 261 dossiers.
@@ -413,6 +487,7 @@ var NEWB={"NIAGARA": ["2026-08-04", "AUG 4"], "ERIE": ["2026-06-11", "JUN 11"]};
 var BUILT='2026-08-08';
 var BUILT_MS=Date.parse(BUILT+'T00:00:00Z');
 var MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var CHEV='<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg>';
 function money0(v){return '$'+Math.round(v).toLocaleString('en-US');}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 var state={t:'ALL',q:'',min:0,s:'big',co:'BOTH'};
@@ -451,20 +526,23 @@ function syncChips(){
   document.getElementById('q').value=state.q;
 }
 function card(L,i){
+  // header rows: 1 tags+caret / 2 title full-width / 3 amount+meta. The meta
+  // is joined from parts so a wrap never strands an orphan separator.
   var tag='<span class="tag cty">'+L.co+'</span>'+
     '<span class="tag'+(L.tr==='OTHER'?' oth':'')+'">'+L.tr+'</span>';
-  var thb=L.th?'<span class="thb">THREAD · '+L.th.n+' since '+L.th.y0+'</span>':'';
+  var thb=L.th?'<span class="thb">Thread · '+L.th.n+' since '+L.th.y0+'</span>':'';
   var amt=L.amt?'<span class="amt num">'+money0(L.amt)+(L.cap?'<small>CEILING</small>':'')+'</span>'
-    :(L.sec===0?'<span class="amt na num">NO $ PARSED YET</span>':'<span></span>');
+    :(L.sec===0?'<span class="amt na">No $ parsed yet</span>':'<span></span>');
   var v=L.vote, vs=(v.a!=null)?('voted '+v.a+'–'+v.n)
     :(v.out?esc(v.out.toLowerCase()):'voted —');
-  var meta=(L.sec===0)?(L.id+' · '+L.date+' meeting · vote not public yet')
-    :(L.id+' · '+L.date+' · '+vs);
+  var meta=[L.id,L.date,(L.sec===0?'vote not public yet':vs)]
+    .filter(Boolean).join(' · ');
   var nb=NEWB[L.co];
   var newb=(nb&&L.date===nb[0])?'<span class="newb">NEW · '+nb[1]+'</span>':'';
   return '<div class="lead'+(L.sec===0?' tb':'')+'" data-i="'+i+'" tabindex="0" role="button" aria-expanded="false">'+
-    '<div class="lhead"><div class="lt">'+tag+esc(L.title)+thb+'</div>'+
-    '<div class="lm">'+amt+'<span class="meta num">'+newb+meta+'</span></div></div>'+
+    '<div class="lhead">'+CHEV+'<div class="ltags">'+tag+thb+newb+'</div>'+
+    '<div class="lt">'+esc(L.title)+'</div>'+
+    '<div class="lm">'+amt+'<span class="meta num">'+meta+'</span></div></div>'+
     '<div class="drill"></div></div>';
 }
 function fcast(L){
@@ -477,17 +555,17 @@ function fcast(L){
   if(t&&t.n>=5){src=t;why='N='+t.n+' county '+L.tr+' project pairs since 2015';}
   else if(c&&c.n>=5){src=c;why='N='+c.n+' '+esc(L.cm)+' project pairs since 2015'+
     (t?' — '+L.tr+'-specific history too thin, N='+t.n:'');}
-  var nia=(L.co==='ERIE')?' (NIAGARA HISTORY)':'';
+  var nia=(L.co==='ERIE')?' (Niagara history)':'';
   if(!src){
     var n=t?t.n:(c?c.n:0);
-    return '<div class="fcast thin">EXPECT THE CONSTRUCTION AD'+nia+': history too thin to '+
+    return '<div class="fcast thin">Expect the construction ad'+nia+': history too thin to '+
       'forecast (N='+n+' comparable '+(t?L.tr+' ':'')+'pair'+(n===1?'':'s')+
       ' in 12 years of county records) — no number beats a fake one.</div>';
   }
   function mo(d){return Math.round(d/30.44);}
   function ad(days){var d=new Date(L.date+'T12:00:00');d.setDate(d.getDate()+days);
     return MONS[d.getMonth()]+' '+d.getFullYear();}
-  return '<div class="fcast">EXPECT THE CONSTRUCTION AD'+nia+': median '+mo(src.med)+
+  return '<div class="fcast">Expect the construction ad'+nia+': median '+mo(src.med)+
     ' months after design money ('+mo(src.p25)+'–'+mo(src.p75)+' month range, from '+why+')'+
     ' → this lead projects to ~'+ad(src.med)+' (window '+ad(src.p25)+'–'+ad(src.p75)+')'+
     (L.co==='ERIE'?' — based on Niagara history; Erie’s parsed record starts 2026':'')+
@@ -502,8 +580,8 @@ function drill(L){
   });
   if(!L.am.length) h+='<div class="drow"><span class="dv">No dollar lines parsed from this text.</span></div>';
   if(L.th){
-    h+='<div class="thread"><div class="tht">PROJECT THREAD · '+L.th.n+' RESOLUTIONS · '+
-       L.th.y0+'–'+L.th.y1+' · '+money0(L.th.tot)+' ACROSS THE THREAD</div>';
+    h+='<div class="thread"><div class="tht">Project thread · '+L.th.n+' resolutions · '+
+       L.th.y0+'–'+L.th.y1+' · '+money0(L.th.tot)+' across the thread</div>';
     L.th.rows.forEach(function(x){
       h+='<div class="throw"><span>'+esc(x.t)+'</span><span class="num">'+x.id+' · '+x.date+
          (x.amt?' · '+money0(x.amt):'')+'</span></div>';
@@ -518,8 +596,8 @@ function drill(L){
         (L.nn&&L.nn.length?' (noes: '+esc(L.nn.join(', '))+')':'')+' · '+esc(v.out)
       :(v.out?' · '+esc(v.out)+' — voice vote, the record prints no tally'
         :(L.sec===0?' · no vote in the public record yet':'')))+'</p>';
-  h+='<button class="cpy" data-cp>⧉ COPY LEAD</button>';
-  if(L.src) h+='<a class="srclink" href="'+L.src+'" target="_blank" rel="noreferrer">SOURCE: the county’s own PDF ↗</a>';
+  h+='<button class="cpy" data-cp>⧉ Copy lead</button>';
+  if(L.src) h+='<a class="srclink" href="'+L.src+'" target="_blank" rel="noreferrer">Source: the county’s own PDF ↗</a>';
   return h;
 }
 function match(L){
@@ -560,15 +638,22 @@ function digest(){
       }
     }
   });
+  function scl(s){return s.charAt(0)+s.slice(1).toLowerCase();}
   var parts=[];
-  if(state.t!=='ALL')parts.push(state.t);
-  if(state.co!=='BOTH')parts.push(state.co);
-  if(state.q)parts.push('“'+esc(state.q.toUpperCase())+'”');
+  if(state.t!=='ALL')parts.push(scl(state.t));
+  if(state.co!=='BOTH')parts.push(scl(state.co));
+  if(state.q)parts.push('“'+esc(state.q)+'”');
   el.innerHTML='<span class="dgl">'+parts.join(' · ')+'</span> right now: <b>'+n+
     '</b> lead'+(n!==1?'s':'')+' · <b>'+money0(voted)+'</b> voted · <b>'+table+
     '</b> on the table'+(soon?' · <b>'+soon+'</b> forecast window'+(soon!==1?'s':'')+
     ' opening soon':'');
   el.hidden=false;
+}
+function fcnt(){
+  // "Filters · n" badge on the utility bar: count of non-default filter dims
+  var n=(state.t!=='ALL'?1:0)+(state.co!=='BOTH'?1:0)+(state.min?1:0)+(state.q?1:0);
+  var el=document.getElementById('fcnt');
+  el.hidden=!n; el.textContent=n?('· '+n):'';
 }
 function paint(){
   SECS.forEach(function(sec){
@@ -578,12 +663,13 @@ function paint(){
     var full=rows.length, shown=(!expanded[sec]&&full>10)?rows.slice(0,8):rows;
     document.getElementById('sec'+sec).innerHTML=
       full?(shown.map(function(p){return card(p[0],p[1]);}).join('')+
-        (shown.length<full?'<button class="more" data-more="'+sec+'">SHOW ALL '+full+' &darr;</button>':''))
+        (shown.length<full?'<button class="more" data-more="'+sec+'">Show all '+full+' &darr;</button>':''))
       :'<p class="none">Nothing matches in this section — an honest zero.</p>';
     var cs=document.querySelector('[data-cnt="'+sec+'"]');
     if(cs)cs.textContent='('+rows.length+')';
   });
   digest();
+  fcnt();
 }
 document.getElementById('chips').addEventListener('click',function(e){
   var c=e.target.closest('.chip'); if(!c)return;
@@ -642,6 +728,33 @@ document.querySelectorAll('[data-j]').forEach(function(c){
     if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
   });
 });
+// ---- the filter sheet: same panel node, same handlers, same state ----------
+var fbtn=document.getElementById('fbtn'),fpanel=document.getElementById('fpanel'),
+    scrim=document.getElementById('scrim'),fph=document.getElementById('fph');
+function sheetOpen(){
+  fph.style.height=fpanel.offsetHeight+'px';   // hold the page steady behind the scrim
+  fpanel.classList.add('sheet');
+  fpanel.setAttribute('role','dialog');fpanel.setAttribute('aria-modal','true');
+  scrim.hidden=false;document.body.classList.add('lock');
+  fbtn.setAttribute('aria-expanded','true');
+  var f=fpanel.querySelector('button,input');if(f)f.focus();
+}
+function sheetClose(){
+  fpanel.classList.remove('sheet');
+  fpanel.removeAttribute('role');fpanel.removeAttribute('aria-modal');
+  scrim.hidden=true;document.body.classList.remove('lock');
+  fph.style.height='0px';
+  fbtn.setAttribute('aria-expanded','false');
+  fbtn.focus();
+}
+fbtn.addEventListener('click',function(){
+  if(fpanel.classList.contains('sheet'))sheetClose();else sheetOpen();
+});
+scrim.addEventListener('click',sheetClose);
+document.getElementById('fdone').addEventListener('click',sheetClose);
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&fpanel.classList.contains('sheet'))sheetClose();
+});
 document.addEventListener('click',function(e){
   var btn=e.target.closest('.cpy'); if(!btn)return;
   var el=btn.closest('.lead'); var L=LEADS[+el.getAttribute('data-i')];
@@ -652,8 +765,8 @@ document.addEventListener('click',function(e){
       :(L.vote.out?' · '+L.vote.out.toLowerCase()
         :(L.sec===0?' · on the agenda — no vote on record yet':'')))+
     (L.src?NL+'Source: '+L.src:'')+NL+'via Groundwork — jcurry44.github.io/groundwork-demo';
-  function done(ok){btn.textContent=ok?'COPIED ✓':'COPY FAILED';btn.classList.toggle('done',ok);
-    setTimeout(function(){btn.textContent='⧉ COPY LEAD';btn.classList.remove('done');},1600);}
+  function done(ok){btn.textContent=ok?'Copied ✓':'Copy failed';btn.classList.toggle('done',ok);
+    setTimeout(function(){btn.textContent='⧉ Copy lead';btn.classList.remove('done');},1600);}
   function fallback(){
     var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
     document.body.appendChild(ta);ta.select();
@@ -700,9 +813,9 @@ function firmCard(F){
   if(F.da) h+='<div class="fdd">Named in records totaling <span class="num">'+money0(F.da)+
     '</span> — presence in the room, never &ldquo;won&rdquo;: a tabulation&rsquo;s printed amount'+
     ' is usually the winning bid, not theirs.</div>';
-  if(F.cb) h+='<div class="fdcb">NT CHECKBOOK: '+money0(F.cb[0])+' actually paid · '+F.cb[1]+
+  if(F.cb) h+='<div class="fdcb">NT checkbook: '+money0(F.cb[0])+' actually paid · '+F.cb[1]+
     ' payment'+(F.cb[1]!==1?'s':'')+' · '+fdate(F.cb[2])+'–'+fdate(F.cb[3])+'</div>';
-  if(F.riv.length) h+='<div class="fdr"><b>CO-NAMED RIVALS:</b> '+F.riv.map(esc).join(' · ')+
+  if(F.riv.length) h+='<div class="fdr"><b>Co-named rivals:</b> '+F.riv.map(esc).join(' · ')+
     ' — named in the same records, usually the same bid tabulations.</div>';
   if(F.rec.length){
     h+='<div class="fdrec">';
