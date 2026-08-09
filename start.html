@@ -76,11 +76,12 @@
     <label class="chip"><input type="checkbox" value="FLEET/EQUIP"><span>Fleet/equip</span></label>
   </div>
 
-  <h2>Your counties</h2>
+  <h2>Your boards</h2>
   <div class="chips" id="cos">
-    <label class="chip"><input type="radio" name="co" value="" checked><span>Both counties</span></label>
-    <label class="chip"><input type="radio" name="co" value="NIAGARA"><span>Niagara</span></label>
-    <label class="chip"><input type="radio" name="co" value="ERIE"><span>Erie</span></label>
+    <label class="chip"><input type="radio" name="co" value="" checked><span>All boards</span></label>
+    <label class="chip"><input type="radio" name="co" value="NIAGARA"><span>Niagara Co</span></label>
+    <label class="chip"><input type="radio" name="co" value="ERIE"><span>Erie Co</span></label>
+    <label class="chip"><input type="radio" name="co" value="TONAWANDA"><span>Tonawanda (T)</span></label>
   </div>
 
   <h2>Only show me money over</h2>
@@ -124,7 +125,7 @@ function build(){
   document.getElementById('open').href=u;
   var body='I want in on the Groundwork founding pilot.'+String.fromCharCode(10)+
     'Firm: ___'+String.fromCharCode(10)+
-    'Counties: '+(p.co?p.co:'both — Niagara + Erie')+String.fromCharCode(10)+
+    'Boards: '+(p.co?p.co:'all — Niagara + Erie + Town of Tonawanda')+String.fromCharCode(10)+
     'Trades: '+(p.ts.length?p.ts.join(', '):'___')+String.fromCharCode(10)+
     'Minimum $: '+(p.f?('$'+p.f.toLocaleString()):'any')+String.fromCharCode(10)+
     'My link: '+u;
