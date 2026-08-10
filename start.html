@@ -84,6 +84,10 @@
     <label class="chip"><input type="radio" name="co" value="TONAWANDA"><span>Tonawanda (T)</span></label>
     <label class="chip"><input type="radio" name="co" value="LANCASTER"><span>Lancaster</span></label>
     <label class="chip"><input type="radio" name="co" value="WSENECA"><span>W Seneca</span></label>
+    <label class="chip"><input type="radio" name="co" value="PENDLETON"><span>Pendleton</span></label>
+    <label class="chip"><input type="radio" name="co" value="ORCHARDPARK"><span>Orchard Park</span></label>
+    <label class="chip"><input type="radio" name="co" value="GRANDISLAND"><span>Grand Island</span></label>
+    <label class="chip"><input type="radio" name="co" value="HAMBURG"><span>Hamburg</span></label>
   </div>
 
   <h2>Only show me money over</h2>
@@ -127,7 +131,7 @@ function build(){
   document.getElementById('open').href=u;
   var body='I want in on the Groundwork founding pilot.'+String.fromCharCode(10)+
     'Firm: ___'+String.fromCharCode(10)+
-    'Boards: '+(p.co?p.co:'all — Niagara + Erie + the towns of Tonawanda, Lancaster & West Seneca')+String.fromCharCode(10)+
+    'Boards: '+(p.co?p.co:'all — Niagara + Erie + 7 towns (Tonawanda, Lancaster, West Seneca, Pendleton, Orchard Park, Grand Island, Hamburg)')+String.fromCharCode(10)+
     'Trades: '+(p.ts.length?p.ts.join(', '):'___')+String.fromCharCode(10)+
     'Minimum $: '+(p.f?('$'+p.f.toLocaleString()):'any')+String.fromCharCode(10)+
     'My link: '+u;
