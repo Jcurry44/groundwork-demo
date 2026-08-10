@@ -29,6 +29,8 @@
     margin:24px 0 10px;display:flex;gap:10px;align-items:center}
   h2::after{content:'';flex:1;height:1px;background:var(--rule)}
   h2 em{font-style:normal;font-weight:500;color:var(--faint);letter-spacing:0}
+  .cogl{font:600 8.5px 'JetBrains Mono',monospace;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--faint);margin:10px 0 6px}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
   .chip{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .chip input{position:absolute;opacity:0;pointer-events:none}
@@ -77,17 +79,32 @@
   </div>
 
   <h2>Your boards</h2>
-  <div class="chips" id="cos">
-    <label class="chip"><input type="radio" name="co" value="" checked><span>All boards</span></label>
-    <label class="chip"><input type="radio" name="co" value="NIAGARA"><span>Niagara Co</span></label>
-    <label class="chip"><input type="radio" name="co" value="ERIE"><span>Erie Co</span></label>
-    <label class="chip"><input type="radio" name="co" value="TONAWANDA"><span>Tonawanda (T)</span></label>
-    <label class="chip"><input type="radio" name="co" value="LANCASTER"><span>Lancaster</span></label>
-    <label class="chip"><input type="radio" name="co" value="WSENECA"><span>W Seneca</span></label>
-    <label class="chip"><input type="radio" name="co" value="PENDLETON"><span>Pendleton</span></label>
-    <label class="chip"><input type="radio" name="co" value="ORCHARDPARK"><span>Orchard Park</span></label>
-    <label class="chip"><input type="radio" name="co" value="GRANDISLAND"><span>Grand Island</span></label>
-    <label class="chip"><input type="radio" name="co" value="HAMBURG"><span>Hamburg</span></label>
+  <div id="cos">
+    <div class="chips">
+      <label class="chip"><input type="radio" name="co" value="" checked><span>All boards</span></label>
+    </div>
+    <div class="cogl">Niagara County</div>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="co" value="NIAGARA"><span>Niagara register</span></label>
+      <label class="chip"><input type="radio" name="co" value="LOCKPORT"><span>Lockport (city)</span></label>
+      <label class="chip"><input type="radio" name="co" value="PENDLETON"><span>Pendleton</span></label>
+      <label class="chip"><input type="radio" name="co" value="CAMBRIA"><span>Cambria</span></label>
+      <label class="chip"><input type="radio" name="co" value="WHEATFIELD"><span>Wheatfield</span></label>
+    </div>
+    <div class="cogl">Erie County</div>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="co" value="ERIE"><span>Erie register</span></label>
+      <label class="chip"><input type="radio" name="co" value="TONAWANDA"><span>Tonawanda (T)</span></label>
+      <label class="chip"><input type="radio" name="co" value="LANCASTER"><span>Lancaster</span></label>
+      <label class="chip"><input type="radio" name="co" value="WSENECA"><span>W Seneca</span></label>
+      <label class="chip"><input type="radio" name="co" value="ORCHARDPARK"><span>Orchard Park</span></label>
+      <label class="chip"><input type="radio" name="co" value="GRANDISLAND"><span>Grand Island</span></label>
+      <label class="chip"><input type="radio" name="co" value="HAMBURG"><span>Hamburg</span></label>
+      <label class="chip"><input type="radio" name="co" value="CLARENCE"><span>Clarence</span></label>
+      <label class="chip"><input type="radio" name="co" value="ALDEN"><span>Alden</span></label>
+      <label class="chip"><input type="radio" name="co" value="NEWSTEAD"><span>Newstead</span></label>
+      <label class="chip"><input type="radio" name="co" value="SARDINIA"><span>Sardinia</span></label>
+    </div>
   </div>
 
   <h2>Only show me money over</h2>
@@ -131,7 +148,7 @@ function build(){
   document.getElementById('open').href=u;
   var body='I want in on the Groundwork founding pilot.'+String.fromCharCode(10)+
     'Firm: ___'+String.fromCharCode(10)+
-    'Boards: '+(p.co?p.co:'all — Niagara + Erie + 7 towns (Tonawanda, Lancaster, West Seneca, Pendleton, Orchard Park, Grand Island, Hamburg)')+String.fromCharCode(10)+
+    'Boards: '+(p.co?p.co:'all — Niagara + Erie registers, City of Lockport, + 13 towns (Tonawanda, Lancaster, West Seneca, Pendleton, Orchard Park, Grand Island, Hamburg, Clarence, Alden, Newstead, Sardinia, Cambria, Wheatfield)')+String.fromCharCode(10)+
     'Trades: '+(p.ts.length?p.ts.join(', '):'___')+String.fromCharCode(10)+
     'Minimum $: '+(p.f?('$'+p.f.toLocaleString()):'any')+String.fromCharCode(10)+
     'My link: '+u;
