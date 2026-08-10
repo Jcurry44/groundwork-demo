@@ -78,32 +78,29 @@
     <label class="chip"><input type="checkbox" value="FLEET/EQUIP"><span>Fleet/equip</span></label>
   </div>
 
-  <h2>Your boards</h2>
+  <h2>Your boards <em>&middot; tap any &middot; leave blank for all 16</em></h2>
   <div id="cos">
-    <div class="chips">
-      <label class="chip"><input type="radio" name="co" value="" checked><span>All boards</span></label>
-    </div>
     <div class="cogl">Niagara County</div>
     <div class="chips">
-      <label class="chip"><input type="radio" name="co" value="NIAGARA"><span>Niagara register</span></label>
-      <label class="chip"><input type="radio" name="co" value="LOCKPORT"><span>Lockport (city)</span></label>
-      <label class="chip"><input type="radio" name="co" value="PENDLETON"><span>Pendleton</span></label>
-      <label class="chip"><input type="radio" name="co" value="CAMBRIA"><span>Cambria</span></label>
-      <label class="chip"><input type="radio" name="co" value="WHEATFIELD"><span>Wheatfield</span></label>
+      <label class="chip"><input type="checkbox" value="NIAGARA"><span>Niagara register</span></label>
+      <label class="chip"><input type="checkbox" value="LOCKPORT"><span>Lockport (city)</span></label>
+      <label class="chip"><input type="checkbox" value="PENDLETON"><span>Pendleton</span></label>
+      <label class="chip"><input type="checkbox" value="CAMBRIA"><span>Cambria</span></label>
+      <label class="chip"><input type="checkbox" value="WHEATFIELD"><span>Wheatfield</span></label>
     </div>
     <div class="cogl">Erie County</div>
     <div class="chips">
-      <label class="chip"><input type="radio" name="co" value="ERIE"><span>Erie register</span></label>
-      <label class="chip"><input type="radio" name="co" value="TONAWANDA"><span>Tonawanda (T)</span></label>
-      <label class="chip"><input type="radio" name="co" value="LANCASTER"><span>Lancaster</span></label>
-      <label class="chip"><input type="radio" name="co" value="WSENECA"><span>W Seneca</span></label>
-      <label class="chip"><input type="radio" name="co" value="ORCHARDPARK"><span>Orchard Park</span></label>
-      <label class="chip"><input type="radio" name="co" value="GRANDISLAND"><span>Grand Island</span></label>
-      <label class="chip"><input type="radio" name="co" value="HAMBURG"><span>Hamburg</span></label>
-      <label class="chip"><input type="radio" name="co" value="CLARENCE"><span>Clarence</span></label>
-      <label class="chip"><input type="radio" name="co" value="ALDEN"><span>Alden</span></label>
-      <label class="chip"><input type="radio" name="co" value="NEWSTEAD"><span>Newstead</span></label>
-      <label class="chip"><input type="radio" name="co" value="SARDINIA"><span>Sardinia</span></label>
+      <label class="chip"><input type="checkbox" value="ERIE"><span>Erie register</span></label>
+      <label class="chip"><input type="checkbox" value="TONAWANDA"><span>Tonawanda (T)</span></label>
+      <label class="chip"><input type="checkbox" value="LANCASTER"><span>Lancaster</span></label>
+      <label class="chip"><input type="checkbox" value="WSENECA"><span>W Seneca</span></label>
+      <label class="chip"><input type="checkbox" value="ORCHARDPARK"><span>Orchard Park</span></label>
+      <label class="chip"><input type="checkbox" value="GRANDISLAND"><span>Grand Island</span></label>
+      <label class="chip"><input type="checkbox" value="HAMBURG"><span>Hamburg</span></label>
+      <label class="chip"><input type="checkbox" value="CLARENCE"><span>Clarence</span></label>
+      <label class="chip"><input type="checkbox" value="ALDEN"><span>Alden</span></label>
+      <label class="chip"><input type="checkbox" value="NEWSTEAD"><span>Newstead</span></label>
+      <label class="chip"><input type="checkbox" value="SARDINIA"><span>Sardinia</span></label>
     </div>
   </div>
 
@@ -123,9 +120,9 @@
       <a class="btn line" id="open" href="index.html">Open it</a>
       <a class="btn line" id="pilot" href="#">Join the pilot &rarr;</a>
     </div>
-    <p class="note">The demo filters live to one trade at a time &mdash; your first pick
-    drives the link; the weekly product covers every trade you tick. Joining the pilot
-    opens an email to us with your picks filled in; first five WNY firms ride free.</p>
+    <p class="note">Your link opens straight onto <b>your board</b> &mdash; every trade you
+    tick, ranked by what you can bid soonest. Joining the pilot opens an email to us with
+    your picks filled in; first five WNY firms ride free.</p>
   </div>
 
   <a class="back" href="index.html">&larr; back to the demo</a>
@@ -134,21 +131,21 @@
 var BASE='https://jcurry44.github.io/groundwork-demo/';
 function picks(){
   var ts=[].map.call(document.querySelectorAll('#trades input:checked'),function(i){return i.value;});
+  var cs=[].map.call(document.querySelectorAll('#cos input:checked'),function(i){return i.value;});
   var f=document.querySelector('#floors input:checked').value;
-  var co=document.querySelector('#cos input:checked').value;
-  return {ts:ts,f:+f,co:co};
+  return {ts:ts,f:+f,co:cs};
 }
 function build(){
   var p=picks(), u=BASE, q=[];
-  if(p.co)q.push('co='+p.co);
-  if(p.ts.length)q.push('trade='+encodeURIComponent(p.ts[0]));
+  if(p.co.length)q.push('co='+encodeURIComponent(p.co.join(',')));
+  if(p.ts.length)q.push('trades='+encodeURIComponent(p.ts.join(',')));
   if(p.f)q.push('min='+p.f);
   if(q.length)u+='?'+q.join('&');
   document.getElementById('url').textContent=u;
   document.getElementById('open').href=u;
   var body='I want in on the Groundwork founding pilot.'+String.fromCharCode(10)+
     'Firm: ___'+String.fromCharCode(10)+
-    'Boards: '+(p.co?p.co:'all — Niagara + Erie registers, City of Lockport, + 13 towns (Tonawanda, Lancaster, West Seneca, Pendleton, Orchard Park, Grand Island, Hamburg, Clarence, Alden, Newstead, Sardinia, Cambria, Wheatfield)')+String.fromCharCode(10)+
+    'Boards: '+(p.co.length?p.co.join(', '):'all — Niagara + Erie registers, City of Lockport, + 13 towns (Tonawanda, Lancaster, West Seneca, Pendleton, Orchard Park, Grand Island, Hamburg, Clarence, Alden, Newstead, Sardinia, Cambria, Wheatfield)')+String.fromCharCode(10)+
     'Trades: '+(p.ts.length?p.ts.join(', '):'___')+String.fromCharCode(10)+
     'Minimum $: '+(p.f?('$'+p.f.toLocaleString()):'any')+String.fromCharCode(10)+
     'My link: '+u;

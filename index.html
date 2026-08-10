@@ -45,7 +45,10 @@
   .st .l{font:500 10px Inter,sans-serif;letter-spacing:.04em;color:var(--faint);
     margin-top:2px}
   .st .v em{color:var(--accent);font-style:normal}
-  .filters{padding:14px 0 4px;margin-top:8px}
+  /* v13: the filter panel is sheet-only now. The board carries setup inline,
+     so the old inline chip wall (480px of scroll before a single lead) is
+     gone; the same node still opens as the sheet from the utility bar. */
+  .filters{display:none;padding:14px 0 4px;margin-top:8px}
   .chips{display:flex;gap:7px;flex-wrap:wrap}
   .chips+.chips,#cochips+.chips{margin-top:8px}
   .cogl{font:600 8.5px 'JetBrains Mono',monospace;letter-spacing:.1em;
@@ -67,7 +70,7 @@
   .fdone{display:none}
   .scrim{position:fixed;inset:0;background:rgba(30,28,24,.35);z-index:30}
   body.lock{overflow:hidden}
-  .filters.sheet{position:fixed;z-index:40;left:0;right:0;bottom:0;margin:0;
+  .filters.sheet{display:block;position:fixed;z-index:40;left:0;right:0;bottom:0;margin:0;
     background:var(--paper);border-radius:16px 16px 0 0;
     box-shadow:0 -12px 40px -12px rgba(30,28,24,.4);
     padding:12px 18px calc(18px + env(safe-area-inset-bottom,0px));
@@ -238,7 +241,11 @@
   @media(max-width:700px){.pq,.ptie{margin-left:0}}
   .pnote{border-top:1px solid var(--rule);margin-top:7px;padding-top:7px;
     font-size:11px;color:var(--faint);line-height:1.6}
-  .vn{font-weight:600;font-size:14px;min-width:0;flex:1}
+  /* v13 fix (found by the text-rect collision probe, pre-existing): flex:1
+     with a 0 basis let the name box shrink to 8px while its text kept its
+     natural width - vendor names painted straight through the year/count
+     column at 390px. A real basis makes the row wrap instead of collide. */
+  .vn{flex:1 1 170px;min-width:0;overflow-wrap:anywhere;font-weight:600;font-size:14px}
   .vys{font-size:10px;color:var(--faint)}
   .vt{font:600 15px 'JetBrains Mono',monospace;color:var(--accent)}
   .cover{margin:44px 0 0;padding:24px;border:1px solid var(--rule2);border-radius:12px;
@@ -355,8 +362,127 @@
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .ysx{display:flex;justify-content:space-between;max-width:250px;margin-top:2px;
     font-size:8px;color:var(--faint)}
+  /* ---- v13 THE BOARD: the ranked first screen --------------------------- */
+  .board{margin:16px 0 0}
+  .bh{display:block;font:600 clamp(26px,6vw,34px)/1.14 'Fraunces',serif;margin:0;
+    letter-spacing:-.012em}
+  .bh::after{display:none}
+  .bh em{color:var(--accent);font-style:normal}
+  .bhs{color:var(--muted);font-size:13.5px;line-height:1.55;margin:6px 0 0;max-width:62ch}
+  .bhs b{color:var(--ink);font-weight:600}
+  .setline[hidden],.setcta[hidden],.setup[hidden],.bkempty[hidden]{display:none}
+  .setline{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin:12px 0 0;
+    padding:9px 14px;border:1px solid var(--rule2);border-radius:999px;background:var(--card)}
+  .setline .slt{flex:1;min-width:0;font:500 11.5px Inter,sans-serif;color:var(--ink)}
+  .setline .slt b{font-weight:600}
+  .slc{flex:none;background:none;border:0;padding:0;cursor:pointer;
+    font:600 11.5px Inter,sans-serif;color:var(--accent);
+    border-bottom:1px solid rgba(122,92,46,.45);-webkit-tap-highlight-color:transparent}
+  .setcta{display:block;width:100%;text-align:left;margin:12px 0 0;padding:13px 42px 13px 15px;
+    position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;
+    border:1px solid rgba(122,92,46,.4);border-radius:12px;box-shadow:var(--lift);
+    background:linear-gradient(rgba(122,92,46,.06),transparent 70%),var(--card);
+    transition:border-color .12s ease-out,box-shadow .15s}
+  @media(hover:hover){.setcta:hover{border-color:var(--accent);box-shadow:var(--hover)}}
+  .setcta .sct1{display:block;font:600 15px Inter,sans-serif;color:var(--ink)}
+  .setcta .sct2{display:block;margin-top:3px;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  .setcta .chev{top:19px;color:var(--accent);transform:rotate(-90deg)}
+  .setup{margin:12px 0 0;padding:16px;border:1px solid var(--rule2);border-radius:12px;
+    background:var(--card);box-shadow:var(--lift)}
+  .setup[hidden]{display:none}
+  .sut{font:600 11px Inter,sans-serif;letter-spacing:.08em;color:var(--accent);
+    margin-bottom:12px}
+  .surow+.surow{margin-top:14px;border-top:1px solid var(--rule);padding-top:13px}
+  .sul{font:600 12.5px Inter,sans-serif;color:var(--ink);margin-bottom:8px}
+  .sul em{font-style:normal;font-weight:500;color:var(--faint);font-size:11.5px}
+  /* the board picker is 16 chips and the default (all of them) is right for
+     almost everyone - it folds so trades, floor and Save fit one screen */
+  .subtn{display:block;width:100%;text-align:left;position:relative;background:none;
+    border:0;padding:0 30px 0 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .subtn .chev{right:2px;top:1px;width:15px;height:15px}
+  .subtn[aria-expanded="true"] .chev{transform:rotate(180deg);color:var(--accent)}
+  .subs{display:block;margin-top:2px;font:500 11.5px Inter,sans-serif;color:var(--faint)}
+  #sucos[hidden]{display:none}
+  #sucos{margin-top:10px}
+  .suacts{display:flex;gap:10px;align-items:center;margin-top:16px}
+  .susave{flex:1;background:var(--ink);color:var(--paper);border:0;border-radius:10px;
+    font:600 13px Inter,sans-serif;padding:13px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:background .12s ease-out}
+  @media(hover:hover){.susave:hover{background:#332f28}}
+  .suclr{flex:none;background:none;border:1px solid var(--rule2);border-radius:10px;
+    color:var(--muted);font:600 12px Inter,sans-serif;padding:12px 16px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:all .12s ease-out}
+  @media(hover:hover){.suclr:hover{border-color:var(--accent);color:var(--accent)}}
+  .bkt{margin:26px 0 0;scroll-margin-top:68px}
+  .brsplit{scroll-margin-top:68px}
+  .sheetsu{display:block;width:100%;margin:0 0 12px;background:none;
+    border:1px solid var(--ink);border-radius:10px;color:var(--ink);
+    font:600 12.5px Inter,sans-serif;padding:12px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:all .12s ease-out}
+  @media(hover:hover){.sheetsu:hover{background:var(--ink);color:var(--paper)}}
+  .bkh{display:flex;gap:9px;align-items:baseline;margin:0 0 2px}
+  .bkh .bkn{font:600 11px Inter,sans-serif;letter-spacing:.08em;color:var(--ink)}
+  .bkh .bkc{font:600 10px 'JetBrains Mono',monospace;color:var(--faint)}
+  .bkh::after{content:'';flex:1;height:1px;background:var(--rule)}
+  .bkt.now .bkh .bkn{color:var(--brick)}
+  .bks{color:var(--muted);font-size:12.5px;line-height:1.55;margin:0 0 10px;max-width:70ch}
+  .lead.bd .lhead{padding:12px 38px 12px 15px}
+  .lead.bd .chev{top:14px}
+  /* each clause carries its own leading separator so a wrap never strands a
+     dangling "·" at the end of a line */
+  .why{font:600 11px/1.55 Inter,sans-serif;color:var(--accent);
+    display:flex;flex-wrap:wrap;align-items:baseline}
+  .why .wp{white-space:nowrap}
+  .why .wsep{margin:0 5px;color:var(--rule2);font-style:normal}
+  .why .wamt{margin-left:11px;font:600 12px/1.4 'JetBrains Mono',ui-monospace,monospace;
+    font-variant-numeric:tabular-nums}
+  .why .wamt:first-child{margin-left:0}
+  /* county resolution titles run to 210 characters. On the board they clamp
+     to three lines - the full text rides the drill one tap down, and a
+     visible ellipsis is honest where a rewritten summary would not be. */
+  .lead.bd .lt{margin-top:5px;font:500 15px/1.45 Inter,sans-serif;color:var(--ink);
+    display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;
+    overflow:hidden}
+  .bmeta{margin-top:6px;font:400 10px/1.5 'JetBrains Mono',ui-monospace,monospace;
+    color:var(--faint);font-variant-numeric:tabular-nums}
+  .bmeta b{color:var(--muted);font-weight:600}
+  .lead.bid{border-color:rgba(160,75,46,.4);
+    background:linear-gradient(rgba(160,75,46,.045),transparent 55%),var(--card)}
+  .lead.bid .why{color:var(--brick)}
+  .lead.bid .why .wsep{color:rgba(160,75,46,.4)}
+  .bkempty{color:var(--muted);font-size:12.5px;line-height:1.6;padding:10px 14px;margin:2px 0 0;
+    border:1px solid var(--rule);border-radius:10px;background:var(--drill)}
+  .bkempty button{background:none;border:0;padding:0;cursor:pointer;font:600 12.5px Inter,sans-serif;
+    color:var(--accent);border-bottom:1px solid rgba(122,92,46,.45);
+    -webkit-tap-highlight-color:transparent}
+  .bnone{margin:16px 0 0;padding:18px;border:1px solid rgba(160,75,46,.4);border-radius:12px;
+    background:linear-gradient(rgba(160,75,46,.05),transparent 70%),var(--card);
+    box-shadow:var(--lift)}
+  .bnone .bnh{font:600 15.5px/1.4 Inter,sans-serif;color:var(--ink)}
+  .bnone .bnp{margin:8px 0 0;font-size:13px;line-height:1.6;color:var(--muted)}
+  .bnone .bnb{margin:14px 0 0;background:var(--ink);color:var(--paper);border:0;border-radius:10px;
+    font:600 12.5px Inter,sans-serif;padding:11px 18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent}
+  .bmore{display:block;width:100%;background:none;border:1px solid var(--rule2);
+    border-radius:12px;color:var(--accent);font:600 11px Inter,sans-serif;letter-spacing:.02em;
+    padding:11px;margin:10px 0 0;cursor:pointer;-webkit-tap-highlight-color:transparent;
+    transition:border-color .12s ease-out}
+  @media(hover:hover){.bmore:hover{border-color:var(--accent)}}
+  .brsplit{margin:30px 0 0}
+  .brbtn{display:block;width:100%;text-align:left;position:relative;cursor:pointer;
+    background:none;border:1px solid var(--rule2);border-radius:12px;padding:14px 42px 14px 16px;
+    -webkit-tap-highlight-color:transparent;transition:border-color .12s ease-out}
+  @media(hover:hover){.brbtn:hover{border-color:var(--accent)}}
+  .brbtn .brt{display:block;font:600 13.5px Inter,sans-serif;color:var(--ink)}
+  .brbtn .brs{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+  .brbtn .chev{top:19px}
+  .brbtn[aria-expanded="true"] .chev{transform:rotate(180deg);color:var(--accent)}
+  #brbody[hidden]{display:none}
+  #brbody>h2:first-of-type{margin-top:30px}
   .chip:focus-visible,.lead:focus-visible,.vrow:focus-visible,.frow:focus-visible,
-  .more:focus-visible,.cpy:focus-visible,.cta:focus-visible{
+  .more:focus-visible,.cpy:focus-visible,.cta:focus-visible,.setcta:focus-visible,
+  .brbtn:focus-visible,.susave:focus-visible,.suclr:focus-visible,.slc:focus-visible,
+  .bmore:focus-visible,.bkempty button:focus-visible,.bnone .bnb:focus-visible{
     outline:2px solid var(--accent);outline-offset:2px}
   @media(max-width:700px){
     h2{margin-top:36px}
@@ -372,7 +498,9 @@
   @media print{
     body{background:#fff;font-size:12px;padding:0}
     .wrap{max-width:none;background:#fff;border:0;box-shadow:none;padding:0}
-    .filters,.utility,.scrim,.cta,.cpy,.srclink,.jumps,#fq{display:none !important}
+    .filters,.utility,.scrim,.cta,.cpy,.srclink,.jumps,#fq,.brsplit,
+    .setcta,.setup,.bmore{display:none !important}
+    #brbody[hidden]{display:block !important}
     .lead,.vrow,.panel,.bridge,.frow,.fdcard{break-inside:avoid}
     header{padding-top:8px}
     a{text-decoration:none}
@@ -386,20 +514,98 @@
   bid portal &mdash; we measured it</b> (45 county projects). Groundwork reads every WNY board
   and hands you the money, the vote, and the source &mdash; weekly, filtered to your trade.</p>
   <div class="fresh" title="Latest parsed &middot; Niagara 2026-08-04 (vote not public yet) &middot; Erie 2026-06-11 (minutes not posted) &middot; Lockport 2026-08-12 (draft — meeting not yet held) &middot; Tonawanda 2026-08-03 &middot; Lancaster 2026-08-03 &middot; West Seneca 2026-08-10 &middot; Pendleton 2026-08-10 &middot; Orchard Park 2026-08-05 &middot; Grand Island 2026-08-03 &middot; Hamburg 2026-08-10 &middot; Clarence 2026-07-22 &middot; Alden 2026-07-20 &middot; Newstead 2026-07-13 &middot; Sardinia 2026-07-06 &middot; Cambria 2026-07-09 &middot; Wheatfield 2026-08-03 &middot; Monday&rsquo;s brief would carry all sixteen">Latest &middot; Niagara Aug 4 &middot; Erie Jun 11 &middot; Lockport Aug 12 &middot; the 13 towns Jul 6&ndash;Aug 10 &middot; Votes pending</div>
-  <div class="stats">
-    <div class="st"><div class="v"><em>$57.2M</em></div><div class="l">On the table &middot; vote not public yet</div></div>
-    <div class="st"><div class="v"><em>$388M</em></div><div class="l">In voted signals &middot; 16 boards &middot; 2026 YTD</div></div>
-    <div class="st"><div class="v">284</div><div class="l">Leads on the record &middot; sixteen boards</div></div>
-    <div class="st"><div class="v"><em>3</em></div><div class="l">Bids open now &middot; due Aug 11</div></div>
-    <div class="st"><div class="v">306</div><div class="l">Carry a project thread</div></div>
-    <div class="st"><div class="v">7,162</div><div class="l">Member-votes by name &middot; eleven of the sixteen boards print names</div></div>
-    <div class="st"><div class="v">12 <em>yrs</em></div><div class="l">Of county history behind every lead &middot; 5,888 records read</div></div>
-  </div>
 </header>
+
+<div class="utility">
+  <button class="fbtn" id="fbtn" aria-haspopup="dialog" aria-expanded="false">
+    <svg class="fico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4.5h6.5M12.7 4.5H14M2 11.5h1.3M7.5 11.5H14"/><circle cx="10.6" cy="4.5" r="1.9"/><circle cx="5.4" cy="11.5" r="1.9"/></svg>
+    Filters<span class="fcnt" id="fcnt" hidden></span>
+  </button>
+  <div class="chips jumps" id="jumps"></div>
+</div>
+
+<section class="board" id="board" aria-label="Your board">
+  <h2 class="bh" id="bhead">This week in WNY</h2>
+  <p class="bhs" id="bsub"></p>
+  <div class="setline" id="setline" hidden>
+    <span class="slt" id="sltxt"></span>
+    <button class="slc" id="slchange">change</button>
+  </div>
+  <button class="setcta" id="setcta" aria-expanded="false" aria-controls="setupcard">
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg>
+    <span class="sct1">Set up my board</span>
+    <span class="sct2">Your trades, your smallest job, your towns &mdash; three taps.</span>
+  </button>
+  <div class="setup" id="setupcard" hidden>
+    <div class="sut">SET UP MY BOARD</div>
+    <div class="surow">
+      <div class="sul">What do you build? <em>&middot; tap any</em></div>
+      <div class="chips" id="sutr">
+        <button class="chip" aria-pressed="false" data-t="BRIDGE">Bridge</button><button class="chip" aria-pressed="false" data-t="BUILDING">Building</button><button class="chip" aria-pressed="false" data-t="ELECTRICAL">Electrical</button><button class="chip" aria-pressed="false" data-t="FLEET/EQUIP">Fleet/equip</button><button class="chip" aria-pressed="false" data-t="ROADS">Roads</button><button class="chip" aria-pressed="false" data-t="SITE/PARKS">Site/parks</button><button class="chip" aria-pressed="false" data-t="WATER/SEWER">Water/sewer</button>
+      </div>
+    </div>
+    <div class="surow">
+      <div class="sul">Smallest job worth your time</div>
+      <div class="chips">
+        <button class="chip" aria-pressed="true" data-m="0">Any $</button>
+        <button class="chip" aria-pressed="false" data-m="100000">$100K+</button>
+        <button class="chip" aria-pressed="false" data-m="250000">$250K+</button>
+        <button class="chip" aria-pressed="false" data-m="500000">$500K+</button>
+      </div>
+    </div>
+    <div class="surow">
+      <button class="subtn" id="subco" aria-expanded="false" aria-controls="sucos">
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg>
+        <span class="sul" style="margin:0">Where do you work?</span>
+        <span class="subs" id="subsum">All 16 boards &mdash; tap to narrow</span>
+      </button>
+      <div id="sucos" hidden>
+      <div class="cogl">Niagara County</div>
+      <div class="chips">
+        <button class="chip" aria-pressed="false" data-co="NIAGARA">Niagara register</button>
+        <button class="chip" aria-pressed="false" data-co="LOCKPORT">Lockport (city)</button>
+        <button class="chip" aria-pressed="false" data-co="PENDLETON">Pendleton</button>
+        <button class="chip" aria-pressed="false" data-co="CAMBRIA">Cambria</button>
+        <button class="chip" aria-pressed="false" data-co="WHEATFIELD">Wheatfield</button>
+      </div>
+      <div class="cogl">Erie County</div>
+      <div class="chips">
+        <button class="chip" aria-pressed="false" data-co="ERIE">Erie register</button>
+        <button class="chip" aria-pressed="false" data-co="TONAWANDA">Tonawanda (T)</button>
+        <button class="chip" aria-pressed="false" data-co="LANCASTER">Lancaster</button>
+        <button class="chip" aria-pressed="false" data-co="WSENECA">W Seneca</button>
+        <button class="chip" aria-pressed="false" data-co="ORCHARDPARK">Orchard Park</button>
+        <button class="chip" aria-pressed="false" data-co="GRANDISLAND">Grand Island</button>
+        <button class="chip" aria-pressed="false" data-co="HAMBURG">Hamburg</button>
+        <button class="chip" aria-pressed="false" data-co="CLARENCE">Clarence</button>
+        <button class="chip" aria-pressed="false" data-co="ALDEN">Alden</button>
+        <button class="chip" aria-pressed="false" data-co="NEWSTEAD">Newstead</button>
+        <button class="chip" aria-pressed="false" data-co="SARDINIA">Sardinia</button>
+      </div>
+      </div>
+    </div>
+    <div class="surow suacts">
+      <button class="susave" id="susave">Save my board</button>
+      <button class="suclr" id="suclr">Clear</button>
+    </div>
+  </div>
+  <div id="buckets"></div>
+</section>
+
+<div class="stats">
+  <div class="st"><div class="v"><em>$57.2M</em></div><div class="l">On the table &middot; vote not public yet</div></div>
+  <div class="st"><div class="v"><em>$388M</em></div><div class="l">In voted signals &middot; 16 boards &middot; 2026 YTD</div></div>
+  <div class="st"><div class="v">284</div><div class="l">Leads on the record &middot; sixteen boards</div></div>
+  <div class="st"><div class="v"><em>3</em></div><div class="l">Bids open now &middot; due Aug 11</div></div>
+  <div class="st"><div class="v">306</div><div class="l">Carry a project thread</div></div>
+  <div class="st"><div class="v">7,162</div><div class="l">Member-votes by name &middot; eleven of the sixteen boards print names</div></div>
+  <div class="st"><div class="v">12 <em>yrs</em></div><div class="l">Of county history behind every lead &middot; 5,888 records read</div></div>
+</div>
 
 <div id="fph" aria-hidden="true"></div>
 <div class="filters" id="fpanel" aria-label="Filters">
   <div class="grab" aria-hidden="true"></div>
+  <button class="sheetsu" id="fsetup">Set up my board &rarr;</button>
   <div id="cochips">
     <div class="chips">
       <button class="chip" aria-pressed="true" data-co="BOTH">All boards</button>
@@ -442,25 +648,21 @@
   </div>
   <button class="fdone" id="fdone">Done</button>
 </div>
+<div class="scrim" id="scrim" hidden></div>
+
+<div class="brsplit" id="brwrap">
+  <button class="brbtn" id="brbtn" aria-expanded="false" aria-controls="brbody">
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg>
+    <span class="brt">Browse everything</span>
+    <span class="brs">All 500 leads by section &mdash; the agenda, the money, the
+    awards, the checkbook and twelve years of homework.</span>
+  </button>
+</div>
+
+<div id="brbody" hidden>
 
 <div id="digest" class="digest" hidden
   title="&ldquo;Opening soon&rdquo; = a sec-03 lead&rsquo;s forecast window (p25) starts within 183 days of this issue&rsquo;s build date"></div>
-
-<div class="utility">
-  <button class="fbtn" id="fbtn" aria-haspopup="dialog" aria-expanded="false">
-    <svg class="fico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4.5h6.5M12.7 4.5H14M2 11.5h1.3M7.5 11.5H14"/><circle cx="10.6" cy="4.5" r="1.9"/><circle cx="5.4" cy="11.5" r="1.9"/></svg>
-    Filters<span class="fcnt" id="fcnt" hidden></span>
-  </button>
-  <div class="chips jumps">
-    <button class="chip jump" data-j="s0">00 Agenda</button>
-    <button class="chip jump" data-j="s1">01 Approved</button>
-    <button class="chip jump" data-j="s2">02 Awarded</button>
-    <button class="chip jump" data-j="s3">03 Upstream</button>
-    <button class="chip jump" data-j="s4">04 Checkbook</button>
-    <button class="chip jump" data-j="s5">05 Intel</button>
-  </div>
-</div>
-<div class="scrim" id="scrim" hidden></div>
 
 <h2 id="s0" class="tblh">00 &middot; On the table <span class="cnt num" data-cnt="0"></span></h2>
 <p class="sub"><b>Niagara&rsquo;s Aug 4, Erie&rsquo;s Jun 11, West Seneca&rsquo;s Aug 10, Pendleton&rsquo;s Aug 10, Orchard Park&rsquo;s Aug 5, Grand Island&rsquo;s Aug 3 workshop, Hamburg&rsquo;s Aug 10 and Wheatfield&rsquo;s Mar 2&ndash;Aug 3 agendas</b> &mdash; minutes not posted, so no votes are public yet. Tonawanda, Lancaster and Cambria&rsquo;s next agendas aren&rsquo;t posted yet. Lockport&rsquo;s Aug 12 draft minutes are already posted &mdash; every item below carries its draft label until the clerk refills the file after Wednesday&rsquo;s meeting. The Clarence-cluster towns publish minutes only &mdash; no pre-meeting agenda layer exists to read. The earliest signal there is; items without a parsed $ say so and are hidden by $ floors.</p>
@@ -535,6 +737,8 @@ of them. What the record teaches, with the N on every number.</p>
 the county doesn&rsquo;t print winners in titles, and we refuse to guess.</p>
 <div id="fres"></div>
 <div id="fcard"></div>
+
+</div><!-- /brbody -->
 
 <div class="cover">
   <h3>This demo is sixteen boards and a city checkbook. The product is your whole market.</h3>
@@ -687,43 +891,76 @@ var MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec
 var CHEV='<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.2l4 4 4-4"/></svg>';
 function money0(v){return '$'+Math.round(v).toLocaleString('en-US');}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
-var state={t:'ALL',q:'',min:0,s:'big',co:'BOTH'};
-var expanded={};
+// ---- v13 STATE: trades and boards are SETS -------------------------------
+// A firm that does roads AND sitework was never one radio button. `t` and `co`
+// are arrays now; EMPTY means "everything" (the old 'ALL'/'BOTH' sentinels).
+// Every legacy shape still loads: a saved 'ROADS' string, a saved 'BOTH', and
+// ?trade=ROADS all arrive as one-element (or empty) sets. Nothing a contractor
+// already texted to his estimator can break.
+var TRSET={"BRIDGE": 1, "BUILDING": 1, "ELECTRICAL": 1, "FLEET/EQUIP": 1, "ROADS": 1, "SITE/PARKS": 1, "WATER/SEWER": 1};
+var COSET={"NIAGARA": 1, "ERIE": 1, "TONAWANDA": 1, "LANCASTER": 1, "WSENECA": 1, "PENDLETON": 1, "ORCHARDPARK": 1, "GRANDISLAND": 1, "HAMBURG": 1, "LOCKPORT": 1, "CLARENCE": 1, "ALDEN": 1, "NEWSTEAD": 1, "SARDINIA": 1, "CAMBRIA": 1, "WHEATFIELD": 1};
+var state={t:[],q:'',min:0,s:'big',co:[],up:0};
+var expanded={},bexp={},sup=0;
+function asSet(v,ok){
+  var out=[],i,s;
+  if(v==null)return out;
+  if(typeof v==='string')v=v.split(',');
+  if(Object.prototype.toString.call(v)!=='[object Array]')return out;
+  for(i=0;i<v.length;i++){
+    s=String(v[i]).toUpperCase().replace(/^\s+|\s+$/g,'');
+    if(s==='ALL'||s==='BOTH'||!s)continue;
+    if(ok[s]&&out.indexOf(s)<0)out.push(s);
+  }
+  return out.sort();
+}
 (function initState(){
   try{var sv=JSON.parse(localStorage.getItem('gw')||'{}');
-    if(sv.t)state.t=sv.t; if(sv.q)state.q=sv.q; if(sv.min)state.min=sv.min;
-    if(sv.co)state.co=sv.co;}catch(e){}
+    state.t=asSet(sv.t,TRSET); state.co=asSet(sv.co,COSET);
+    if(sv.q)state.q=String(sv.q); if(sv.min)state.min=+sv.min||0;
+    if(sv.up)state.up=1;
+    // pre-v13 saves carry no `up` flag - a returning user who had picked
+    // anything IS set up, so restore them onto their board, not the cold page
+    if(state.t.length||state.co.length||state.min)state.up=1;
+  }catch(e){}
   var p=new URLSearchParams(location.search);
-  if(p.get('trade'))state.t=p.get('trade').toUpperCase();
+  if(p.get('trades')!==null)state.t=asSet(p.get('trades'),TRSET);
+  else if(p.get('trade')!==null)state.t=asSet(p.get('trade'),TRSET);
+  if(p.get('co')!==null)state.co=asSet(p.get('co'),COSET);
   if(p.get('min'))state.min=+p.get('min')||0;
   if(p.get('q'))state.q=(p.get('q')||'').toLowerCase();
-  if(p.get('co'))state.co=p.get('co').toUpperCase();
-  if(['NIAGARA','ERIE','TONAWANDA','LANCASTER','WSENECA','PENDLETON',
-      'ORCHARDPARK','GRANDISLAND','HAMBURG','LOCKPORT','CLARENCE','ALDEN',
-      'NEWSTEAD','SARDINIA','CAMBRIA','WHEATFIELD'].indexOf(state.co)<0)state.co='BOTH';
+  // a texted link IS a setup: it opens on their work, already tuned
+  if(p.get('trades')||p.get('trade')||p.get('co')||p.get('min')||p.get('up'))state.up=1;
 })();
 function persist(){
   try{localStorage.setItem('gw',JSON.stringify(state));}catch(e){}
   var p=new URLSearchParams();
-  if(state.co!=='BOTH')p.set('co',state.co);
-  if(state.t!=='ALL')p.set('trade',state.t);
+  if(state.co.length)p.set('co',state.co.join(','));
+  if(state.t.length)p.set('trades',state.t.join(','));
   if(state.min)p.set('min',state.min);
   if(state.q)p.set('q',state.q);
+  // only carry the bare flag when nothing else would imply it
+  if(state.up&&!state.t.length&&!state.co.length&&!state.min&&!state.q)p.set('up','1');
   var qs=p.toString();
   history.replaceState(null,'',qs?('?'+qs):location.pathname);
 }
+function touch(){if(state.t.length||state.co.length||state.min)state.up=1;}
 function syncChips(){
-  var valid=[].some.call(document.querySelectorAll('#chips .chip'),
-    function(x){return x.getAttribute('data-t')===state.t;});
-  if(!valid)state.t='ALL';
-  document.querySelectorAll('#chips .chip').forEach(function(x){
-    x.setAttribute('aria-pressed',x.getAttribute('data-t')===state.t);});
+  // one state, two presentations: the same [data-t]/[data-co]/[data-m] chips
+  // live in the board's setup card AND the filter sheet, and both stay true
+  document.querySelectorAll('[data-t]').forEach(function(x){
+    var v=x.getAttribute('data-t');
+    x.setAttribute('aria-pressed',v==='ALL'?!state.t.length:state.t.indexOf(v)>=0);});
   document.querySelectorAll('[data-co]').forEach(function(x){
-    x.setAttribute('aria-pressed',x.getAttribute('data-co')===state.co);});
+    var v=x.getAttribute('data-co');
+    x.setAttribute('aria-pressed',v==='BOTH'?!state.co.length:state.co.indexOf(v)>=0);});
   document.querySelectorAll('[data-m]').forEach(function(x){
     x.setAttribute('aria-pressed',+x.getAttribute('data-m')===state.min);});
+  document.querySelectorAll('[data-s]').forEach(function(x){
+    x.setAttribute('aria-pressed',x.getAttribute('data-s')===state.s);});
   document.getElementById('q').value=state.q;
 }
+function scl(s){return s.charAt(0)+s.slice(1).toLowerCase();}
+function nbs(iso){return MONS[+iso.slice(5,7)-1]+' '+(+iso.slice(8,10));}
 var CO_TAG={TONAWANDA:'TONAWANDA (T)',WSENECA:'W SENECA',ORCHARDPARK:'ORCHARD PK',
   GRANDISLAND:'GRAND IS'};
 var CO_NAME={NIAGARA:'Niagara County',ERIE:'Erie County',TONAWANDA:'Town of Tonawanda',
@@ -810,8 +1047,12 @@ function fcast(L){
     ' → this lead projects to ~'+ad(src.med)+' (window '+ad(src.p25)+'–'+ad(src.p75)+')'+
     (HIST[L.co]||'')+'</div>';
 }
-function drill(L){
+function drill(L,full){
   var h='';
+  // board cards clamp the title to three lines - open one and the record's
+  // own wording is right here, untouched
+  if(full)h+='<div class="drow"><span class="dk">AS TITLED</span>'+
+    '<span class="dv"><q>'+esc(L.title)+'</q></span></div>';
   h+=fcast(L);
   (L.xd||[]).forEach(function(x){   // structured lines built at build time
     h+='<div class="drow"><span class="dk">'+x[0]+'</span>'+
@@ -874,14 +1115,20 @@ function rollGrid(L){
   if(R.vn)h+='<div class="vgn">the minutes note: “'+esc(R.vn)+'”</div>';
   return h+'</div>';
 }
-function match(L){
-  if(state.co!=='BOTH'&&L.co!==state.co) return false;
-  if(state.t!=='ALL'&&L.tr!==state.t) return false;
+function match(L,o){
+  // `o` overrides one dimension without touching state - that is how the
+  // empty-board offer counts "how many would there be if you lowered the
+  // floor?" against the real data instead of guessing a number.
+  o=o||{};
+  var C=o.co!==undefined?o.co:state.co, T=o.t!==undefined?o.t:state.t,
+      M=o.min!==undefined?o.min:state.min;
+  if(C.length&&C.indexOf(L.co)<0) return false;
+  if(T.length&&T.indexOf(L.tr)<0) return false;
   // A $ floor means "known to involve at least $X". Sec-0 agenda items with
   // no parsed amount are hidden under a floor - their cards say NO $ PARSED
   // YET instead of faking a pass - chosen over a sec-0 exemption so ANY $
   // shows everything and floors never lie.
-  if(state.min&&(!L.amt||L.amt<state.min)) return false;
+  if(M&&(!L.amt||L.amt<M)) return false;
   if(state.q){
     var hay=(L.title+' '+L.id).toLowerCase();
     if(hay.indexOf(state.q)<0) return false;
@@ -898,7 +1145,7 @@ var SECS=[0,1,2,3];
 // a few days between builds.
 function digest(){
   var el=document.getElementById('digest');
-  var personal=(state.t!=='ALL')||(state.co!=='BOTH')||!!state.q;
+  var personal=!!state.t.length||!!state.co.length||!!state.q;
   if(!personal){el.hidden=true;el.innerHTML='';return;}
   var rows=LEADS.filter(match),n=rows.length,table=0,voted=0,soon=0;
   rows.forEach(function(L){
@@ -912,10 +1159,9 @@ function digest(){
       }
     }
   });
-  function scl(s){return s.charAt(0)+s.slice(1).toLowerCase();}
   var parts=[];
-  if(state.t!=='ALL')parts.push(scl(state.t));
-  if(state.co!=='BOTH')parts.push(CO_LBL[state.co]||scl(state.co));
+  if(state.t.length)parts.push(state.t.map(scl).join(' + '));
+  if(state.co.length)parts.push(state.co.map(function(c){return CO_LBL[c]||scl(c);}).join(' + '));
   if(state.q)parts.push('“'+esc(state.q)+'”');
   el.innerHTML='<span class="dgl">'+parts.join(' · ')+'</span> right now: <b>'+n+
     '</b> lead'+(n!==1?'s':'')+' · <b>'+money0(voted)+'</b> voted · <b>'+table+
@@ -925,9 +1171,241 @@ function digest(){
 }
 function fcnt(){
   // "Filters · n" badge on the utility bar: count of non-default filter dims
-  var n=(state.t!=='ALL'?1:0)+(state.co!=='BOTH'?1:0)+(state.min?1:0)+(state.q?1:0);
+  var n=(state.t.length?1:0)+(state.co.length?1:0)+(state.min?1:0)+(state.q?1:0);
   var el=document.getElementById('fcnt');
   el.hidden=!n; el.textContent=n?('· '+n):'';
+}
+
+// ===== v13 THE BOARD =======================================================
+// Three questions a contractor actually asks - what can I BID, what's COMING,
+// who BEAT me - ranked by what can be acted on soonest. Every term of the
+// score shows up as plain English on the card, because a rank nobody can read
+// is a rank nobody trusts. All date math measures against BUILT (the baked
+// build date), never Date.now(): same file, same order, forever.
+var SK={"bid": 100, "s0": 70, "s1": 50, "s3": 50, "s2": 25, "bidWin": 30, "bidMax": 40, "newMeet": 20, "soon": 15, "recWin": 120, "recMax": 15, "sizeK": 12, "sizeFloor": 10000, "fit": 45, "immDays": 21};
+var BIDS=[{"subj": "Tonawanda Rail Trail Enhancements", "due": "2026-08-11", "id": "2026-496", "co": "TONAWANDA", "job": "2665.2", "src": "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2475&Inline=True", "date": "2026-07-13", "note": "", "inf": 0, "ad": 1, "tr": "SITE/PARKS"}, {"subj": "Community Activity Center Picnic Shelter Project", "due": "2026-08-11", "id": "O.P. 14-19", "co": "ORCHARDPARK", "job": "AB004", "src": "https://www.orchardparkny.gov/wp-content/uploads/2026/08/20260715-TB-M.pdf", "date": "2026-07-15", "note": "", "inf": 0, "ad": 0, "tr": "OTHER"}, {"subj": "Community Activity Center Milling Parking Lot extension and test dig into Brush Mountain Pile Project", "due": "", "id": "O.P. 14-20", "co": "ORCHARDPARK", "job": "AB005", "src": "https://www.orchardparkny.gov/wp-content/uploads/2026/08/20260715-TB-M.pdf", "date": "2026-07-15", "note": "award listed on the Aug 5, 2026 agenda", "inf": 1, "ad": 0, "tr": "OTHER"}];
+var BK=[
+  {k:'bid',t:'Bid now',s:'Open calls and work about to be let.'},
+  {k:'ready',t:'Get ready',s:'Money approved or design underway. Median 22 months from here to the bid &mdash; we measured it.'},
+  {k:'room',t:'Know the room',s:'Recent awards and the prices they went for.'}
+];
+function clamp(v,a,b){return v<a?a:(v>b?b:v);}
+function ageD(iso){return (BUILT_MS-Date.parse(iso+'T00:00:00Z'))/86400000;}
+function fitOn(x){return !!state.t.length&&state.t.indexOf(x.tr)>=0;}
+function sizeS(L){
+  // log-scaled on purpose: 125x more money is only ~2.3x more score, so one
+  // giant bond can never bury a $400K job that is biddable this week.
+  // ESTIMATE money scores 0 - it is not lettable work.
+  if(!L.amt||L.est)return 0;
+  return SK.sizeK*Math.log(Math.max(L.amt,SK.sizeFloor)/SK.sizeFloor)/Math.LN10;
+}
+function soon3(L){
+  if(L.sec!==3)return false;   // same CLOCK selection fcast()/digest() use
+  var t=CLOCK.trade[L.tr]||null,c=(L.co==='NIAGARA'?CLOCK.cm[L.cm]:null)||null;
+  var src=(t&&t.n>=5)?t:((c&&c.n>=5)?c:null);
+  if(!src)return false;
+  var d=-ageD(L.date)+Math.round(src.p25);
+  return d>=0&&d<=183;
+}
+function scoreLead(L){
+  var st=L.sec===0?SK.s0:(L.sec===2?SK.s2:SK.s1),t=0;
+  if(L.sec===0&&NEWB[L.co]&&NEWB[L.co][0]===L.date)t+=SK.newMeet;
+  if(soon3(L))t+=SK.soon;
+  t+=clamp(SK.recMax*(1-ageD(L.date)/SK.recWin),0,SK.recMax);
+  return st+t+sizeS(L)+(fitOn(L)?SK.fit:0);
+}
+function scoreBid(b){
+  // no size term (a call for bids has no price - that is what bidding is for)
+  // and no recency term (its clock is the returnable date, not its age)
+  var t=0;
+  if(b.due)t=clamp(SK.bidMax*(1+ageD(b.due)/SK.bidWin),0,SK.bidMax);
+  return SK.bid+t+(fitOn(b)?SK.fit:0);
+}
+function bucketOf(L){
+  if(L.sec===0)return (ageD(L.date)<=SK.immDays&&L.tr!=='OTHER')?'bid':'ready';
+  return L.sec===2?'room':'ready';
+}
+function bidMatch(b){
+  // board + trade only. A call for bids prints no dollar figure by
+  // definition, so the $ floor cannot honestly apply to one - the bucket
+  // says so out loud whenever a floor is set.
+  if(state.co.length&&state.co.indexOf(b.co)<0)return false;
+  if(state.t.length&&state.t.indexOf(b.tr)<0)return false;
+  if(state.q&&(b.subj+' '+b.id).toLowerCase().indexOf(state.q)<0)return false;
+  return true;
+}
+function dueWord(iso){
+  var d=Math.round(-ageD(iso));
+  if(d<=0)return 'Bids due today';
+  if(d===1)return 'Bids due tomorrow';
+  return 'Bids due in '+d+' days';
+}
+function amtWord(L){
+  if(!L.amt)return '';
+  return money0(L.amt)+(L.cap?' ceiling':(L.est?' estimate':(L.sec===2?' award':'')));
+}
+function whyLead(L){
+  // WHY IT'S HERE, composed only from what actually drove the score. Never
+  // "best match" without the reason, never a reason we did not measure.
+  var p=[],d;
+  if(L.sec===0){d=Math.round(-ageD(L.date));
+    p.push(d>0?('Up for a vote '+nbs(L.date)):('On the '+nbs(L.date)+' agenda'));}
+  else if(L.sec===1)p.push('Money approved '+nbs(L.date));
+  else if(L.sec===2)p.push('Awarded '+nbs(L.date));
+  else p.push(soon3(L)?'Ad window opens inside 6 months':('Design money '+nbs(L.date)));
+  p.push(fitOn(L)?('matches '+L.tr.toLowerCase()):(CO_LBL[L.co]||scl(L.co)));
+  var a=amtWord(L); if(a)p.push(a);
+  return p;
+}
+function whyBid(b){
+  var p=[b.inf?'Bid call &mdash; no returnable date printed':dueWord(b.due)];
+  p.push(fitOn(b)?('matches '+b.tr.toLowerCase()):(CO_LBL[b.co]||scl(b.co)));
+  if(b.ad)p.push('addendum may extend');
+  return p;
+}
+function whyHtml(parts){
+  // the money clause carries no separator - the mono shift already sets it
+  // apart, and it is the clause most likely to wrap onto its own line
+  return '<div class="why">'+parts.map(function(s,i){
+    var amt=s.charAt(0)==='$';
+    return '<span class="wp'+(amt?' wamt':'')+'">'+
+      (i&&!amt?'<i class="wsep">·</i>':'')+s+'</span>';
+  }).join('')+'</div>';
+}
+function bcard(L,i){
+  var nb=NEWB[L.co],newb=(nb&&L.date===nb[0])?'<span class="newb">NEW · '+nb[1]+'</span>':'';
+  var v=L.vote,vs=(v.a!=null)?('voted '+v.a+'–'+v.n)
+    :(L.sec===0?'vote not public yet':(v.out?esc(v.out.toLowerCase()):'voted —'));
+  var meta=[coTag(L.co),L.tr,L.id,L.date,(L.dr?'draft':''),(L.ov?'vote from scan':''),
+    (L.cf?'printed $ conflict':''),vs].filter(Boolean).join(' · ');
+  return '<div class="lead bd" data-i="'+i+'" tabindex="0" role="button" aria-expanded="false">'+
+    '<div class="lhead">'+CHEV+whyHtml(whyLead(L))+
+    '<div class="lt">'+esc(L.title)+'</div>'+
+    '<div class="bmeta">'+newb+esc(meta)+'</div></div>'+
+    '<div class="drill"></div></div>';
+}
+function bidcard(b,i){
+  var meta=[coTag(b.co),(b.job?((b.co==='TONAWANDA'?'JOB ':'ACCT ')+b.job):''),b.id,
+    (b.due?'returnable '+b.due:'no returnable date printed')].filter(Boolean).join(' · ');
+  return '<div class="lead bd bid" data-b="'+i+'" tabindex="0" role="button" aria-expanded="false">'+
+    '<div class="lhead">'+CHEV+whyHtml(whyBid(b))+
+    '<div class="lt">'+esc(b.subj)+'</div>'+
+    '<div class="bmeta">'+esc(meta)+'</div></div>'+
+    '<div class="drill"></div></div>';
+}
+function biddrill(b){
+  var h='<div class="drow"><span class="dk">WHAT THIS IS</span><span class="dv">'+
+    'A call for bids printed in the town&rsquo;s own minutes'+
+    (b.date?' on '+nbs(b.date):'')+' &mdash; the lead exists before any bid portal.'+
+    (b.ad?' The call says the return date may be extended by addendum.':'')+'</span></div>';
+  if(b.due)h+='<div class="drow"><span class="dk">RETURNABLE</span><span class="dv"><q>'+
+    b.due+'</q> &mdash; as printed in the call.</span></div>';
+  if(b.note)h+='<div class="drow"><span class="dk">NOTE</span><span class="dv">'+esc(b.note)+'</span></div>';
+  h+='<button class="cpy" data-cp>⧉ Copy lead</button>';
+  if(b.src)h+='<a class="srclink" href="'+b.src+'" target="_blank" rel="noreferrer">'+
+    'Source: the town&rsquo;s own PDF ↗</a>';
+  return h;
+}
+function trLabel(){
+  if(!state.t.length)return 'All trades';
+  var a=state.t.map(scl);
+  return a.length<=3?a.join(', '):(a.slice(0,2).join(', ')+' +'+(a.length-2)+' more');
+}
+function minLabel(){return state.min?('$'+Math.round(state.min/1000)+'K+'):'Any size';}
+function coLabel(){
+  if(!state.co.length)return 'all 16 boards';
+  if(state.co.length<=2)return state.co.map(function(c){return CO_LBL[c]||scl(c);}).join(', ');
+  return state.co.length+' boards';
+}
+function loosen(){
+  // THE HONEST LOOSENING: never a blank screen, never a fake result. Count
+  // the real data one dimension at a time and offer the nearest thing that
+  // actually exists this week.
+  var i,f,n,FL=[250000,100000,0];
+  function cnt(o){var k=0;LEADS.forEach(function(L){if(match(L,o))k++;});return k;}
+  for(i=0;i<FL.length;i++){f=FL[i];
+    if(state.min&&f<state.min){n=cnt({min:f});
+      if(n)return {n:n,act:'min',v:f,txt:'There '+(n===1?'is':'are')+' <b>'+n+'</b> '+
+        (f?'over $'+Math.round(f/1000)+'K':'at any size')+' &mdash; '+
+        (f?'lower the floor?':'drop the floor?')};}}
+  if(state.co.length){n=cnt({co:[]});
+    if(n)return {n:n,act:'co',txt:'There '+(n===1?'is':'are')+' <b>'+n+'</b> across all 16 boards &mdash; widen the map?'};}
+  if(state.t.length){n=cnt({t:[]});
+    if(n)return {n:n,act:'t',txt:'There '+(n===1?'is':'are')+' <b>'+n+'</b> of every trade at this size &mdash; show every trade?'};}
+  return null;
+}
+function boardEmpty(){
+  var bits=[state.t.length
+    ?state.t.map(function(s){return s.toLowerCase();}).join(' or ')+' jobs':'leads'];
+  if(state.min)bits.push('over $'+Math.round(state.min/1000)+'K');
+  if(state.co.length)bits.push('on '+coLabel());
+  var lo=loosen();
+  return '<div class="bnone"><div class="bnh">No '+bits.join(' ')+' in this issue.</div>'+
+    '<p class="bnp">'+(lo?lo.txt:'Nothing on any of the sixteen boards matches &mdash; that is '+
+      'the honest state of this week&rsquo;s record, not an error.')+'</p>'+
+    (lo?'<button class="bnb" data-loose="'+lo.act+'" data-lv="'+(lo.v!==undefined?lo.v:'')+'">'+
+        (lo.act==='min'?'Show me those':(lo.act==='co'?'Use all 16 boards':'Show every trade'))+
+        '</button>'
+       :'<button class="bnb" data-loose="clear">Clear my setup</button>')+'</div>';
+}
+var BKEMPTY={
+  bid:'No open bid call and nothing construction-related about to be voted &mdash; '+
+      'the boards print calls when they print them, and this fills the week one lands.',
+  ready:'No approved money and no design work in your setup this issue.',
+  room:'No award in your setup this issue &mdash; an honest zero, not a filtered-out one.'
+};
+function paintBoard(){
+  var i,items={bid:[],ready:[],room:[]},nmatch=0;
+  LEADS.forEach(function(L,ix){
+    if(!match(L))return; nmatch++;
+    items[bucketOf(L)].push({s:scoreLead(L),h:bcard(L,ix),k:'L'+(1e6+ix)});
+  });
+  BIDS.forEach(function(b,ix){
+    if(!bidMatch(b))return;
+    items.bid.push({s:scoreBid(b),h:bidcard(b,ix),k:'B'+(1e6+ix)});
+  });
+  var total=items.bid.length+items.ready.length+items.room.length;
+  // headline + sub
+  var set=!!state.up;
+  document.getElementById('bhead').innerHTML=set?'Your <em>board</em>':'This week in WNY';
+  document.getElementById('bsub').innerHTML=set
+    ?('<b>'+nmatch+'</b> of '+LEADS.length+' leads match your setup, ranked by what you can '+
+      'act on soonest.')
+    :('Sixteen boards read. Here&rsquo;s what moved &mdash; tune it to your trades and this '+
+      'becomes <b>your board</b>.');
+  document.getElementById('setline').hidden=!(set&&!sup);
+  document.getElementById('setcta').hidden=!(!set&&!sup);
+  document.getElementById('setupcard').hidden=!sup;
+  document.getElementById('setcta').setAttribute('aria-expanded',sup?'true':'false');
+  document.getElementById('sltxt').innerHTML=
+    '<b>'+esc(trLabel())+'</b> · '+esc(minLabel())+' · '+esc(coLabel());
+  document.getElementById('subsum').innerHTML=state.co.length
+    ? esc(coLabel())+' &mdash; tap to change'
+    : 'All 16 boards &mdash; tap to narrow';
+  var h='';
+  if(!total){h=boardEmpty();}
+  else{
+    BK.forEach(function(B){
+      var rows=items[B.k];
+      rows.sort(function(a,b){return (b.s-a.s)||(a.k<b.k?-1:1);});
+      var full=rows.length, shown=bexp[B.k]?rows:rows.slice(0,5);
+      // the floor exception is only worth saying when a call is actually here
+      var nb=0; rows.forEach(function(r){if(r.k.charAt(0)==='B')nb++;});
+      var note=(B.k==='bid'&&state.min&&nb)
+        ?'<p class="bks" style="color:var(--faint)">A call for bids prints no dollar figure, '+
+         'so your $'+Math.round(state.min/1000)+'K floor does not apply to the calls themselves.</p>':'';
+      h+='<div class="bkt'+(B.k==='bid'?' now':'')+'" id="bk_'+B.k+'">'+
+        '<div class="bkh"><span class="bkn">'+B.t.toUpperCase()+'</span>'+
+        '<span class="bkc num">'+full+'</span></div>'+
+        '<p class="bks">'+B.s+'</p>'+note+
+        (full?(shown.map(function(r){return r.h;}).join('')+
+          (full>shown.length?'<button class="bmore" data-bmore="'+B.k+'">Show all '+full+
+            ' in this bucket &darr;</button>':''))
+         :'<p class="bkempty">'+BKEMPTY[B.k]+'</p>')+
+        '</div>';
+    });
+  }
+  document.getElementById('buckets').innerHTML=h;
 }
 function paint(){
   SECS.forEach(function(sec){
@@ -935,18 +1413,20 @@ function paint(){
       .filter(function(p){return p[0].sec===sec&&match(p[0]);});
     if(state.s==='new')rows.sort(function(a,b){return a[0].date<b[0].date?1:-1;});
     var full=rows.length, shown=(!expanded[sec]&&full>10)?rows.slice(0,8):rows;
+    var em=(state.co.length===1?(EMPTY[state.co[0]]||{})[sec]:null);
     document.getElementById('sec'+sec).innerHTML=
       full?(shown.map(function(p){return card(p[0],p[1]);}).join('')+
         (shown.length<full?'<button class="more" data-more="'+sec+'">Show all '+full+' &darr;</button>':''))
-      :'<p class="none">'+(((EMPTY[state.co]||{})[sec])||'Nothing matches in this section — an honest zero.')+'</p>';
+      :'<p class="none">'+(em||'Nothing matches in this section — an honest zero.')+'</p>';
     var cs=document.querySelector('[data-cnt="'+sec+'"]');
     if(cs)cs.textContent='('+rows.length+')';
   });
+  var okCo=function(v){return !state.co.length||state.co.indexOf(v)>=0;};
   var bids=document.getElementById('bids');   // per-row board filter (T.o.T. + O.P. calls)
   if(bids){
     var any=false;
     bids.querySelectorAll('.bidr').forEach(function(rw){
-      var show=(state.co==='BOTH'||rw.getAttribute('data-bco')===state.co);
+      var show=okCo(rw.getAttribute('data-bco'));
       rw.hidden=!show; if(show)any=true;
     });
     bids.hidden=!any;
@@ -955,39 +1435,39 @@ function paint(){
   if(pays){
     var anyP=false;
     pays.querySelectorAll('.payr').forEach(function(rw){
-      var show=(state.co==='BOTH'||rw.getAttribute('data-pco')===state.co);
+      var show=okCo(rw.getAttribute('data-pco'));
       rw.hidden=!show; if(show)anyP=true;
     });
     pays.hidden=!anyP;
   }
+  paintBoard();
   digest();
   fcnt();
 }
-document.getElementById('chips').addEventListener('click',function(e){
-  var c=e.target.closest('.chip'); if(!c)return;
-  state.t=c.getAttribute('data-t');persist();
-  document.querySelectorAll('#chips .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c);});
-  paint();
+// one delegated handler per dimension - the same chips live in the board's
+// setup card AND in the filter sheet, and both must mean the same thing
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-t]'); if(!c)return;
+  var v=c.getAttribute('data-t'),k;
+  if(v==='ALL')state.t=[];
+  else{k=state.t.indexOf(v); if(k<0)state.t.push(v); else state.t.splice(k,1); state.t.sort();}
+  touch();persist();syncChips();paint();
 });
-document.getElementById('cochips').addEventListener('click',function(e){
-  var c=e.target.closest('.chip'); if(!c)return;
-  state.co=c.getAttribute('data-co');persist();
-  document.querySelectorAll('#cochips .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c);});
-  paint();
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-co]'); if(!c)return;
+  var v=c.getAttribute('data-co'),k;
+  if(v==='BOTH')state.co=[];
+  else{k=state.co.indexOf(v); if(k<0)state.co.push(v); else state.co.splice(k,1); state.co.sort();}
+  touch();persist();syncChips();paint();
 });
-document.querySelectorAll('[data-s]').forEach(function(c){
-  c.addEventListener('click',function(){
-    state.s=c.getAttribute('data-s');
-    document.querySelectorAll('[data-s]').forEach(function(x){x.setAttribute('aria-pressed',x===c);});
-    paint();
-  });
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-m]'); if(!c)return;
+  state.min=+c.getAttribute('data-m');
+  touch();persist();syncChips();paint();
 });
-document.querySelectorAll('[data-m]').forEach(function(c){
-  c.addEventListener('click',function(){
-    state.min=+c.getAttribute('data-m');persist();
-    document.querySelectorAll('[data-m]').forEach(function(x){x.setAttribute('aria-pressed',x===c);});
-    paint();
-  });
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-s]'); if(!c)return;
+  state.s=c.getAttribute('data-s');syncChips();paint();
 });
 var qt;
 document.getElementById('q').addEventListener('input',function(e){
@@ -995,10 +1475,49 @@ document.getElementById('q').addEventListener('input',function(e){
   qt=setTimeout(function(){state.q=e.target.value.trim().toLowerCase();persist();paint();},120);
 });
 document.addEventListener('click',function(e){
-  var el=e.target.closest('.lead'); if(!el||e.target.closest('a')||e.target.closest('.cpy'))return;
+  var el=e.target.closest('.lead');
+  if(!el||e.target.closest('a')||e.target.closest('.cpy'))return;
   var open=el.classList.toggle('open');
   el.setAttribute('aria-expanded',open);
-  if(open) el.querySelector('.drill').innerHTML=drill(LEADS[+el.getAttribute('data-i')]);
+  if(open) el.querySelector('.drill').innerHTML=el.hasAttribute('data-b')
+    ? biddrill(BIDS[+el.getAttribute('data-b')])
+    : drill(LEADS[+el.getAttribute('data-i')],el.classList.contains('bd'));
+});
+// ---- the board's own controls: setup, show-all, honest loosening ----------
+function showCos(on){
+  document.getElementById('sucos').hidden=!on;
+  document.getElementById('subco').setAttribute('aria-expanded',on?'true':'false');
+}
+document.getElementById('subco').addEventListener('click',function(){
+  showCos(document.getElementById('sucos').hidden);
+});
+function showSetup(on,scroll){
+  sup=on?1:0; paintBoard();
+  // someone arriving on a link that already names boards should SEE which
+  if(on&&state.co.length)showCos(1);
+  if(on&&scroll)document.getElementById('setupcard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('setcta').addEventListener('click',function(){showSetup(1,0);});
+document.getElementById('slchange').addEventListener('click',function(){showSetup(1,0);});
+document.getElementById('susave').addEventListener('click',function(){
+  state.up=1;persist();showSetup(0,0);
+});
+document.getElementById('suclr').addEventListener('click',function(){
+  state.t=[];state.co=[];state.min=0;state.q='';state.up=0;
+  persist();syncChips();paint();
+});
+document.addEventListener('click',function(e){
+  var mb=e.target.closest('[data-bmore]'); if(!mb)return;
+  bexp[mb.getAttribute('data-bmore')]=1; paintBoard();
+});
+document.addEventListener('click',function(e){
+  var lb=e.target.closest('[data-loose]'); if(!lb)return;
+  var a=lb.getAttribute('data-loose');
+  if(a==='min')state.min=+lb.getAttribute('data-lv')||0;
+  else if(a==='co')state.co=[];
+  else if(a==='t')state.t=[];
+  else{state.t=[];state.co=[];state.min=0;state.q='';state.up=0;}
+  persist();syncChips();paint();
 });
 document.addEventListener('keydown',function(e){
   if(e.key!=='Enter'&&e.key!==' ')return;
@@ -1014,12 +1533,40 @@ document.addEventListener('click',function(e){
   var mb=e.target.closest('[data-more]'); if(!mb)return;
   expanded[+mb.getAttribute('data-more')]=true; paint();
 });
-document.querySelectorAll('[data-j]').forEach(function(c){
-  c.addEventListener('click',function(){
-    var el=document.getElementById(c.getAttribute('data-j'));
-    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-  });
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-j]'); if(!c)return;
+  var el=document.getElementById(c.getAttribute('data-j'));
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
 });
+// ---- BROWSE EVERYTHING: the whole old page, one tap down and remembered ---
+// Nothing was deleted - sections 00-05, the checkbook, the payments lane, the
+// bids strip, every drill and the print sheet all live on in here.
+var brbtn=document.getElementById('brbtn'),brbody=document.getElementById('brbody');
+function paintJumps(){
+  var open=!brbody.hidden;
+  document.getElementById('jumps').innerHTML=open
+    ?'<button class="chip jump" data-j="s0">00 Agenda</button>'+
+     '<button class="chip jump" data-j="s1">01 Approved</button>'+
+     '<button class="chip jump" data-j="s2">02 Awarded</button>'+
+     '<button class="chip jump" data-j="s3">03 Upstream</button>'+
+     '<button class="chip jump" data-j="s4">04 Checkbook</button>'+
+     '<button class="chip jump" data-j="s5">05 Intel</button>'
+    :'<button class="chip jump" data-j="bk_bid">Bid now</button>'+
+     '<button class="chip jump" data-j="bk_ready">Get ready</button>'+
+     '<button class="chip jump" data-j="bk_room">Know the room</button>'+
+     '<button class="chip jump" data-j="brwrap">Everything</button>';
+}
+function setBrowse(on){
+  brbody.hidden=!on;
+  brbtn.setAttribute('aria-expanded',on?'true':'false');
+  brbtn.querySelector('.brs').innerHTML=on
+    ?'All '+LEADS.length+' leads are open below &mdash; tap to collapse back to your board.'
+    :'All '+LEADS.length+' leads by section &mdash; the agenda, the money, the awards, '+
+     'the checkbook and twelve years of homework.';
+  try{sessionStorage.setItem('gwbr',on?'1':'0');}catch(e){}
+  paintJumps();
+}
+brbtn.addEventListener('click',function(){setBrowse(brbody.hidden);});
 // ---- the filter sheet: same panel node, same handlers, same state ----------
 var fbtn=document.getElementById('fbtn'),fpanel=document.getElementById('fpanel'),
     scrim=document.getElementById('scrim'),fph=document.getElementById('fph');
@@ -1044,19 +1591,29 @@ fbtn.addEventListener('click',function(){
 });
 scrim.addEventListener('click',sheetClose);
 document.getElementById('fdone').addEventListener('click',sheetClose);
+document.getElementById('fsetup').addEventListener('click',function(){
+  sheetClose();showSetup(1,1);
+});
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'&&fpanel.classList.contains('sheet'))sheetClose();
 });
 document.addEventListener('click',function(e){
   var btn=e.target.closest('.cpy'); if(!btn)return;
-  var el=btn.closest('.lead'); var L=LEADS[+el.getAttribute('data-i')];
-  var NL=String.fromCharCode(10);
-  var txt=L.title+' — '+(L.amt?money0(L.amt)+(L.cap?' ceiling':''):'')+' · '+L.id+' · '+L.date+
+  var el=btn.closest('.lead'), NL=String.fromCharCode(10), txt;
+  if(el.hasAttribute('data-b')){
+    var B=BIDS[+el.getAttribute('data-b')];
+    txt=B.subj+' — CALL FOR BIDS'+(B.due?', returnable '+B.due:' (no returnable date printed)')+
+      ' · '+coName(B.co)+(B.job?' · '+(B.co==='TONAWANDA'?'Job ':'Acct ')+B.job:'')+
+      (B.src?NL+'Source: '+B.src:'')+NL+'via Groundwork — jcurry44.github.io/groundwork-demo';
+  } else {
+  var L=LEADS[+el.getAttribute('data-i')];
+  txt=L.title+' — '+(L.amt?money0(L.amt)+(L.cap?' ceiling':''):'')+' · '+L.id+' · '+L.date+
     ' · '+coName(L.co)+
     (L.vote.a!=null?' · voted '+L.vote.a+'–'+L.vote.n
       :(L.vote.out?' · '+L.vote.out.toLowerCase()
         :(L.sec===0?' · on the agenda — no vote on record yet':'')))+
     (L.src?NL+'Source: '+L.src:'')+NL+'via Groundwork — jcurry44.github.io/groundwork-demo';
+  }
   function done(ok){btn.textContent=ok?'Copied ✓':'Copy failed';btn.classList.toggle('done',ok);
     setTimeout(function(){btn.textContent='⧉ Copy lead';btn.classList.remove('done');},1600);}
   function fallback(){
@@ -1159,6 +1716,11 @@ document.addEventListener('keydown',function(e){
   var el=e.target.closest('.frow,.vrow'); if(!el)return;
   e.preventDefault(); el.click();
 });
+var _br=0; try{_br=sessionStorage.getItem('gwbr')==='1';}catch(e){}
+setBrowse(!!_br);
+// mirror a restored setup straight back into the address bar, so the link in
+// the URL always IS their board - copy it, text it, it opens the same way
+persist();
 syncChips();
 paint();
 fpaint();
