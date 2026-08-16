@@ -292,28 +292,29 @@
   #fq:focus,#bq:focus{border-color:var(--accent)}
   #fq::placeholder,#bq::placeholder{color:var(--faint)}
   .fnote{font-size:11.5px;color:var(--muted);margin:6px 0 0}
-  .frow,.brw{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;border:1px solid var(--rule);
+  .frow,.bdw{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;border:1px solid var(--rule);
     background:var(--card);border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;
     -webkit-tap-highlight-color:transparent;box-shadow:var(--lift);
     transition:border-color .15s,box-shadow .15s,transform .12s ease-out}
-  @media(hover:hover){.frow:hover,.brw:hover{border-color:var(--accent);transform:translateY(-1px);
+  @media(hover:hover){.frow:hover,.bdw:hover{border-color:var(--accent);transform:translateY(-1px);
     box-shadow:var(--hover)}}
-  .brow{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+  .bdrow{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
     padding:8px 2px;border-bottom:1px dashed var(--rule)}
-  .brow:last-of-type{border-bottom:0}
-  .brl{min-width:0;flex:1}
-  .brt{font:500 13px Inter,sans-serif;color:var(--ink)}
-  .brm{font:400 10.5px 'JetBrains Mono',monospace;color:var(--faint)}
-  .brs{text-align:right;white-space:nowrap;font:400 10.5px 'JetBrains Mono',monospace;
+  .bdrow:last-of-type{border-bottom:0}
+  .bdl{min-width:0;flex:1}
+  .bdt{font:500 13px Inter,sans-serif;color:var(--ink)}
+  .bdm{font:400 10.5px 'JetBrains Mono',monospace;color:var(--faint);overflow-wrap:anywhere}
+  .bdsp{text-align:right;white-space:nowrap;font:400 10.5px 'JetBrains Mono',monospace;
     color:var(--faint);flex:0 0 auto}
-  .brs b{display:block;font-size:12.5px;font-weight:600}
-  .brwon b{color:var(--green)}
-  .brlost b{color:var(--brick)}
-  .brsum{font:400 12.5px Inter,sans-serif;color:var(--muted);margin:7px 0 9px}
-  .brsum .num{color:var(--ink);font-weight:600}
-  .bropen{margin-top:10px;padding-top:9px;border-top:1px solid var(--rule);
+  .bdsp b{display:block;font-size:12.5px;font-weight:600}
+  @media(max-width:640px){.bdsp{white-space:normal;max-width:46vw}}
+  .bdwon b{color:var(--green)}
+  .bdlost b{color:var(--brick)}
+  .bdsum{font:400 12.5px Inter,sans-serif;color:var(--muted);margin:7px 0 9px}
+  .bdsum .num{color:var(--ink);font-weight:600}
+  .bdopen{margin-top:10px;padding-top:9px;border-top:1px solid var(--rule);
     font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
-  .bropen b{color:var(--green)}
+  .bdopen b{color:var(--green)}
   .fal{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--accent)}
   .fdcard{border:1px solid var(--rule2);border-radius:12px;background:var(--card);
     padding:16px;margin:12px 0;box-shadow:var(--lift)}
@@ -1739,14 +1740,14 @@ document.addEventListener('click',function(e){
 });
 document.addEventListener('keydown',function(e){
   if(e.key!=='Enter'&&e.key!==' ')return;
-  var el=e.target.closest('.frow,.vrow,.brw'); if(!el)return;
+  var el=e.target.closest('.frow,.vrow,.bdw'); if(!el)return;
   e.preventDefault(); el.click();
 });
 // ---- THE BID ROOM: firm records from the printed tabulations ---------------
 var BFIRMS=[{"n": "Milherst Construction Inc.", "tr": ["OTHER", "ROADS"], "w": 1, "l": 1, "md": 26.5, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1634450, "Milherst Construction, Inc", 1634450, 1, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"], ["2026-05-04", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Matt Kolo Excavating in the ", 987250, "Matt Kolo Excavating", 780301, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2461&Inline=True"]]}, {"n": "A-1 Land Care, Inc.", "tr": ["OTHER", "ROADS"], "w": 0, "l": 1, "md": 16.0, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 127349, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"], ["2026-05-04", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Matt Kolo Excavating in the ", 905212, "Matt Kolo Excavating", 780301, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2461&Inline=True"]]}, {"n": "American Contracting and Environmental Services, Inc.", "tr": ["OTHER"], "w": 0, "l": 1, "md": 3.9, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1698000, "Milherst Construction, Inc", 1634450, 0, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"]]}, {"n": "American Paving & Excavating, Inc", "tr": ["ROADS"], "w": 0, "l": 1, "md": 7.7, "rows": [["2026-05-04", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Matt Kolo Excavating in the ", 840000, "Matt Kolo Excavating", 780301, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2461&Inline=True"]]}, {"n": "Amherst Paving", "tr": ["ROADS"], "w": 0, "l": 1, "md": 16.6, "rows": [["2026-06-10", "Lockport", "Resolution to Award East Ave. Paving", 492110, "D&H Paving", 422220, 0, "https://lockportny.gov/wp-content/uploads/2026/06/6.10.2026-Minutes-2.pdf"]]}, {"n": "Ed Shults Ford Jamestown", "tr": ["FLEET/EQUIP"], "w": 0, "l": 1, "md": 15.3, "rows": [["2026-01-08", "Cambria", "approve the purchase from Joe Basil Cevrolet Transit Road Depew for a 2026 Chevy Silverado 3500HD 4WD equipped with 8’6”", 89010, "Joe Basil Cevrolet Transit Road Depew", 77184, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/January%208th%202026%20%20regular.pdf"]]}, {"n": "Ground Breaking Solutions LLC", "tr": ["OTHER"], "w": 0, "l": 1, "md": 21.5, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1985150, "Milherst Construction, Inc", 1634450, 0, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"]]}, {"n": "Ingalls Site Development", "tr": ["ROADS"], "w": 0, "l": 1, "md": 4.7, "rows": [["2026-05-04", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Matt Kolo Excavating in the ", 817190, "Matt Kolo Excavating", 780301, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2461&Inline=True"]]}, {"n": "Integrated Construction Services & Solutions", "tr": ["BUILDING"], "w": 0, "l": 1, "md": 0.4, "rows": [["2026-03-23", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Guard Construction & Contrac", 277000, "Guard Construction & Contracting Corporation", 275995, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2449&Inline=True"]]}, {"n": "Kandey Company, Inc.", "tr": ["OTHER"], "w": 0, "l": 1, "md": 8.5, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1772772, "Milherst Construction, Inc", 1634450, 0, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"]]}, {"n": "Mark Cerrone, Inc.", "tr": ["OTHER"], "w": 0, "l": 1, "md": 21.5, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1985750, "Milherst Construction, Inc", 1634450, 0, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"], ["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 231500, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}, {"n": "Milherst Construction", "tr": ["ROADS"], "w": 0, "l": 1, "md": 12.2, "rows": [["2026-06-10", "Lockport", "Resolution to Award East Ave. Paving", 473900, "D&H Paving", 422220, 0, "https://lockportny.gov/wp-content/uploads/2026/06/6.10.2026-Minutes-2.pdf"]]}, {"n": "Millennium Construction, Inc.", "tr": ["WATER/SEWER"], "w": 0, "l": 1, "md": 13.0, "rows": [["2026-03-09", "Tonawanda (T)", "Further Communication Received from Matt Sutton, Recommending Acceptance of the Low Bid of Bella Concrete Solutions LLC ", 698125, "Bella Concrete Solutions LLC", 617835, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2447&Inline=True"]]}, {"n": "National Water Main Cleaning Co.", "tr": ["OTHER"], "w": 0, "l": 1, "md": 22.2, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1996960, "Milherst Construction, Inc", 1634450, 0, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"]]}, {"n": "Occhino Corp.", "tr": ["ROADS"], "w": 0, "l": 1, "md": 13.4, "rows": [["2026-06-10", "Lockport", "Resolution to Award East Ave. Paving", 478815, "D&H Paving", 422220, 0, "https://lockportny.gov/wp-content/uploads/2026/06/6.10.2026-Minutes-2.pdf"]]}, {"n": "Premier Concrete & Landscape of WNY", "tr": ["WATER/SEWER"], "w": 0, "l": 1, "md": 5.9, "rows": [["2026-03-09", "Tonawanda (T)", "Further Communication Received from Matt Sutton, Recommending Acceptance of the Low Bid of Bella Concrete Solutions LLC ", 654250, "Bella Concrete Solutions LLC", 617835, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2447&Inline=True"]]}, {"n": "Roman Construction", "tr": ["WATER/SEWER"], "w": 0, "l": 1, "md": 2.9, "rows": [["2026-03-09", "Tonawanda (T)", "Further Communication Received from Matt Sutton, Recommending Acceptance of the Low Bid of Bella Concrete Solutions LLC ", 636000, "Bella Concrete Solutions LLC", 617835, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2447&Inline=True"]]}, {"n": "STC Construction, Inc.", "tr": ["OTHER"], "w": 0, "l": 1, "md": 17.9, "rows": [["2026-01-20", "Grand Island", "Award Contract – SSES Year 10 and Lift Station 5 Replacement – Job # M-198-2023", 1927000, "Milherst Construction, Inc", 1634450, 0, "https://www.grandislandny.gov/AgendaCenter/ViewFile/Minutes/_01202026-822"]]}, {"n": "United Thermal Systems", "tr": ["ROADS"], "w": 0, "l": 1, "md": 28.2, "rows": [["2026-06-24", "Lockport", "Resolution to Highway Garage Roof Rehabilitation", 484500, "RIBCO, Inc.", 377800, 0, "https://lockportny.gov/wp-content/uploads/2026/06/6.24.2026-Minutes-3.pdf"]]}, {"n": "Visone Construction, Inc.", "tr": ["ROADS"], "w": 0, "l": 1, "md": 28.3, "rows": [["2026-05-04", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Matt Kolo Excavating in the ", 1000930, "Matt Kolo Excavating", 780301, 0, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2461&Inline=True"]]}, {"n": "West Herr Chrysler Lockport", "tr": ["FLEET/EQUIP"], "w": 0, "l": 1, "md": 12.0, "rows": [["2026-01-08", "Cambria", "approve the purchase from Joe Basil Cevrolet Transit Road Depew for a 2026 Chevy Silverado 3500HD 4WD equipped with 8’6”", 86449, "Joe Basil Cevrolet Transit Road Depew", 77184, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/January%208th%202026%20%20regular.pdf"]]}, {"n": "West Roofing Systems", "tr": ["ROADS"], "w": 0, "l": 1, "md": 8.0, "rows": [["2026-06-24", "Lockport", "Resolution to Highway Garage Roof Rehabilitation", 408200, "RIBCO, Inc.", 377800, 0, "https://lockportny.gov/wp-content/uploads/2026/06/6.24.2026-Minutes-3.pdf"]]}, {"n": "Bella Concrete Solutions LLC", "tr": ["WATER/SEWER"], "w": 1, "l": 0, "md": null, "rows": [["2026-03-09", "Tonawanda (T)", "Further Communication Received from Matt Sutton, Recommending Acceptance of the Low Bid of Bella Concrete Solutions LLC ", 617835, "Bella Concrete Solutions LLC", 617835, 1, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2447&Inline=True"]]}, {"n": "D&H Paving", "tr": ["ROADS"], "w": 1, "l": 0, "md": null, "rows": [["2026-06-10", "Lockport", "Resolution to Award East Ave. Paving", 422220, "D&H Paving", 422220, 1, "https://lockportny.gov/wp-content/uploads/2026/06/6.10.2026-Minutes-2.pdf"]]}, {"n": "Guard Construction & Contracting Corporation", "tr": ["BUILDING"], "w": 1, "l": 0, "md": null, "rows": [["2026-03-23", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Guard Construction & Contrac", 275995, "Guard Construction & Contracting Corporation", 275995, 1, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2449&Inline=True"]]}, {"n": "Joe Basil Cevrolet Transit Road Depew", "tr": ["FLEET/EQUIP"], "w": 1, "l": 0, "md": null, "rows": [["2026-01-08", "Cambria", "approve the purchase from Joe Basil Cevrolet Transit Road Depew for a 2026 Chevy Silverado 3500HD 4WD equipped with 8’6”", 77184, "Joe Basil Cevrolet Transit Road Depew", 77184, 1, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/January%208th%202026%20%20regular.pdf"]]}, {"n": "Matt Kolo Excavating", "tr": ["ROADS"], "w": 1, "l": 0, "md": null, "rows": [["2026-05-04", "Tonawanda (T)", "Communication from Matthew Sutton, Town Engineer, Recommending Acceptance of the Low Bid of Matt Kolo Excavating in the ", 780301, "Matt Kolo Excavating", 780301, 1, "https://tonawandatownny.iqm2.com/Citizens/FileOpen.aspx?Type=15&ID=2461&Inline=True"]]}, {"n": "RIBCO, Inc.", "tr": ["ROADS"], "w": 1, "l": 0, "md": null, "rows": [["2026-06-24", "Lockport", "Resolution to Highway Garage Roof Rehabilitation", 377800, "RIBCO, Inc.", 377800, 1, "https://lockportny.gov/wp-content/uploads/2026/06/6.24.2026-Minutes-3.pdf"]]}, {"n": "Durable Demolition LLC", "tr": ["OTHER"], "w": 0, "l": 0, "md": null, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 300575, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}, {"n": "E&R General Construction", "tr": ["OTHER"], "w": 0, "l": 0, "md": null, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 94800, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}, {"n": "Edbauer Construction", "tr": ["OTHER"], "w": 0, "l": 0, "md": null, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 135000, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}, {"n": "Ground Breaking Solutions", "tr": ["OTHER"], "w": 0, "l": 0, "md": null, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 97500, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}, {"n": "JMM Construction of WNY", "tr": ["OTHER"], "w": 0, "l": 0, "md": null, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 96317, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}, {"n": "NFP & Sons, Inc.", "tr": ["OTHER"], "w": 0, "l": 0, "md": null, "rows": [["2026-03-12", "Cambria", "approve the above resolution not to exceed $75,000.00", 100500, null, null, 0, "https://media.cmsmax.cloud/lv20xzze8ydi4trylfuou/March%2012%2C%202026a%20regular.pdf"]]}],BROPEN=[{"due": "", "t": "Community Activity Center Milling Parking Lot extension and test dig into Brush Mountain Pile Project", "co": "Orchard Park", "tr": "OTHER"}],bsel=-1;
 function bdate(d){return MONS[+d.slice(5,7)-1]+' '+(+d.slice(8,10));}
 function bRow(F,i){
-  return '<div class="brw" data-bi="'+i+'" tabindex="0" role="button">'+
+  return '<div class="bdw" data-bi="'+i+'" tabindex="0" role="button">'+
     '<span class="vn">'+esc(F.n)+'</span>'+
     '<span class="vys num">'+F.rows.length+' tab appearance'+(F.rows.length!==1?'s':'')+
     (F.w+F.l?' · won '+F.w+' · lost '+F.l:' · winner name not machine-readable')+'</span>'+
@@ -1756,7 +1757,7 @@ function bRow(F,i){
 function bCard(F){
   var h='<div class="fdcard">';
   h+='<div><span class="fdn">'+esc(F.n)+'</span></div>';
-  h+='<div class="brsum"><span class="num">'+F.rows.length+'</span> appearance'+
+  h+='<div class="bdsum"><span class="num">'+F.rows.length+'</span> appearance'+
      (F.rows.length!==1?'s':'')+' in printed tabs'+
      (F.w+F.l?' · won <span class="num">'+F.w+'</span>, lost <span class="num">'+F.l+'</span>':'')+
      (F.md!=null?' · median miss when losing <span class="num">'+(F.md>=0?'+':'')+F.md+'%</span>':'')+
@@ -1764,24 +1765,24 @@ function bCard(F){
   F.rows.forEach(function(r){
     var d=r[0],co=r[1],t=r[2],amt=r[3],win=r[4],wamt=r[5],won=r[6];
     var right;
-    if(won){right='<span class="brs brwon"><b>WON'+(wamt!=null?' · '+money0(wamt):'')+'</b>'+
+    if(won){right='<span class="bdsp bdwon"><b>WON'+(wamt!=null?' · '+money0(wamt):'')+'</b>'+
       'the field is printed in the record</span>';}
     else if(amt!=null&&win&&wamt!=null){
       var dd=amt-wamt,pc=Math.round(dd/wamt*1000)/10;
-      right='<span class="brs brlost"><b>'+(dd>=0?'+':'&minus;')+money0(Math.abs(dd))+
+      right='<span class="bdsp bdlost"><b>'+(dd>=0?'+':'&minus;')+money0(Math.abs(dd))+
         ' · '+(pc>=0?'+':'')+pc+'%</b>their '+money0(amt)+' vs '+money0(wamt)+'</span>';
     }else if(amt!=null){
-      right='<span class="brs"><b>their '+money0(amt)+'</b>'+
+      right='<span class="bdsp"><b>their '+money0(amt)+'</b>'+
         (win?'winner&rsquo;s figure not printed':'winner&rsquo;s name truncated in the record')+'</span>';
-    }else{right='<span class="brs"><b>figure not printed</b>named in the tab</span>';}
-    h+='<div class="brow"><span class="brl"><span class="brt">'+esc(t)+'</span><br>'+
-       '<span class="brm">'+bdate(d)+' · '+esc(co)+' · '+
+    }else{right='<span class="bdsp"><b>figure not printed</b>named in the tab</span>';}
+    h+='<div class="bdrow"><span class="bdl"><span class="bdt">'+esc(t)+'</span><br>'+
+       '<span class="bdm">'+bdate(d)+' · '+esc(co)+' · '+
        (won?'awarded to them':(win?'awarded to '+esc(win):
         'the award snippet truncates the winner&rsquo;s name &mdash; the source PDF prints it'))+
        '</span></span>'+right+'</div>';
   });
   var op=BROPEN.filter(function(b){return F.tr.indexOf(b.tr)>=0;});
-  h+='<div class="bropen">'+(op.length?
+  h+='<div class="bdopen">'+(op.length?
     '<b>Open now in their trades:</b> '+op.map(function(b){
       return esc(b.t)+(b.due?' — due '+bdate(b.due):'')+' ('+esc(b.co)+')';}).join(' · '):
     'No open bid calls in their trades in this build — the Monday email is where the next one lands.')+'</div>';
@@ -1804,7 +1805,7 @@ function bpaint(){
 var bqt;
 document.getElementById('bq').addEventListener('input',function(){clearTimeout(bqt);bqt=setTimeout(bpaint,120);});
 document.addEventListener('click',function(e){
-  var brr=e.target.closest('.brw');if(!brr)return;
+  var brr=e.target.closest('.bdw');if(!brr)return;
   bsel=+brr.getAttribute('data-bi');bpaint();
   document.getElementById('bcard').scrollIntoView({behavior:'smooth',block:'nearest'});
 });
