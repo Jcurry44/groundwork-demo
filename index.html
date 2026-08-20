@@ -202,6 +202,9 @@
   .throw .num{color:var(--faint);flex:none;font-size:11px}
   .throw.thme{background:rgba(122,92,46,.08);border-left:2px solid var(--accent);
     padding-left:8px;margin-left:-10px;border-radius:0 4px 4px 0}
+  a.throw.thlink{text-decoration:none;color:var(--muted)}
+  @media(hover:hover){a.throw.thlink:hover span:first-child{color:var(--accent);
+    text-decoration:underline}}
   .throw.thme span:first-child{font:600 10px 'JetBrains Mono',monospace;
     letter-spacing:.06em;color:var(--accent);align-self:center}
   .vline{font-size:13px;color:var(--muted);margin:8px 0 0;padding-top:8px;
@@ -941,6 +944,7 @@ var FIRMS=[{"n": "Concrete Applied Technologies Corp", "a": 19, "y0": "2015", "y
 var NFIRMS_ALL=261;
 var NEWB={"NIAGARA": ["2026-08-04", "AUG 4"], "ERIE": ["2026-06-11", "JUN 11"], "TONAWANDA": ["2026-08-03", "AUG 3"], "LANCASTER": ["2026-08-17", "AUG 17"], "WSENECA": ["2026-08-10", "AUG 10"], "PENDLETON": ["2026-08-10", "AUG 10"], "ORCHARDPARK": ["2026-08-05", "AUG 5"], "GRANDISLAND": ["2026-08-03", "AUG 3"], "HAMBURG": ["2026-08-10", "AUG 10"], "LOCKPORT": ["2026-08-12", "AUG 12"], "CLARENCE": ["2026-07-22", "JUL 22"], "ALDEN": ["2026-08-03", "AUG 3"], "NEWSTEAD": ["2026-07-13", "JUL 13"], "SARDINIA": ["2026-07-06", "JUL 6"], "CAMBRIA": ["2026-08-10", "AUG 10"], "WHEATFIELD": ["2026-08-03", "AUG 3"]};   // county -> [latest meeting date, badge label], build-time
 var TRATE={"WATER/SEWER": [{"t": "Approve and Authorize the Supervisor and Town Board, as Commissioners of the Water Acqui", "amt": 603239, "co": "TONAWANDA", "date": "2026-08-03"}, {"t": "Approve and Authorize the Supervisor and the Town Board, as Commissioners of the Water A", "amt": 206210, "co": "TONAWANDA", "date": "2026-07-13"}, {"t": "AUTHORIZING SEWER EXPENDITURE", "amt": 18554, "co": "PENDLETON", "date": "2026-07-13"}], "SITE/PARKS": [{"t": "awards the contract for the Lancaster Opera House Staircase and Sidewalk Reconstruction ", "amt": 292600, "co": "LANCASTER", "date": "2026-08-03"}, {"t": "for the following: RESOLVED that the Clarence Town Board award the construction support ", "amt": 297000, "co": "CLARENCE", "date": "2026-07-08"}, {"t": "awards the contract for the supply and installation of a Splashpad in Westwood Park to G", "amt": 700000, "co": "LANCASTER", "date": "2026-07-06"}], "ROADS": [{"t": "that upon the recommendation of the Highway Superintendent after reviewing bids, to awar", "amt": 80870, "co": "CLARENCE", "date": "2026-07-22"}, {"t": "Resolution to Highway Garage Roof Rehabilitation", "amt": 377800, "co": "LOCKPORT", "date": "2026-06-24"}, {"t": "Approve and Authorize the Supervisor and Town Board, as Commissioners of the Water Acqui", "amt": 151982, "co": "TONAWANDA", "date": "2026-06-22"}], "FLEET/EQUIP": [{"t": "Chief Cosgrove re Bid Award for Police Vehicles", "amt": 80906, "co": "WSENECA", "date": "2026-06-29"}, {"t": "AUTHORIZING EXPENDITURE FOR TRUCK BODY", "amt": 24225, "co": "PENDLETON", "date": "2026-05-11"}, {"t": "Niagara County Sheriff's Office Award of Sealed Bid for Fleet Vehicle Graphics for Niaga", "amt": 24860, "co": "NIAGARA", "date": "2026-05-05"}], "ELECTRICAL": [{"t": "Approve the final change order/final payment and authorize release of retention for the ", "amt": 492948, "co": "ORCHARDPARK", "date": "2026-05-20"}, {"t": "Approve the final change order/final payment and authorize release of retention for the ", "amt": 178161, "co": "ORCHARDPARK", "date": "2026-05-20"}, {"t": "Approve the final change order/final payment and authorize release of retention for the ", "amt": 43975, "co": "ORCHARDPARK", "date": "2026-04-15"}], "BUILDING": [{"t": "awards the contract for the purchase and installation of new carpet and vinyl flooring t", "amt": 30355, "co": "LANCASTER", "date": "2026-05-18"}, {"t": "Armor Pump Station Emergency Repair", "amt": 190000, "co": "HAMBURG", "date": "2026-05-04"}, {"t": "approves Change Order No. 1 and 2 from Aerial Roofing & Exteriors, Inc., with respect to", "amt": 196578, "co": "LANCASTER", "date": "2026-04-06"}], "BRIDGE": [{"t": "Supervisor Dickson re Award of Greymont Avenue Culvert Project", "amt": 330151, "co": "WSENECA", "date": "2026-03-09"}, {"t": "Award contract to Legend Excavating LLC Corp for the Dennis Road Culvert Replacement Pro", "amt": 1039113, "co": "ORCHARDPARK", "date": "2026-02-18"}]}; // trade -> latest 3 awards across the boards (the going rate)
+var TRVOCAB={"abatement": 1, "addition": 1, "asphalt": 1, "athletic": 1, "becsd": 1, "boiler": 1, "bridge": 1, "building": 1, "capital": 1, "construction": 1, "culvert": 1, "demoli": 1, "drainage": 1, "drinking": 1, "electric": 1, "equipment": 1, "erosion": 1, "excavator": 1, "fencing": 1, "field": 1, "fill": 1, "force": 1, "generator": 1, "golf": 1, "grinder": 1, "guard": 1, "guiderail": 1, "highway": 1, "hvac": 1, "improvement": 1, "landscap": 1, "lighting": 1, "line": 1, "lining": 1, "loader": 1, "locker": 1, "machinery": 1, "main": 1, "masonry": 1, "microgrid": 1, "mill": 1, "mower": 1, "overlay": 1, "park": 1, "parkway": 1, "pavement": 1, "paving": 1, "photovoltaic": 1, "pipe": 1, "playground": 1, "plow": 1, "pump": 1, "purchase": 1, "rail": 1, "remodel": 1, "renovat": 1, "resurfac": 1, "road": 1, "roof": 1, "sanitary": 1, "service": 1, "sewer": 1, "shoreline": 1, "sidewalk": 1, "site": 1, "solar": 1, "station": 1, "storm": 1, "streambank": 1, "street": 1, "trail": 1, "truck": 1, "vehicle": 1, "wastewater": 1, "water": 1, "waterline": 1, "window": 1, "wrrf": 1}; // the trade classifier's work-words, weighted up in comps
 var TIP={"LANCASTER":"every roll call named: all 368 resolutions this year print the five-member vote by name — 1,869 member-votes captured","WSENECA":"machine-verified coverage: 14 of 15 numbered meetings machine-read — #06 (Mar 23) exists only as a paper scan, quarantined and flagged, never guessed; 9 future meetings on the town calendar","PENDLETON":"named ayes on every one of the year&rsquo;s 161 resolutions, numbering continuous 1&rarr;161 with zero gaps; the July minutes are pending-approval drafts and their cards say so",
   "ORCHARDPARK":"meetings 1st&ndash;14th and warrants #1&ndash;#14 both continuous; the clerk printed a roll call on 6 items &mdash; those drills show the names; voice votes carry no tally and none is invented","GRANDISLAND":"named ayes on all 262 voted items; Regular #1&ndash;#12 and Workshop #1&ndash;#19 series gate-checked; the one count/name mismatch is the clerk&rsquo;s own printed typo, reported never repaired","HAMBURG":"named ayes wherever a tally prints; sub-items 4.1..4.N continuous in all 13 meetings; audit-of-disbursements totals are tracked separately and never counted as project money",
   "LOCKPORT":"two-layer record: born-digital minutes + the meeting packet, joined on the clerk&rsquo;s printed item ids; outcomes on 183 of 184 past items; the approval-of-minutes chain links all 16 meetings end to end; OCR-read votes and unverified $ tokens are flagged, never laundered","CLARENCE":"printed page numbers across all 14 minutes files tile 1&ndash;143 with zero missing pages; per-item roll calls print &ldquo;Ayes: All&rdquo; or names &mdash; rendered verbatim, names shown exactly when a vote wasn&rsquo;t clean","ALDEN":"named per-member vote table on every resolution; meetings No. 2&ndash;10 exist only as scanned agenda packets (no minutes posted) &mdash; the gap is declared, not papered over",
@@ -1233,17 +1237,88 @@ function nxt(L){
   }
   return s?'<div class="drow"><span class="dk">NEXT STEP</span><span class="dv">'+s+'</span></div>':'';
 }
+// comp tokens: what the work IS, with civic boilerplate stopped out. "roofing"
+// also yields "roof" (cheap -ing/-s stem) so Roof Replacement comps with
+// Aerial Roofing, not with carpet-and-vinyl flooring (Joe, 2026-08-20).
+var _CSTOP={the:1,of:1,and:1,for:1,with:1,from:1,into:1,that:1,this:1,shall:1,
+  resolution:1,resolved:1,authorize:1,authorizing:1,authorized:1,authorization:1,
+  approve:1,approves:1,approving:1,approval:1,accept:1,accepting:1,acceptance:1,
+  award:1,awards:1,awarding:1,contract:1,contracts:1,agreement:1,bids:1,
+  project:1,work:1,town:1,city:1,county:1,supervisor:1,board:1,amount:1,
+  total:1,whereas:1,further:1,amendment:1,amend:1,change:1,order:1,purchase:1,
+  installation:1,improvement:1,improvements:1,replacement:1,rehabilitation:1,
+  repair:1,repairs:1,various:1,relative:1,regarding:1,department:1,
+  public:1,final:1,execute:1,office:1,niagara:1,erie:1};
+function _ctoks(t){
+  var out={};
+  String(t).toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).forEach(function(w){
+    if(w.length<4||_CSTOP[w]||/^\d+$/.test(w))return;
+    out[w]=1;
+    if(w.length>6&&w.slice(-3)==='ing')out[w.slice(0,-3)]=1;
+    if(w.slice(-1)==='s')out[w.slice(0,-1)]=1;
+  });
+  return out;
+}
+var _CDF=null;
+function _cdf(){
+  // document frequency of every comp token across the whole payload,
+  // computed once - a token shared by half the titles is worth almost
+  // nothing, a rare one is worth a lot, and the trade classifier's own
+  // work-words (roof, paving, sewer...) are worth six of anything else
+  if(_CDF)return _CDF;
+  _CDF={};
+  LEADS.forEach(function(x){
+    var tk=_ctoks(x.title);
+    for(var w in tk)_CDF[w]=(_CDF[w]||0)+1;
+  });
+  return _CDF;
+}
+function comps(L){
+  // similar AWARDS by rarity-weighted shared work-tokens; the lead's own
+  // project thread never comps against itself
+  var DF=_cdf(), mine=_ctoks(L.title), ex={}; ex[L.id]=1;
+  if(L.th)L.th.rows.forEach(function(r){ex[r.id]=1;});
+  var scored=[];
+  LEADS.forEach(function(x){
+    if(x.sec!==2||!x.amt||x.est||ex[x.id])return;
+    var s=0, tk=_ctoks(x.title);
+    for(var w in tk){
+      if(!mine[w]||DF[w]>60)continue;      // shared-by-everyone words carry nothing
+      s+=(TRVOCAB[w]?6:1)/DF[w];
+    }
+    if(s<0.05)return;                       // a weak echo is not a comp
+    if(x.tr===L.tr)s+=0.01;
+    scored.push([s,x.date,x]);
+  });
+  scored.sort(function(a,b){return (b[0]-a[0])||(a[1]<b[1]?1:-1);});
+  return scored.slice(0,3).map(function(r){return r[2];});
+}
 function grate(L){
-  // THE GOING RATE: latest awards in this lead's trade across all 16 boards -
-  // market context for anything not yet let. Never shown on awards themselves.
+  // THE GOING RATE: comparable awards across all 16 boards - market context
+  // for anything not yet let. Similar work when the titles connect; the
+  // trade's latest awards otherwise. Never shown on awards themselves.
+  // Each comp links to its own source PDF - the closest thing to specs the
+  // public record carries is the resolution text itself.
   if(L.sec===2)return '';
-  var g=TRATE[L.tr];
-  if(!g||!g.length)return '';
-  var h='<div class="thread"><div class="tht">The going rate · latest '+esc(L.tr)+
-        ' awards on these boards</div>';
-  g.forEach(function(x){
-    h+='<div class="throw"><span>'+esc(x.t)+'</span><span class="num">'+
-       esc(CO_LBL[x.co]||x.co)+' · '+x.date+' · '+money0(x.amt)+'</span></div>';
+  var sim=comps(L), rows, cap;
+  if(sim.length){rows=sim;cap='similar work awarded on these boards';}
+  else{
+    var g=TRATE[L.tr];
+    if(!g||!g.length)return '';
+    rows=g;cap='latest '+esc(L.tr)+' awards on these boards';
+  }
+  var h='<div class="thread"><div class="tht">The going rate · '+cap+'</div>';
+  rows.forEach(function(x){
+    // civic boilerplate off the front so the WORK shows in the 88 chars
+    var t=(x.title||x.t)
+      .replace(/^approve and authorize [^-]*? to (execute|enter into|award)\s*/i,'')
+      .replace(/^resolution (to|authorizing|approving)\s*/i,'')
+      .replace(/^resolved,?\s*(to\s*)?/i,'')
+      .replace(/^award of contract\s*[-–]\s*/i,'');
+    var inner='<span>'+esc(t.slice(0,88))+'</span><span class="num">'+
+       esc(CO_LBL[x.co]||x.co)+' · '+x.date+' · '+money0(x.amt)+(x.src?' ↗':'')+'</span>';
+    h+=x.src?'<a class="throw thlink" href="'+x.src+'" target="_blank" rel="noreferrer">'+inner+'</a>'
+            :'<div class="throw">'+inner+'</div>';
   });
   return h+'</div>';
 }
