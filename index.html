@@ -500,6 +500,9 @@
   .bnone .bnb{margin:14px 0 0;background:var(--ink);color:var(--paper);border:0;border-radius:10px;
     font:600 12.5px Inter,sans-serif;padding:11px 18px;cursor:pointer;
     -webkit-tap-highlight-color:transparent}
+  .bkb{margin:2px 0 14px;background:var(--ink);color:var(--paper);border:0;border-radius:10px;
+    font:600 12px Inter,sans-serif;padding:9px 16px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent}
   .bmore{display:block;width:100%;background:none;border:1px solid var(--rule2);
     border-radius:12px;color:var(--accent);font:600 11px Inter,sans-serif;letter-spacing:.02em;
     padding:11px;margin:10px 0 0;cursor:pointer;-webkit-tap-highlight-color:transparent;
@@ -1509,6 +1512,29 @@ var BKEMPTY={
   ready:'No approved money and no design work in your setup this issue.',
   room:'No award in your setup this issue &mdash; an honest zero, not a filtered-out one.'
 };
+function bkLoosen(k){
+  // the bucket-scoped honest loosening: an empty bucket under a filter must
+  // say what the filter is hiding, counted from the real data - "your 5
+  // boards have none" must never read as "there is none" (Joe, 2026-08-20)
+  function cnt(o){var n=0;LEADS.forEach(function(L){if(match(L,o)&&bucketOf(L)===k)n++;});return n;}
+  var i,f,n,FL=[250000,100000,0];
+  for(i=0;i<FL.length;i++){f=FL[i];
+    if(state.min&&f<state.min){n=cnt({min:f});
+      if(n)return {n:n,act:'min',v:f,txt:'<b>'+n+'</b> land'+(n===1?'s':'')+' here '+
+        (f?'at a $'+Math.round(f/1000)+'K floor':'with no floor')+'.'};}}
+  if(state.co.length){n=cnt({co:[]});
+    if(n)return {n:n,act:'co',txt:'<b>'+n+'</b> sit'+(n===1?'s':'')+' here on the boards you&rsquo;ve left off.'};}
+  if(state.t.length){n=cnt({t:[]});
+    if(n)return {n:n,act:'t',txt:'<b>'+n+'</b> land'+(n===1?'s':'')+' here across the other trades.'};}
+  return null;
+}
+function bkEmpty(k){
+  var lo=bkLoosen(k);
+  return '<p class="bkempty">'+BKEMPTY[k]+(lo?' '+lo.txt:'')+'</p>'+
+    (lo?'<button class="bnb bkb" data-loose="'+lo.act+'" data-lv="'+(lo.v!==undefined?lo.v:'')+'">'+
+        (lo.act==='min'?'Lower the floor':(lo.act==='co'?'Use all 16 boards':'Show every trade'))+
+        '</button>':'');
+}
 function paintBoard(){
   var i,items={bid:[],ready:[],room:[]},nmatch=0;
   LEADS.forEach(function(L,ix){
@@ -1556,7 +1582,7 @@ function paintBoard(){
         (full?(shown.map(function(r){return r.h;}).join('')+
           (full>shown.length?'<button class="bmore" data-bmore="'+B.k+'">Show all '+full+
             ' in this bucket &darr;</button>':''))
-         :'<p class="bkempty">'+BKEMPTY[B.k]+'</p>')+
+         :bkEmpty(B.k))+
         '</div>';
     });
   }
